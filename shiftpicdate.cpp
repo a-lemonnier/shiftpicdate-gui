@@ -32,3 +32,10 @@ void spdFunc::test() {
   auto img=Exiv2::ImageFactory::open("ico.svg");
 
 }
+
+bool spdFunc::test_ext(const std::string &sS) {
+    bool res=false;
+    for(const auto &ext: EXTENSION_LIST)
+        res|=(sS.find(ext)!=std::string::npos);
+    return res;
+}

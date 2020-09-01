@@ -20,6 +20,8 @@
 
 #include <exiv2/exiv2.hpp>
 
+
+
 #if __has_include (<filesystem>)
 #include <filesystem>
 #define FS_STD /**< std::filesystem availability (C++17) */
@@ -36,11 +38,16 @@ namespace fs = boost::filesystem;
 #error "No filesystem header found"
 #endif
 
+#define EXTENSION_LIST {".JPEG", ".jpeg", \
+                        ".JPG",  ".jpg",  \
+                        ".CR2",  ".cr2"  }
+
 // ----------------------------------------------------
 
 namespace spdFunc {
     std::string stoyear(long long t);
     void test();
+    bool test_ext(const std::string &sS);
 }
 
 // ----------------------------------------------------
@@ -49,5 +56,7 @@ namespace spdFunc {
 std::string spdFunc::stoyear(long long t);
 
 void spdFunc::test();
+
+bool spdFunc::test_ext(const std::string &sS);
 
 #endif // shiftpicdate.h

@@ -12,6 +12,12 @@
 #include <QMetaType>
 #include <QScrollBar>
 #include <QTimer>
+#include <QImageReader>
+#include <QGraphicsView>
+#include <QPixmap>
+#include <QMatrix>
+#include <QTreeView>
+#include <QListView>
 
 #include <filesystem>
 #include <algorithm>
@@ -36,11 +42,13 @@ public:
     void setLogtext(const std::string &msg);
 
     void getfileList();
+    void startSlideshow();
 
 public slots:
     void update_progressBar_value(int v);
     void update_Log_value(QString);
     void update_Log();
+    void changePic();
 
 private slots:
     void on_bBrowse_clicked();
@@ -61,18 +69,26 @@ private slots:
     void on_sBMin_valueChanged(int arg1);
     void on_sBHour_valueChanged(int arg1);
 
-
     void on_cBScroll_clicked(bool checked);
+    void on_cBHidepic_clicked(bool checked);
+    void on_bRot_clicked();
+
+    void on_bNext_clicked();
+
+    void on_bPrev_clicked();
+
+    void on_bStop_clicked();
 
 private:
     Ui::MainWIndow *ui;
 
-    QTimer *timer;
+    QTimer *timer, *timer_ss;
 
     QString SLog;
     std::vector<QString> QSLog;
 
     std::string sFilename;
+    std::vector<std::string> vsList;
 
     long long DeltaY;
     long long DeltaD;
@@ -87,6 +103,10 @@ private:
     bool isAutoScroll;
 
     int iZoom;
+    int iPicRot;
+
+    long long picNb;
+    long long currentPic;
 
     int computeDeltaT();
 
@@ -122,6 +142,29 @@ private:
 
 };
 
+
+//class slideShow: public QObject {
+//    Q_OBJECT
+
+//public:
+
+//    explicit slideShow(QObject *parent=Q_NULLPTR): QObject(parent), cPic(0) { }
+//    virtual ~slideShow() { }
+
+//    void setPath(std::string &str);
+//    void changePic();
+
+//signals:
+//    void finished();
+
+//private:
+//    size_t cPic;
+//    size_t nextPic();
+
+//    std::string sPath;
+//    std::vector<std::string> vsList;
+
+//};
 
 
 

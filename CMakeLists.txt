@@ -8,7 +8,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-
 #set(CMAKE_CC_COMPILER "x86_64-w64-mingw32-gcc")
 #set(CMAKE_CXX_COMPILER "x86_64-w64-mingw32-g++")
 
@@ -68,11 +67,12 @@ else()
 endif()
 
 
+
 find_package( Boost 1.40 COMPONENTS program_options
                          REQUIRED timer filesystem unit_test_framework)
 
 target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Widgets )
-target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lexiv2 )
+target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lexiv2 -lexif)
 
 
 
