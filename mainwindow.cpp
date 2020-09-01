@@ -44,7 +44,6 @@ MainWIndow::MainWIndow(QWidget *parent)
 }
 
 MainWIndow::~MainWIndow() {
-    //delete timer;
     delete ui;
 }
 
@@ -176,7 +175,7 @@ void MainWIndow::on_sBDay_valueChanged(int val) {
     this->DeltaD=val;
     this->computeDeltaT();
     this->setLogtext("-> Shift by "+
-    stoyear( this->computeDeltaT())
+    spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
     +"s.\n");
@@ -190,7 +189,7 @@ void MainWIndow::on_sBYear_valueChanged(int val) {
     this->computeDeltaT();
     
     this->setLogtext("-> Shift by "+
-    stoyear( this->computeDeltaT())
+    spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
     +"s.\n");
@@ -203,7 +202,7 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
     this->computeDeltaT();
     
     this->setLogtext("-> Shift by "+
-    stoyear( this->computeDeltaT())
+    spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
     +"s.\n");
@@ -218,7 +217,7 @@ void MainWIndow::on_sBMin_valueChanged(int val) {
     this->computeDeltaT();
     
     this->setLogtext("-> Shift by "+
-    stoyear( this->computeDeltaT())
+    spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
     +"s.\n");
@@ -230,7 +229,7 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
     this->DeltaH=val;
     this->computeDeltaT();
     
-    this->setLogtext("-> Shift by "+stoyear( this->computeDeltaT())
+    this->setLogtext("-> Shift by "+spdFunc::stoyear( this->computeDeltaT())
                      +" or "       +std::to_string(this->computeDeltaT())
                      +"s.\n");
 }
@@ -306,7 +305,7 @@ void MainWIndow::update_Log_value(QString str) {
 
 void MainWIndow::update_Log() {
     qDebug() << "timer tick.\n";
-    qDebug() << "Auto scroll: " << this->isAutoScroll << "\n";
+    //qDebug() << "Auto scroll: " << this->isAutoScroll << "\n";
     if (!this->isQuiet) {
         ui->tBLog->setText(this->SLog);
         if (this->isAutoScroll)
