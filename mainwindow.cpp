@@ -490,17 +490,18 @@ void MainWIndow::startSlideshow() {
 
 
 void MainWIndow::changePic() {
+    this->currentPic++;
+    if (this->currentPic>this->picNb-1)
+        this->currentPic=0;
     QMatrix rm;
     rm.rotate(this->iPicRot);
-    QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic++]));
+    QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
     pmap = pmap.transformed(rm);
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
-    if (this->currentPic>this->picNb)
-        this->currentPic=0;
 
     ui->picLabel->setToolTipDuration(1000);
-    ui->picLabel->setToolTip(QString::fromStdString(this->vsList[this->currentPic++]));
-    ui->statusbar->showMessage(QString::fromStdString(this->vsList[this->currentPic++]));
+    ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+    ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 
     this->iPicRot=0;
 }
@@ -518,8 +519,8 @@ void MainWIndow::on_bNext_clicked() {
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
     ui->picLabel->setToolTipDuration(1000);
-    ui->picLabel->setToolTip(QString::fromStdString(this->vsList[this->currentPic]));
-    ui->statusbar->showMessage(QString::fromStdString(this->vsList[this->currentPic]));
+    ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+    ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 
 }
 
@@ -535,10 +536,9 @@ void MainWIndow::on_bPrev_clicked() {
 
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
-
     ui->picLabel->setToolTipDuration(1000);
-    ui->picLabel->setToolTip(QString::fromStdString(this->vsList[this->currentPic]));
-    ui->statusbar->showMessage(QString::fromStdString(this->vsList[this->currentPic]));
+    ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+    ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 }
 
 void MainWIndow::on_bStop_clicked() {
