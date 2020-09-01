@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ico/ico.svg</file>
+        <file>ico/ico0.svg</file>
+        <file>ico/ico1.svg</file>
+        <file>ts/french.ts</file>
+    </qresource>
+</RCC>
