@@ -151,7 +151,7 @@
         <location filename="../../mainwindow.ui" line="559"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="520"/>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation type="unfinished">À propos</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="584"/>
