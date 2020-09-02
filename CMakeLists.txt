@@ -16,19 +16,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
-# Check http://doc.qt.io/qt-5/deployment-android.html for more information.
-# They need to be set before the find_package(Qt5 ...) call.
-
-#if(ANDROID)
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
-#        set(ANDROID_EXTRA_LIBS
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
-#    endif()
-#endif()
-
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
 file(GLOB TS_FILES "res/ts/*.ts")
@@ -78,6 +65,8 @@ endif(UNIX)
 
 #find_package( Boost 1.40 COMPONENTS program_options
 #                         REQUIRED timer filesystem unit_test_framework)
+
+
 
 target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Widgets )
 

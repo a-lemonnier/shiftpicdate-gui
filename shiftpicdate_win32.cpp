@@ -2,9 +2,9 @@
 
 
 std::string spdFunc::getExifDate(const std::string &sFilename) {
-   std::string Res;
-
+   std::string Res="invalid metadata";
    if (test_ext(sFilename)) {
+
        std::wstring wsFilename=std::wstring(sFilename.begin(), sFilename.end());
 
        const WCHAR* wcFilename=wsFilename.c_str();
@@ -23,13 +23,21 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
        PropertyItem* propertyItem = (PropertyItem*)malloc(size);
        bitmap->GetPropertyItem(PropertyTagDateTime, size, propertyItem);
 
-       Res = static_cast<char*>( propertyItem->value);
+       std::stringstream ssS;
+
+
+       assert(ssS << static_cast<char*>( propertyItem->value) && Res=ssS.str(););
+
+
+        //std::cerr << "- Error while loading image exif.\n";
 
        free(propertyItem);
        propertyItem=NULL;
 
        delete bitmap;
    }
+   else
+       return "invalid file.";
 
    return Res;
 }

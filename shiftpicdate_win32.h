@@ -20,6 +20,7 @@
 
 
 #if defined(_WIN32) || defined(WIN32)
+#include <cassert>
 #include <windows.h>
 #include <objidl.h>
 #include <strsafe.h>
