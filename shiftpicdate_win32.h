@@ -1,5 +1,5 @@
-#ifndef SHIFTPICDATE_H
-#define SHIFTPICDATE_H
+#ifndef SHIFTPICDATE_WIN32_H
+#define SHIFTPICDATE_WIN32_H
 
 #include <iostream>
 #include <cmath>
@@ -18,6 +18,7 @@
 #include <thread>
 #include <future>
 
+
 #if defined(_WIN32) || defined(WIN32)
 #include <windows.h>
 #include <objidl.h>
@@ -27,9 +28,6 @@ using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 #endif
 
-#ifdef __unix__
-#include <exiv2/exiv2.hpp>
-#endif
 
 #if __has_include (<filesystem>)
 #include <filesystem>
@@ -73,4 +71,4 @@ std::string spdFunc::stoyear(long long t);
 void spdFunc::test();
 bool spdFunc::test_ext(const std::string &sS);
 
-#endif // shiftpicdate.h
+#endif // shiftpicdate_win32.h

@@ -1,10 +1,37 @@
-#include "shiftpicdate.h"
+#include "shiftpicdate_win32.h"
 
 
 std::string spdFunc::getExifDate(const std::string &sFilename) {
    std::string Res;
 
+   if (test_ext(sFilename)) {
+       std::wstring wsFilename=std::wstring(sFilename.begin(), sFilename.end());
 
+       const WCHAR* wcFilename=wsFilename.c_str();
+
+       GdiplusStartupInput gdiplusStartupInput;
+
+       ULONG_PTR gdiplusToken;
+       GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+       UINT  size = 0;
+       UINT  count = 0;
+
+       Bitmap* bitmap = new Bitmap(wcFilename);
+
+       bitmap->GetPropertySize(&size, &count);
+
+       size = bitmap->GetPropertyItemSize(PropertyTagDateTime);
+       PropertyItem* propertyItem = (PropertyItem*)malloc(size);
+       bitmap->GetPropertyItem(PropertyTagDateTime, size, propertyItem);
+
+       Res = static_cast<char*>( propertyItem->value);
+
+       free(propertyItem);
+       propertyItem=NULL;
+
+       delete bitmap;
+   }
 
    return Res;
 }

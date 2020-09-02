@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "shiftpicdate.h"
 
 MainWIndow::MainWIndow(QWidget *parent)
 : QMainWindow(parent)
@@ -54,8 +53,8 @@ MainWIndow::~MainWIndow() {
 void MainWIndow::on_bBrowse_clicked() {
     
     QFileDialog dialog(this);
-    
     dialog.setFileMode(QFileDialog::DirectoryOnly);
+    //dialog.setOption(QFileDialog::ShowDirsOnly, true);
     dialog.setOption(QFileDialog::DontUseNativeDialog, true);
     dialog.setViewMode(QFileDialog::List);
     
@@ -149,8 +148,9 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 void MainWIndow::on_bTest_clicked() {
     ui->bReset->setEnabled(true);
     
-    qDebug() << " Test ---\n";
+    qDebug() << "bTest clicked ---\n";
 
+    qDebug() << QString::fromStdString(spdFunc::getExifDate("IMG_4580.JPG")) << "\n";
 
 
     qDebug() << "---\n";
@@ -407,9 +407,7 @@ void MainWIndow::getfileList() {
     connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
     
     // Update textBrowser at least one time
-    connect(th, &QThread::finished, this,
-            [=](){ this->timer->stop(); qDebug() << "timer stopped.\n";
-                this->update_Log();  qDebug() << "update log.\n"; });
+    connect(th, &QThread::finished, this, [=](){ this->timer->stop(); this->update_Log(); });
     
     connect(fL, &fileList::fLProgress, this,  &MainWIndow::update_progressBar_value);
     connect(fL, &fileList::sendstdStr, this,  &MainWIndow::update_Log_value);
@@ -441,8 +439,7 @@ void fileList::getList() {
     emit(fLProgress(0)); // Set progressBar to 0
     
     for(const auto &str: std::filesystem::recursive_directory_iterator(this->fileName)) {
-        
-        emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\n")));
+        emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+spdFunc::getExifDate(str.path().generic_string())+"\n")));
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
     

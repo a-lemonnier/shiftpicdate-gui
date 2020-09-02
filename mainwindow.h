@@ -23,6 +23,13 @@
 #include <algorithm>
 #include <memory>
 
+#if defined(_WIN32) || defined(WIN32)
+#include "shiftpicdate_win32.h"
+#endif
+
+#if defined(__linux__)
+#include "shiftpicdate.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWIndow; }
@@ -142,29 +149,6 @@ private:
 
 };
 
-
-//class slideShow: public QObject {
-//    Q_OBJECT
-
-//public:
-
-//    explicit slideShow(QObject *parent=Q_NULLPTR): QObject(parent), cPic(0) { }
-//    virtual ~slideShow() { }
-
-//    void setPath(std::string &str);
-//    void changePic();
-
-//signals:
-//    void finished();
-
-//private:
-//    size_t cPic;
-//    size_t nextPic();
-
-//    std::string sPath;
-//    std::vector<std::string> vsList;
-
-//};
 
 
 
