@@ -9,16 +9,14 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
 
        const WCHAR* wcFilename=wsFilename.c_str();
 
-       GdiplusStartupInput gdiplusStartupInput;
-
-       ULONG_PTR gdiplusToken;
-       GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-
        UINT  size = 0;
        UINT  count = 0;
+       ULONG_PTR gdiplusToken;
+
+       GdiplusStartupInput gdiplusStartupInput;
+       GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
        Bitmap* bitmap = new Bitmap(wcFilename);
-
        bitmap->GetPropertySize(&size, &count);
 
        size = bitmap->GetPropertyItemSize(PropertyTagDateTime);

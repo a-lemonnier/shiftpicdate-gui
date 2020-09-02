@@ -47,6 +47,7 @@ public:
 
     void setLogtextTh(const std::string &msg);
     void setLogtext(const std::string &msg);
+    void setLogtextErr(const std::string &msg);
 
     void getfileList();
     void startSlideshow();

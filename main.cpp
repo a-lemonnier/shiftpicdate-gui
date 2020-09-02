@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     if (translator->load("french.qm"))
         a.installTranslator(translator);
 
+    //a.setWindowIcon(QIcon("ico1.svg"));
+
     MainWIndow w;
     w.show();
 

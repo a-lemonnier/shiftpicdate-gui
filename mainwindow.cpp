@@ -5,8 +5,8 @@
 MainWIndow::MainWIndow(QWidget *parent)
 : QMainWindow(parent)
 , ui(new Ui::MainWIndow)
-, SLog("- Init.\n")
-, sFilename("./")
+, SLog(tr("- Init.\n"))
+, sFilename(".")
 , DeltaY(0)
 , DeltaD(0)
 , DeltaH(0)
@@ -17,9 +17,12 @@ MainWIndow::MainWIndow(QWidget *parent)
 , isQuiet(false)
 , isAutoScroll(true)
 , iPicRot(-90)
-, currentPic(0){
+, currentPic(0) {
+    qDebug() << tr("- MainWIndow::MainWIndow(): init main windows.");
+
     ui->setupUi(this);
     
+    ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     
     //ui->bTest->setHidden(true);
@@ -41,7 +44,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBMin->setValue(this->DeltaM);
     ui->sBSec->setValue(this->DeltaS);
     
-    ui->lEPath->setText("./");
+    ui->lEPath->setText(".");
 }
 
 MainWIndow::~MainWIndow() {
@@ -49,16 +52,16 @@ MainWIndow::~MainWIndow() {
 }
 
 
-
 void MainWIndow::on_bBrowse_clicked() {
-    
+    qDebug() << tr("- MainWIndow::on_bBrowse_clicked().");
+
+    qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): config dialog.");
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::DirectoryOnly);
-    //dialog.setOption(QFileDialog::ShowDirsOnly, true);
     dialog.setOption(QFileDialog::DontUseNativeDialog, true);
     dialog.setViewMode(QFileDialog::List);
     
-    
+    qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): set dialog tricks.");
     // See on QT forum ***
     QListView *list = dialog.findChild<QListView*>("listView");
     if (list)  list->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -66,54 +69,74 @@ void MainWIndow::on_bBrowse_clicked() {
     if (tree)  tree->setSelectionMode(QAbstractItemView::MultiSelection);
     // ***
     
+    qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): grab filenames.");
     QStringList fileNames={"./"};
     if (dialog.exec())
         fileNames = dialog.selectedFiles();
     
-    
     ui->lEPath->setText(fileNames[0]);
     ui->lEPath->setEnabled(false);
     
-    this->setLogtext("- Path selected: ");
+    this->setLogtext(tr("- Path selected: ").toStdString());
     for(const auto &str: fileNames)
         this->setLogtext(str.toUtf8().toStdString()+"\n");
     
-    if (std::filesystem::is_directory(fileNames[0].toUtf8().toStdString())) {
-        this->sFilename=fileNames[0].toUtf8().toStdString();
-        
+    qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): double check file type.");
+
+    if (fs::is_directory(fileNames[0].toUtf8().toStdString())) {
+
+        qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): this is a directory.");
+        this->sFilename=fileNames[0].toUtf8().toStdString()+"/";
+        qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): path: ") << QString::fromStdString(this->sFilename);
+
         // if one pic has been selected then display it
-        auto fileNb=[](std::filesystem::path path)  {
-            return std::distance(std::filesystem::recursive_directory_iterator{path},
-                                 std::filesystem::recursive_directory_iterator{});
+        auto fileNb=[](std::filesystem::path path) {
+            long long n=-1;
+            try { n=std::distance(std::filesystem::recursive_directory_iterator{path}, std::filesystem::recursive_directory_iterator{}); }
+            catch (fs::filesystem_error &err) {qDebug() << tr("- MainWIndow::on_bBrowse_clicked::fileNb(lambda): error ") << QString::fromStdString(err.what());}
+            return n;
         };
-        
-        if (fileNb(this->sFilename)==1) {
-            QString oneFilename=QString::fromStdString((*std::filesystem::recursive_directory_iterator(this->sFilename)).path().string());
-            
-            this->setLogtext("- Load image "+oneFilename.toStdString()+": ");
-            
+
+        long long llFilenb=fileNb(this->sFilename);
+
+        if (llFilenb>-1) {
+            qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): ") << fileNb(this->sFilename) << tr(" files.");
+            if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
+                qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): show only one file having a good ext.");
+                QString oneFilename=QString::fromStdString((*fs::recursive_directory_iterator(this->sFilename)).path().string());
+
+                this->setLogtext(tr("- Load image ").toStdString()+oneFilename.toStdString()+": ");
+
+                ui->bReset->setEnabled(true);
+                QImageReader* imgr=new QImageReader(oneFilename);
+                imgr->read();
+
+                this->setLogtext(imgr->errorString().toStdString()+"\n");
+
+                QPixmap pmap(oneFilename);
+                ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
+
+                delete imgr;
+            }
+            else {
+                qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): start this->getfileList().");
+
+                this->setEnabled(false);
+                this->getfileList();
+                this->setEnabled(true);
+
+                qDebug() << tr("- MainWIndow::on_bBrowse_clicked(): start this->startSlideshow().");
+                this->startSlideshow();
+            }
+
+            ui->bRun->setEnabled(true);
             ui->bReset->setEnabled(true);
-            QImageReader* imgr=new QImageReader(oneFilename);
-            imgr->read();
-            
-            this->setLogtext(imgr->errorString().toStdString()+"\n");
-            
-            QPixmap pmap(oneFilename);
-            ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
-            
-            delete imgr;
+            ui->bQuit->setEnabled(true);
         }
         else {
-            this->setEnabled(false);
-            this->getfileList();
-            this->setEnabled(true);
-            
-            this->startSlideshow();
+            qDebug() << tr("- \u25EC MainWIndow::on_bBrowse_clicked(): \u2620 Cannot process with this path: ") << QString::fromStdString(this->sFilename);
+            this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
         }
-        
-        ui->bRun->setEnabled(true);
-        ui->bReset->setEnabled(true);
-        ui->bQuit->setEnabled(true);
     }
 }
 
@@ -134,13 +157,14 @@ void MainWIndow::on_bRun_clicked() {
 
 
 void MainWIndow::on_bDST_clicked(bool checked) {
+    qDebug() << tr("- MainWIndow::on_bDST_clicked().");
     if (!checked) {
         this->isDST=false;
-        this->setLogtext("- DST is disable.\n");
+        this->setLogtext(tr("- DST is disable.\n").toStdString());
     }
     else {
         this->isDST=true;
-        this->setLogtext("- DST is enable: +1h.\n");
+        this->setLogtext(tr("- DST is enable: +1h.\n").toStdString());
     }
 }
 
@@ -148,17 +172,21 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 void MainWIndow::on_bTest_clicked() {
     ui->bReset->setEnabled(true);
     
-    qDebug() << "bTest clicked ---\n";
+    qDebug() << tr("bTest clicked ---");
 
-    qDebug() << QString::fromStdString(spdFunc::getExifDate("IMG_4580.JPG")) << "\n";
+    qDebug() << QString::fromStdString(spdFunc::getExifDate("IMG_4580.JPG"));
 
 
-    qDebug() << "---\n";
+    qDebug() << "---";
 }
 
 void MainWIndow::on_bRot_clicked() {
+    qDebug() << tr("- MainWIndow::on_bRot_clicked().");
     if (!this->timer_ss->isActive()) {
+        qDebug() << "- MainWIndow::on_bRot_clicked(): Stop timer.";
+
         this->iPicRot=90;
+
         QMatrix rm;
         rm.rotate(this->iPicRot);
 
@@ -177,29 +205,33 @@ void MainWIndow::on_bRot_clicked() {
 void MainWIndow::on_cBWrap_clicked(bool checked) {
     if (!checked) {
         ui->tBLog->setLineWrapMode(QTextEdit::NoWrap);
-        this->setLogtext("- Auto wrap off.\n");
+        this->setLogtext(tr("- Auto wrap off.\n").toStdString());
     }
     else {
         ui->tBLog->setLineWrapMode(QTextEdit::WidgetWidth);
-        this->setLogtext("- Auto wrap on.\n");
+        this->setLogtext(tr("- Auto wrap on.\n").toStdString());
     }
 }
 
 void MainWIndow::on_cBQuiet_clicked(bool checked) {
+    qDebug() << tr("-  MainWIndow::on_cBQuiet_clicked().");
     this->isQuiet=checked;
     if (!checked)
-        this->setLogtext("- Toggle verbosity on.\n");
+        this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
 }
 
 void MainWIndow::on_cBScroll_clicked(bool checked) {
+    qDebug() << tr("-  MainWIndow::on_cBScroll_clicked().");
     this->isAutoScroll=checked;
     if (!this->isQuiet) {
-        if (checked) this->setLogtext("- Toggle auto scroll on.\n");
-        else         this->setLogtext("- Toggle auto scroll off.\n");
+        if (checked) this->setLogtext(tr("- Toggle auto scroll on.\n").toStdString());
+        else         this->setLogtext(tr("- Toggle auto scroll off.\n").toStdString());
     }
 }
 
 void MainWIndow::on_bReset_clicked() {
+    qDebug() << tr("- MainWIndow::on_bReset_clicked().");
+
     ui->bRun->setEnabled(true);
     ui->sBYear->setEnabled(true);
     ui->sBDay->setEnabled(true);
@@ -252,9 +284,9 @@ void MainWIndow::on_sBDay_valueChanged(int val) {
     
     this->DeltaD=val;
     this->computeDeltaT();
-    this->setLogtext("-> Shift by "+
+    this->setLogtext(tr("-> Shift by ").toStdString()+
     spdFunc::stoyear( this->computeDeltaT())
-    +" or "
+    +tr(" or ").toStdString()
     +std::to_string(this->computeDeltaT())
     +"s.\n");
 }
@@ -266,9 +298,9 @@ void MainWIndow::on_sBYear_valueChanged(int val) {
     this->DeltaY=val;
     this->computeDeltaT();
     
-    this->setLogtext("-> Shift by "+
+    this->setLogtext(tr("-> Shift by ").toStdString()+
     spdFunc::stoyear( this->computeDeltaT())
-    +" or "
+    +tr(" or ").toStdString()
     +std::to_string(this->computeDeltaT())
     +"s.\n");
 }
@@ -279,7 +311,7 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
     this->DeltaS=val;
     this->computeDeltaT();
     
-    this->setLogtext("-> Shift by "+
+    this->setLogtext(tr("-> Shift by ").toStdString()+
     spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
@@ -294,7 +326,7 @@ void MainWIndow::on_sBMin_valueChanged(int val) {
     this->DeltaM=val;
     this->computeDeltaT();
     
-    this->setLogtext("-> Shift by "+
+    this->setLogtext(tr("-> Shift by ").toStdString()+
     spdFunc::stoyear( this->computeDeltaT())
     +" or "
     +std::to_string(this->computeDeltaT())
@@ -307,26 +339,30 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
     this->DeltaH=val;
     this->computeDeltaT();
     
-    this->setLogtext("-> Shift by "+spdFunc::stoyear( this->computeDeltaT())
+    this->setLogtext(tr("-> Shift by ").toStdString()+spdFunc::stoyear( this->computeDeltaT())
     +" or "       +std::to_string(this->computeDeltaT())
     +"s.\n");
 }
 
 void MainWIndow::on_bZoomIn_clicked() {
+    qDebug() << "-  MainWIndow::on_bZoomIn_clicked().";
     ui->tBLog->zoomIn(1);
 }
 
 void MainWIndow::on_bZoomOut_clicked() {
+    qDebug() << "-  MainWIndow::on_bZoomOut_clicked().";
     ui->tBLog->zoomOut(1);
 }
 
 void MainWIndow::on_rBInfo_clicked() { // About...
+    qDebug() << "-  MainWIndow::on_rBInfo_clicked().";
+
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
     
     QString infoMsg;
     infoMsg= "shiftpicdate-gui 0.1\n\n";
-    infoMsg+="Qt5 GUI for changing picture timestamps.\n\n";
+    infoMsg+=tr("Qt5 GUI for changing picture timestamps.\n\n");
     infoMsg+="MIT - A. Lemonnier - 2020\n";
     
     QMessageBox msgBox;
@@ -356,6 +392,8 @@ void MainWIndow::setLogtext(const std::string &msg) {
     }
 }
 
+
+
 int  MainWIndow::computeDeltaT() { // compute total secs.
     constexpr int cM=60;
     constexpr int cH=cM*60;
@@ -382,18 +420,21 @@ void MainWIndow::update_Log_value(QString str) {
 }
 
 void MainWIndow::update_Log() {
-    qDebug() << "timer tick.\n";
-    qDebug() << "Auto scroll: " << this->isAutoScroll << "\n";
+    qDebug() << "- MainWIndow::update_Log().";
     if (!this->isQuiet) {
         ui->tBLog->setText(this->SLog);
-        if (this->isAutoScroll)
+        if (this->isAutoScroll) {
+            qDebug() << tr("- MainWIndow::update_Log(): Scroll to the end.");
             ui->tBLog->verticalScrollBar()->setValue(ui->tBLog->verticalScrollBar()->maximum());
+        }
     }
 }
 
 
 
 void MainWIndow::getfileList() {
+    qDebug() << "- MainWIndow::getfileList().";
+
     fileList *fL=new fileList();
     QThread *th=new QThread();
     
@@ -416,7 +457,7 @@ void MainWIndow::getfileList() {
     connect(th, &QThread::finished, fL, &fileList::deleteLater);
     connect(th, &QThread::started, fL, &fileList::getList);
     
-    this->setLogtextTh("- List of files...\n");
+    this->setLogtextTh(tr("- List of files...\n").toStdString());
     
     timer->start(1000);
     th->start();
@@ -425,41 +466,51 @@ void MainWIndow::getfileList() {
 
 
 void fileList::getList() {
-    
+    qDebug() << "- fileList::getList().";
+
     auto fileNb=[](std::filesystem::path path)  {
         return std::distance(std::filesystem::recursive_directory_iterator{path},
                              std::filesystem::recursive_directory_iterator{});
     };
     
     size_t iFileNb=fileNb(this->fileName);
-    
-    emit(sendstdStr(QString::fromStdString("\t - Number of files: "+std::to_string(iFileNb)+" -\n")));
+    qDebug() << "- fileList::getList(): " << iFileNb << tr(" files.");
+
+    qDebug() << "- fileList::getList(): emit(sendstdStr()).";
+    emit(sendstdStr(QString::fromStdString(tr("\t - Number of files: ").toStdString()+std::to_string(iFileNb)+" -\n")));
     
     int iCount=0;
     emit(fLProgress(0)); // Set progressBar to 0
     
-    for(const auto &str: std::filesystem::recursive_directory_iterator(this->fileName)) {
+    qDebug() << tr("- fileList::getList(): parse recursive_directory_iterator().");
+    for(const auto &str: fs::recursive_directory_iterator(this->fileName)) {
+        qDebug() << tr("- fileList::getList(): emit(sendstdStr()).");
         emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+spdFunc::getExifDate(str.path().generic_string())+"\n")));
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
+    qDebug() << tr("- fileList::getList(): recursive_directory_iterator() loop complete.");
     
     emit(fLProgress(100)); // Set progressBar to 0
     emit(finished());
+     qDebug() << "- fileList::getList(): emit(finished()).";
     
 }
 
 void fileList::setfileName(std::string& str) {
+    qDebug() << "- fileList::setfileName().";
     this->fileName=str;
 }
 
 
 
 void MainWIndow::on_cBHidepic_clicked(bool checked) {
+    qDebug() << "- MainWIndow::on_cBHidepic_clicked().";
     ui->picLabel->setHidden(checked);
 }
 
 
 void MainWIndow::startSlideshow() {
+    qDebug() << "- MainWIndow::startSlideshow().";
     
     if (std::filesystem::is_directory(this->sFilename)) {
         // List of pics
@@ -487,6 +538,8 @@ void MainWIndow::startSlideshow() {
 
 
 void MainWIndow::changePic() {
+    qDebug() << "- MainWIndow::changePic().";
+
     this->currentPic++;
     if (this->currentPic>this->picNb-1)
         this->currentPic=0;
@@ -504,6 +557,8 @@ void MainWIndow::changePic() {
 }
 
 void MainWIndow::on_bNext_clicked() {
+    qDebug() << "- MainWIndow::on_bNext_clicked().";
+
     if (this->timer_ss->isActive())
         timer_ss->stop();
 
@@ -522,6 +577,8 @@ void MainWIndow::on_bNext_clicked() {
 }
 
 void MainWIndow::on_bPrev_clicked() {
+    qDebug() << "- MainWIndow::on_bPrev_clicked().";
+
     if (this->timer_ss->isActive())
         timer_ss->stop();
 
@@ -539,6 +596,8 @@ void MainWIndow::on_bPrev_clicked() {
 }
 
 void MainWIndow::on_bStop_clicked() {
+    qDebug() << "- MainWIndow::on_bStop_clicked()().";
+
     if (this->timer_ss->isActive())
         timer_ss->stop();
 }
