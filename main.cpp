@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "fsdialog.h"
 
 #include <QApplication>
 #include <QTranslator>
@@ -14,9 +15,8 @@ int main(int argc, char *argv[])
     if (translator->load("french.qm"))
         a.installTranslator(translator);
 
-    //a.setWindowIcon(QIcon("ico1.svg"));
-
     MainWIndow w;
+
     w.show();
 
     return a.exec();

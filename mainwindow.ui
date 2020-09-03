@@ -123,6 +123,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="bSelectfile">
+              <property name="text">
+               <string>Select files</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -387,22 +394,6 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_16">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Minimum</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="picLabel">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -427,6 +418,9 @@
             </property>
             <property name="statusTip">
              <string/>
+            </property>
+            <property name="autoFillBackground">
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>No picture selected.</string>
@@ -795,7 +789,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>284</x>
-     <y>419</y>
+     <y>581</y>
     </hint>
     <hint type="destinationlabel">
      <x>217</x>

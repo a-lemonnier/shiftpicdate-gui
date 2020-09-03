@@ -28,6 +28,10 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    fsdialog.ui
+    fsdialog.cpp
+    fsdialog.h
+    shiftpicdate.cpp
     shiftpicdate.h
     ${QM_FILES}
   )
@@ -39,6 +43,9 @@ if(WIN32)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    fsdialog.ui
+    fsdialog.cpp
+    fsdialog.h
     shiftpicdate_win32.cpp
     shiftpicdate_win32.h
     ${QM_FILES}
@@ -56,6 +63,9 @@ if(UNIX)
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        fsdialog.ui
+        fsdialog.cpp
+        fsdialog.h
         shiftpicdate.cpp
         shiftpicdate.h
         ${QM_FILES}
@@ -73,5 +83,3 @@ target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Widgets )
 if (UNIX)
     target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lexiv2 -lexif)
 endif (UNIX)
-
-

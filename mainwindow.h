@@ -18,10 +18,13 @@
 #include <QMatrix>
 #include <QTreeView>
 #include <QListView>
+#include <QTextStream>
+
 
 #include <filesystem>
 #include <algorithm>
 #include <memory>
+#include <cassert>
 
 #if defined(_WIN32) || defined(WIN32)
 #include "shiftpicdate_win32.h"
@@ -31,9 +34,12 @@
 #include "shiftpicdate.h"
 #endif
 
+#include "fsdialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWIndow; }
 QT_END_NAMESPACE
+
 
 
 class MainWIndow : public QMainWindow
@@ -50,6 +56,8 @@ public:
     void setLogtextErr(const std::string &msg);
 
     void getfileList();
+    void setvsList(std::vector<std::string> &);
+    std::vector<std::string> getvsList();
     void startSlideshow();
 
 public slots:
@@ -57,6 +65,7 @@ public slots:
     void update_Log_value(QString);
     void update_Log();
     void changePic();
+    void get_fsDialog_vector(std::vector<std::string> &);
 
 private slots:
     void on_bBrowse_clicked();
@@ -86,6 +95,8 @@ private slots:
     void on_bPrev_clicked();
 
     void on_bStop_clicked();
+
+    void on_bSelectfile_clicked();
 
 private:
     Ui::MainWIndow *ui;
@@ -118,6 +129,7 @@ private:
 
     int computeDeltaT();
 
+
 signals:
     void LogTimout();
 
@@ -129,13 +141,14 @@ class fileList: public QObject {
 
 public:
 
-    explicit fileList(QObject *parent=Q_NULLPTR): QObject(parent) { }
+    explicit fileList(QObject *parent=Q_NULLPTR): QObject(parent) { qDebug().noquote(); }
     virtual ~fileList() { }
 
     void setfileName(std::string &str);
 
 public slots:
     void getList();
+    std::vector<std::string> getvsList() const;
 
 signals:
     void fLProgress(int);
@@ -147,6 +160,7 @@ private:
 
     std::string sList;
     std::vector<std::string> vsList;
+
 
 };
 
