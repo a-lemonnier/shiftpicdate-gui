@@ -47,9 +47,17 @@ namespace fs = boost::filesystem;
 #error "No filesystem header found"
 #endif
 
-#define EXTENSION_LIST {".JPEG", ".jpeg", \
-                        ".JPG",  ".jpg",  \
-                        ".CR2",  ".cr2"  }
+#define EXTENSION_LIST {".JPEG",  ".jpeg", \
+                        ".JPG",   ".jpg",  \
+                        ".CR2",   ".cr2",  \
+                        ".CR3",   ".cr3",  \
+                        ".CR2",   ".cr2",  \
+                        ".DCR",   ".dcr",  \
+                        ".ARW",   ".arw",  \
+                        ".RAW",   ".raw",  \
+                        ".BRAW",  ".braw", \
+                        ".PNG",   ".png"   }
+
 
 // ----------------------------------------------------
 

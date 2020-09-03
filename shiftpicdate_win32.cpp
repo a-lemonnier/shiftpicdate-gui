@@ -83,3 +83,10 @@ bool spdFunc::test_ext(const std::string &sS) {
     return res;
 }
 
+
+long long spdFunc::fileNb(const fs::path &path) {
+    long long n=-1;
+    try { n=std::distance(fs::recursive_directory_iterator{path}, fs::recursive_directory_iterator{}); }
+    catch (fs::filesystem_error &err) {std::cerr << "- spdFunc::fileNb(): error: "  << ": " << err.what() << "\n";}
+    return n;
+}

@@ -63,6 +63,8 @@ namespace spdFunc {
     std::string getExifDate(const std::string &sFilename);
     bool setExifDate(const std::string &sFilename, const std::string &sTimestamp);
 
+    long long fileNb(const fs::path &path);
+
     std::string stoyear(long long t);
     void test();
     bool test_ext(const std::string &sS);
@@ -74,6 +76,8 @@ namespace spdFunc {
 
 std::string spdFunc::getExifDate(const std::string &sFilename);
 bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTimestamp);
+
+long long spdFunc::fileNb(const fs::path &path);
 
 std::string spdFunc::stoyear(long long t);
 void spdFunc::test();
