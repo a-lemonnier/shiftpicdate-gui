@@ -1,5 +1,5 @@
 # shiftpicdate-gui
-Shift the exif tag date using Exiv2 (linux) or GDI (win) C++ libraries.
+Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 
 ![shiftpicdate-gui](doc/shiftpicdate-gui.png)
 
