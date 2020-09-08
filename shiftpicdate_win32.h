@@ -21,12 +21,11 @@
 
 #if defined(_WIN32) || defined(WIN32)
 #include <cassert>
-#include <windows.h>
-#include <objidl.h>
-#include <strsafe.h>
-#include <gdiplus.h>
-using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
+#include "stdafx.h"
+#include <atlbase.h>
+#include <Wincodec.h>
+#include <wincodecsdk.h>
+#pragma comment (lib,"Windowscodecs.lib")
 #endif
 
 
@@ -68,6 +67,7 @@ namespace spdFunc {
     std::string stoyear(long long t);
     void test();
     bool test_ext(const std::string &sS);
+
 }
 
 // ----------------------------------------------------
@@ -82,5 +82,6 @@ long long spdFunc::fileNb(const fs::path &path);
 std::string spdFunc::stoyear(long long t);
 void spdFunc::test();
 bool spdFunc::test_ext(const std::string &sS);
+
 
 #endif // shiftpicdate_win32.h

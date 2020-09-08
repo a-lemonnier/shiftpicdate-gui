@@ -26,7 +26,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     
-    ui->bTest->setHidden(true);
+    //ui->bTest->setHidden(true);
     
     ui->bRun->setEnabled(false);
     ui->bReset->setEnabled(false);
@@ -78,7 +78,7 @@ void MainWIndow::on_bBrowse_clicked() {
     
     qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): grab filenames.");
     QStringList fileNames={"."};
-    dialog.setDirectory("~");
+    dialog.setDirectory(".");
 
     if (dialog.exec()) {
         fileNames=dialog.selectedFiles();
@@ -176,7 +176,9 @@ void MainWIndow::on_bTest_clicked() {
     
     qDebug().noquote() << tr("bTest clicked ---");
 
-//    qDebug().noquote() << QString::fromStdString(spdFunc::getExifDate("IMG_4580.JPG"));
+    this->setLogtext(spdFunc::getExifDate("IMG_4580.JPG"));
+
+    qDebug().noquote() << "- test: " << spdFunc::setExifDate("IMG_4580.JPG","2020:02:02 02:02:02");
 
     qDebug().noquote() << "---";
 }
@@ -241,9 +243,9 @@ void MainWIndow::on_bReset_clicked() {
     ui->bDST->setChecked(this->isDST);
     ui->cBHidepic->setChecked(false);
     
-    QString savedStrp="<html><head/><body><p><span style=\" font-weight:600; color:#aa0000;\">";
+    QString savedStrp="<p><span style=\" font-weight:600; color:#aa0000;\">";
     QString savedStr=tr("No picture selected.");
-    QString savedStrs="</span></p></body></html>";
+    QString savedStrs="</span></p>";
     
     savedStr=savedStrp+savedStr+savedStrs;
     

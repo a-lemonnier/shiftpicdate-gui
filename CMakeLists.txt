@@ -22,6 +22,7 @@ file(GLOB TS_FILES "res/ts/*.ts")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 qt5_add_resources(res_rcc res/res.qrc)
 
+
 if(ANDROID)
   add_library(shiftpicdate-gui SHARED
     main.cpp
@@ -38,6 +39,7 @@ if(ANDROID)
 endif(ANDROID)
 
 if(WIN32)
+
   add_executable(shiftpicdate-gui
     main.cpp
     mainwindow.cpp
@@ -48,8 +50,11 @@ if(WIN32)
     fsdialog.h
     shiftpicdate_win32.cpp
     shiftpicdate_win32.h
+    stdafx.cpp
+    stdafx.h
     ${QM_FILES}
     ${res_rcc}
+    ${EXIV2_FILES}
   )
 endif(WIN32)
 
@@ -73,13 +78,14 @@ if(UNIX)
   )
 endif(UNIX)
 
-#find_package( Boost 1.40 COMPONENTS program_options
-#                         REQUIRED timer filesystem unit_test_framework)
 
 
-
-target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Widgets )
+if (WIN32)
+    target_link_libraries(shiftpicdate-gui  PRIVATE Qt5::Widgets )
+endif (WIN32)
 
 if (UNIX)
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Widgets )
     target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lexiv2 -lexif)
 endif (UNIX)
+

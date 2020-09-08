@@ -3,38 +3,58 @@
 
 std::string spdFunc::getExifDate(const std::string &sFilename) {
    std::string Res="invalid metadata";
-   if (test_ext(sFilename)) {
-
-       std::wstring wsFilename=std::wstring(sFilename.begin(), sFilename.end());
-
-       const WCHAR* wcFilename=wsFilename.c_str();
-
-       UINT  size = 0;
-       UINT  count = 0;
-       ULONG_PTR gdiplusToken;
-
-       GdiplusStartupInput gdiplusStartupInput;
-       GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
-
-       Bitmap* bitmap = new Bitmap(wcFilename);
-       bitmap->GetPropertySize(&size, &count);
-
-       size = bitmap->GetPropertyItemSize(PropertyTagDateTime);
-       PropertyItem* propertyItem = (PropertyItem*)malloc(size);
-       bitmap->GetPropertyItem(PropertyTagDateTime, size, propertyItem);
-
-       std::stringstream ssS;
 
 
-       assert(ssS << static_cast<char*>( propertyItem->value) && Res=ssS.str(););
+   for(const auto &str: fs::directory_iterator("./"))
+       std::cout << str.path().filename() << "\n";
 
+   if (  fs::exists(fs::path(sFilename)) && test_ext(sFilename)) {
 
-        //std::cerr << "- Error while loading image exif.\n";
+       std::wstring wsFilename(sFilename.begin(), sFilename.end());
+       WCHAR* wcFilename=wsFilename.data();
 
-       free(propertyItem);
-       propertyItem=NULL;
+       CoInitialize( nullptr );
 
-       delete bitmap;
+      CComPtr<IWICImagingFactory> pFactory;
+      CComPtr<IWICBitmapDecoder> pDecoder;
+      CComPtr<IWICBitmapFrameDecode> pFrame;
+      CComPtr<IWICMetadataQueryReader> pMetadataReader;
+
+      CoCreateInstance( CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&pFactory );
+
+      auto hr=pFactory->CreateDecoderFromFilename( wcFilename, NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &pDecoder );
+
+      if (SUCCEEDED(hr)) {
+          pDecoder->GetFrame( 0, &pFrame );
+
+          pFrame->GetMetadataQueryReader( &pMetadataReader );
+
+          PROPVARIANT value;
+          PropVariantInit( &value );
+
+          Res="- "+sFilename+"\n";
+
+          pMetadataReader->GetMetadataByName(L"/app1/ifd/{ushort=315}", &value);
+          if (value.vt == VT_LPSTR)
+            Res+="-> Owner: "+std::string(value.pszVal)+"\n";
+          PropVariantClear(&value);
+
+          pMetadataReader->GetMetadataByName(L"/app1/ifd/{ushort=272}", &value);
+          if (value.vt == VT_LPSTR)
+              Res+="-> Camera: "+std::string(value.pszVal)+"\n";
+          PropVariantClear(&value);
+
+          // EXIF Metadata - Date and time original
+          pMetadataReader->GetMetadataByName( L"/app1/ifd/exif/{ushort=36867}", &value );
+          if (value.vt == VT_LPSTR)
+              Res+="-> Date: "+std::string(value.pszVal)+"\n";
+          PropVariantClear( &value );
+    }
+      else
+          std::cerr << "Cannot create decoder.\n";
+
+      CoUninitialize( );
+
    }
    else
        return "invalid file.";
@@ -44,18 +64,175 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
 
 
 bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTimestamp) {
+    bool bStatus=false;
+    if (spdFunc::test_ext(sFilename)) {
 
-    return true;
+        std::string sFilename_new=sFilename+"_new";
+
+        std::wstring wsFilename(sFilename.begin(), sFilename.end());
+        std::wstring wsFilename_new(sFilename_new.begin(), sFilename_new.end());
+
+        WCHAR* wcFilename=wsFilename.data();
+        WCHAR* wcFilename_new=wsFilename_new.data();
+
+    // Initialize COM.
+    HRESULT hr =CoInitialize( nullptr );
+
+    IWICImagingFactory *piFactory = NULL;
+    IWICBitmapDecoder *piDecoder = NULL;
+
+    // Create the COM imaging factory.
+    if (SUCCEEDED(hr))
+        hr = CoCreateInstance(CLSID_WICImagingFactory,
+        NULL, CLSCTX_INPROC_SERVER,
+        IID_PPV_ARGS(&piFactory));
+
+    // Create the decoder.
+    if (SUCCEEDED(hr))
+        hr = piFactory->CreateDecoderFromFilename(wcFilename, NULL, GENERIC_READ,
+            WICDecodeMetadataCacheOnDemand, //For JPEG lossless decoding/encoding.
+            &piDecoder);
+
+    // Variables used for encoding.
+    IWICStream *piFileStream = NULL;
+    IWICBitmapEncoder *piEncoder = NULL;
+    IWICMetadataBlockWriter *piBlockWriter = NULL;
+    IWICMetadataBlockReader *piBlockReader = NULL;
+
+    WICPixelFormatGUID pixelFormat = { 0 };
+    UINT count = 0;
+    double dpiX, dpiY = 0.0;
+    UINT width, height = 0;
+
+    // Create a file stream.
+    if (SUCCEEDED(hr)) hr = piFactory->CreateStream(&piFileStream);
+
+    // Initialize our new file stream.
+    if (SUCCEEDED(hr)) hr = piFileStream->InitializeFromFilename(wcFilename_new, GENERIC_WRITE);
+
+    // Create the encoder.
+    if (SUCCEEDED(hr)) hr = piFactory->CreateEncoder(GUID_ContainerFormatJpeg, NULL, &piEncoder);
+
+    // Initialize the encoder
+    if (SUCCEEDED(hr)) hr = piEncoder->Initialize(piFileStream,WICBitmapEncoderNoCache);
+
+    if (SUCCEEDED(hr)) hr = piDecoder->GetFrameCount(&count);
+
+    if (SUCCEEDED(hr)) {
+        // Process each frame of the image.
+        for (UINT i=0; i<count && SUCCEEDED(hr); i++) {
+            // Frame variables.
+            IWICBitmapFrameDecode *piFrameDecode = NULL;
+            IWICBitmapFrameEncode *piFrameEncode = NULL;
+            IWICMetadataQueryReader *piFrameQReader = NULL;
+            IWICMetadataQueryWriter *piFrameQWriter = NULL;
+
+            // Get and create the image frame.
+            if (SUCCEEDED(hr)) hr = piDecoder->GetFrame(i, &piFrameDecode);
+
+            if (SUCCEEDED(hr)) hr = piEncoder->CreateNewFrame(&piFrameEncode, NULL);
+
+            // Initialize the encoder.
+            if (SUCCEEDED(hr)) hr = piFrameEncode->Initialize(NULL);
+
+            // Get and set the size.
+            if (SUCCEEDED(hr)) hr = piFrameDecode->GetSize(&width, &height);
+            if (SUCCEEDED(hr)) hr = piFrameEncode->SetSize(width, height);
+
+            // Get and set the resolution.
+            if (SUCCEEDED(hr)) piFrameDecode->GetResolution(&dpiX, &dpiY);
+            if (SUCCEEDED(hr)) hr = piFrameEncode->SetResolution(dpiX, dpiY);
+
+            // Set the pixel format.
+            if (SUCCEEDED(hr)) piFrameDecode->GetPixelFormat(&pixelFormat);
+            if (SUCCEEDED(hr)) hr = piFrameEncode->SetPixelFormat(&pixelFormat);
+
+            // Check that the destination format and source formats are the same.
+            bool formatsEqual = FALSE;
+            if (SUCCEEDED(hr)) {
+                GUID srcFormat;
+                GUID destFormat;
+
+                hr = piDecoder->GetContainerFormat(&srcFormat);
+                if (SUCCEEDED(hr)) hr = piEncoder->GetContainerFormat(&destFormat);
+
+                if (SUCCEEDED(hr)) {
+                    if (srcFormat == destFormat) formatsEqual = true;
+                    else formatsEqual = false;
+                }
+            }
+
+            if (SUCCEEDED(hr) && formatsEqual) {
+                // Copy metadata using metadata block reader/writer.
+                if (SUCCEEDED(hr)) piFrameDecode->QueryInterface(IID_PPV_ARGS(&piBlockReader));
+                if (SUCCEEDED(hr)) piFrameEncode->QueryInterface(IID_PPV_ARGS(&piBlockWriter));
+                if (SUCCEEDED(hr)) piBlockWriter->InitializeFromBlockReader(piBlockReader);
+            }
+
+            if(SUCCEEDED(hr))   hr = piFrameEncode->GetMetadataQueryWriter(&piFrameQWriter);
+
+            if (SUCCEEDED(hr)) {
+                // Add additional metadata.
+                PROPVARIANT    value;
+                value.vt = VT_LPSTR;
+                value.pszVal=  const_cast<char *>(sTimestamp.c_str());
+
+                hr = piFrameQWriter->SetMetadataByName( L"/app1/ifd/exif/{ushort=36867}", &value);
+            }
+
+            if (SUCCEEDED(hr)) {
+                hr = piFrameEncode->WriteSource(
+                    static_cast<IWICBitmapSource*> (piFrameDecode),
+                    NULL); // Using NULL enables JPEG loss-less encoding.
+            }
+
+            // Commit the frame.
+            if (SUCCEEDED(hr)) hr = piFrameEncode->Commit();
+
+            if (piFrameDecode)  piFrameDecode->Release();
+            if (piFrameEncode)  piFrameEncode->Release();
+            if (piFrameQReader) piFrameQReader->Release();
+            if (piFrameQWriter) piFrameQWriter->Release();
+        }
+
+    }
+
+    if (SUCCEEDED(hr)) piEncoder->Commit();
+
+    if (SUCCEEDED(hr)) piFileStream->Commit(STGC_DEFAULT);
+
+    if (piFileStream) piFileStream->Release();
+    if (piEncoder) piEncoder->Release();
+    if (piBlockWriter) piBlockWriter->Release();
+    if (piBlockReader) piBlockReader->Release();
+
+    piFactory->Release();
+    piDecoder->Release();
+
+     CoUninitialize( );
+
+    std::cout << sFilename_new << "->" << sFilename << "\n";
+
+    std::error_code ec;
+    if (!SUCCEEDED(hr) || !fs::copy_file(sFilename_new, sFilename,  fs::copy_options::overwrite_existing, ec))
+        std::cerr << "Error while copying file: "<< ec.message() << "\n";
+    else
+        fs::remove(sFilename_new);
+    }
+    else
+        return "invalid file.";
+
+    return bStatus;
 }
 
 
 std::string spdFunc::stoyear(long long t) {
     std::stringstream ssS;
 
-    long long M=60;
-    long long H=60*M;
-    long long D=24*H;
-    long long Y=365*D;
+    constexpr long long M=60;
+    constexpr long long H=60*M;
+    constexpr long long D=24*H;
+    constexpr long long Y=365*D;
 
     long long t0=-t;
 
@@ -90,3 +267,6 @@ long long spdFunc::fileNb(const fs::path &path) {
     catch (fs::filesystem_error &err) {std::cerr << "- spdFunc::fileNb(): error: "  << ": " << err.what() << "\n";}
     return n;
 }
+
+
+
