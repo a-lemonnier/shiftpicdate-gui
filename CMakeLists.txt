@@ -40,6 +40,8 @@ endif(ANDROID)
 
 if(WIN32)
 
+#  set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
+
   add_executable(shiftpicdate-gui
     main.cpp
     mainwindow.cpp
@@ -59,8 +61,8 @@ if(WIN32)
 endif(WIN32)
 
 if(UNIX)
-    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+    set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
+    #set(CMAKE_CXX_FLAGS_DEBUG "-g")
     #set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
     add_executable(shiftpicdate-gui

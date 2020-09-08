@@ -17,6 +17,7 @@ MainWIndow::MainWIndow(QWidget *parent)
 , isQuiet(false)
 , isAutoScroll(true)
 , iPicRot(-90)
+, iSlideshowInterval(1000)
 , currentPic(0) {
 
     qDebug().noquote().noquote() << tr("- MainWIndow::MainWIndow(): init main windows.");
@@ -52,6 +53,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->bStop->setEnabled(false);
 
     ui->lEPath->setText(".");
+
 }
 
 MainWIndow::~MainWIndow() {
@@ -77,12 +79,12 @@ void MainWIndow::on_bBrowse_clicked() {
     // ***
     
     qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): grab filenames.");
-    QStringList fileNames={"."};
-    dialog.setDirectory(".");
+    QStringList fileNames={""};
+    //dialog.setDirectory("");
 
-    if (dialog.exec()) {
+    if (dialog.exec())
         fileNames=dialog.selectedFiles();
-    }
+
 
     qDebug().noquote() << "- MainWIndow::on_bBrowse_clicked(): path: " << fileNames[0] << ".";
 
@@ -107,6 +109,7 @@ void MainWIndow::on_bBrowse_clicked() {
         if (llFilenb>-1) {
             qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): ") << spdFunc::fileNb(this->sFilename) << tr(" files.");
             if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
+
                 qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): show only one file having a good ext.");
                 QString oneFilename=QString::fromStdString((*fs::recursive_directory_iterator(this->sFilename)).path().string());
 
@@ -120,6 +123,7 @@ void MainWIndow::on_bBrowse_clicked() {
 
                 QPixmap pmap(oneFilename);
                 ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
+
 
                 delete imgr;
             }
@@ -141,20 +145,43 @@ void MainWIndow::on_bBrowse_clicked() {
             this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
         }
     }
+
 }
 
 
 void MainWIndow::on_bRun_clicked() {
-    ui->bQuit->setEnabled(false);
-    ui->bBrowse->setEnabled(false);
-    ui->bReset->setEnabled(false);
-    ui->sBYear->setEnabled(false);
-    ui->sBDay->setEnabled(false);
-    ui->sBHour->setEnabled(false);
-    ui->sBMin->setEnabled(false);
-    ui->sBSec->setEnabled(false);
-    
-    this->setLogtext("- Run...");
+
+    qDebug().noquote() << "MainWIndow::run_shift(): Begin.";
+
+  ui->bQuit->setEnabled(true);
+  ui->bBrowse->setEnabled(false);
+  ui->bReset->setEnabled(false);
+  ui->sBYear->setEnabled(false);
+  ui->sBDay->setEnabled(false);
+  ui->sBHour->setEnabled(false);
+  ui->sBMin->setEnabled(false);
+  ui->sBSec->setEnabled(false);
+
+  this->setLogtext("- Run...\n");
+
+
+
+
+
+  this->setLogtext("- Run done.\n");
+
+  ui->bQuit->setEnabled(true);
+  ui->bBrowse->setEnabled(true);
+  ui->bReset->setEnabled(true);
+  ui->sBYear->setEnabled(true);
+  ui->sBDay->setEnabled(true);
+  ui->sBHour->setEnabled(true);
+  ui->sBMin->setEnabled(true);
+  ui->sBSec->setEnabled(true);
+
+  qDebug().noquote() << "MainWIndow::run_shift(): End.";
+
+
 }
 
 
@@ -174,13 +201,10 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 void MainWIndow::on_bTest_clicked() {
     ui->bReset->setEnabled(true);
     
-    qDebug().noquote() << tr("bTest clicked ---");
+    qDebug().noquote() << tr("\nbTest clicked ---\n");
 
-    this->setLogtext(spdFunc::getExifDate("IMG_4580.JPG"));
 
-    qDebug().noquote() << "- test: " << spdFunc::setExifDate("IMG_4580.JPG","2020:02:02 02:02:02");
-
-    qDebug().noquote() << "---";
+    qDebug().noquote() << "\n---\n";
 }
 
 void MainWIndow::on_bRot_clicked() {
@@ -575,7 +599,7 @@ void MainWIndow::startSlideshow() {
         timer_ss=new QTimer(this);
         connect(timer_ss, &QTimer::timeout, this, &MainWIndow::changePic);
         connect(timer_ss, &QTimer::destroyed, timer_ss,  &QTimer::deleteLater); // ?
-        timer_ss->start(1000);
+        timer_ss->start(this->iSlideshowInterval);
         // --
     }
     else qWarning() << "- MainWIndow::startSlideshow(): empty list.";
@@ -610,6 +634,33 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
     this->vsList=vs;
 }
 
+
+void MainWIndow::run_shift() {
+
+
+   ui->progressBar->setValue(0);
+
+  int iCount=0;
+  int iFileNb=this->vsList.size();
+  for(const auto &file: this->vsList) {
+//      this->setLogtext("\t-> Shift"+file+": "+std::to_string(iFileNb)+".\n");
+    std::cout << "\t-> Shift"+file+": "+std::to_string(iFileNb)+".\n";
+    //ui->progressBar->setValue(static_cast<float>((iCount++)*100/iFileNb)); // Set progressBar to n %
+
+  }
+
+  ui->progressBar->setValue(100);
+
+
+
+
+}
+
+
+// ---------------------
+// ---------------------
+// ---------------------
+
 void fileList::getList() {
     qDebug().noquote() << "- fileList::getList().";
 
@@ -628,7 +679,7 @@ void fileList::getList() {
         if (spdFunc::test_ext(str.path().filename().string())) {
             this->vsList.emplace_back(str.path().string());
             emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+spdFunc::getExifDate(str.path().generic_string())+"\n")));
-        }
+         }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
     qDebug().noquote() << tr("- fileList::getList(): recursive_directory_iterator() loop complete.");
@@ -651,3 +702,4 @@ void fileList::setfileName(std::string& str) {
 std::vector<std::string> fileList::getvsList() const {
     return this->vsList;
 }
+

@@ -19,7 +19,11 @@
 #include <QTreeView>
 #include <QListView>
 #include <QTextStream>
-
+#include <QPainter>
+#include <QList>
+#include <QPainterPath>
+#include <QRect>
+#include <QWidget>
 
 #include <filesystem>
 #include <algorithm>
@@ -39,7 +43,6 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWIndow; }
 QT_END_NAMESPACE
-
 
 
 class MainWIndow : public QMainWindow
@@ -66,6 +69,7 @@ public slots:
     void update_Log();
     void changePic();
     void get_fsDialog_vector(std::vector<std::string> &);
+    void run_shift();
 
 private slots:
     void on_bBrowse_clicked();
@@ -124,6 +128,8 @@ private:
     int iZoom;
     int iPicRot;
 
+    int iSlideshowInterval;
+
     long long picNb;
     long long currentPic;
 
@@ -164,6 +170,23 @@ private:
 
 };
 
+class runShift: public QObject {
+  Q_OBJECT
+
+public:
+    explicit runShift(QObject *parent=Q_NULLPTR): QObject(parent) { qDebug().noquote(); }
+    virtual ~runShift() { }
+
+    void setvsList(std::vector<std::string> &vsList);
+signals:
+    void sendProgress(int);
+    void sendstdStr(QString);
+    void finished();
+
+private:
+   std::vector<std::string> vsList;
+
+};
 
 
 
