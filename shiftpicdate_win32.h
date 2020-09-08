@@ -20,11 +20,12 @@
 
 
 #if defined(_WIN32) || defined(WIN32)
-#include <cassert>
-#include "stdafx.h"
+#include <stdio.h>
+#include <tchar.h>
 #include <atlbase.h>
 #include <Wincodec.h>
 #include <wincodecsdk.h>
+#include <SDKDDKVer.h>
 #pragma comment (lib,"Windowscodecs.lib")
 #endif
 
