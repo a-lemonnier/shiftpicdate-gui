@@ -68,7 +68,6 @@ void MainWIndow::on_bBrowse_clicked() {
 
     this->vsList.clear();
 
-
     QFileDialog dialog(this);
 
 #if defined(__linux__)
