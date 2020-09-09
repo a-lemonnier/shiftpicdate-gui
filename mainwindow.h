@@ -178,6 +178,10 @@ public:
     virtual ~runShift() { }
 
     void setvsList(std::vector<std::string> &vsList);
+
+public slots:
+    void shift();
+
 signals:
     void sendProgress(int);
     void sendstdStr(QString);

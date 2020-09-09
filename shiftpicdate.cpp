@@ -2,9 +2,30 @@
 
 
 std::string spdFunc::getExifDate(const std::string &sFilename) {
-   std::string Res;
+   std::string Res("invalid metadata");
 
+   if (fs::exists(sFilename) && test_ext(sFilename)) {
 
+           Exiv2::Image::AutoPtr pImg;
+
+           try {
+               pImg=Exiv2::ImageFactory::open(sFilename);
+               pImg->readMetadata();
+               assert(pImg.get() != 0);
+               Exiv2::ExifData &exifData=pImg->exifData();
+               Res=exifData["Exif.Image.DateTime"].toString();
+           }
+           catch (Exiv2::AnyError& e) {
+               std::cerr << "- spdFunc::getExifDate(): " << e << ".\n";
+           }
+           catch (...) {
+               std::cerr << "- spdFunc::getExifDate(): error with " << sFilename << ".\n";
+           }
+
+           pImg.release();
+       }
+       else
+           std::cerr << "- spdFunc::getExifDate(): File does not exist.\n";
 
    return Res;
 }

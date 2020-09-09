@@ -66,7 +66,8 @@ void MainWIndow::on_bBrowse_clicked() {
 
     qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): config dialog.");
     QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::DirectoryOnly);
+//    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setOption(QFileDialog::ShowDirsOnly, true);
     //dialog.setOption(QFileDialog::DontUseNativeDialog, true);
     dialog.setViewMode(QFileDialog::List);
     
@@ -151,7 +152,7 @@ void MainWIndow::on_bBrowse_clicked() {
 
 void MainWIndow::on_bRun_clicked() {
 
-    qDebug().noquote() << "MainWIndow::run_shift(): Begin.";
+    qDebug().noquote() << "- MainWIndow::on_bRun_clicked().";
 
   ui->bQuit->setEnabled(true);
   ui->bBrowse->setEnabled(false);
@@ -162,13 +163,9 @@ void MainWIndow::on_bRun_clicked() {
   ui->sBMin->setEnabled(false);
   ui->sBSec->setEnabled(false);
 
-  this->setLogtext("- Run...\n");
 
+  this->run_shift();
 
-
-
-
-  this->setLogtext("- Run done.\n");
 
   ui->bQuit->setEnabled(true);
   ui->bBrowse->setEnabled(true);
@@ -178,9 +175,6 @@ void MainWIndow::on_bRun_clicked() {
   ui->sBHour->setEnabled(true);
   ui->sBMin->setEnabled(true);
   ui->sBSec->setEnabled(true);
-
-  qDebug().noquote() << "MainWIndow::run_shift(): End.";
-
 
 }
 
@@ -545,7 +539,7 @@ void MainWIndow::getfileList() {
     fL->moveToThread(th);
     fL->setfileName(this->sFilename);
     
-    // Attach slop to timer
+    // Attach to timer
     connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
     
     // Update textBrowser at least one time
@@ -637,22 +631,32 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
 
 void MainWIndow::run_shift() {
 
+  qDebug().noquote() << "- MainWIndow::run_shift().\n";
 
-   ui->progressBar->setValue(0);
+  runShift *rs=new runShift();
+  QThread *th=new QThread();
 
-  int iCount=0;
-  int iFileNb=this->vsList.size();
-  for(const auto &file: this->vsList) {
-//      this->setLogtext("\t-> Shift"+file+": "+std::to_string(iFileNb)+".\n");
-    std::cout << "\t-> Shift"+file+": "+std::to_string(iFileNb)+".\n";
-    //ui->progressBar->setValue(static_cast<float>((iCount++)*100/iFileNb)); // Set progressBar to n %
+  // Update textBrowser every n sec
+  timer=new QTimer(nullptr);
 
-  }
+  rs->moveToThread(th);
+  rs->setvsList(this->vsList);
 
-  ui->progressBar->setValue(100);
+  // Attach to timer
+  connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
 
+  connect(th, &QThread::finished, this, [=](){ this->timer->stop(); this->update_Log(); });
 
+  connect(rs, &runShift::sendProgress, this,  &MainWIndow::update_progressBar_value);
+  connect(rs, &runShift::sendstdStr, this,  &MainWIndow::update_Log_value);
+  connect(rs, &runShift::finished, th, &QThread::quit);
 
+  connect(th, &QThread::finished, th, &QThread::deleteLater);
+  connect(th, &QThread::finished, rs, &runShift::deleteLater);
+  connect(th, &QThread::started, rs, &runShift::shift);
+
+  timer->start(1000);
+  th->start();
 
 }
 
@@ -678,7 +682,12 @@ void fileList::getList() {
     for(const auto &str: fs::recursive_directory_iterator(this->fileName)) {
         if (spdFunc::test_ext(str.path().filename().string())) {
             this->vsList.emplace_back(str.path().string());
-            emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+spdFunc::getExifDate(str.path().generic_string())+"\n")));
+            std::string sTmp(spdFunc::getExifDate(str.path().generic_string()));
+            if (sTmp.empty())
+                emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\n")));
+            else
+                emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+sTmp+"\n")));
+
          }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
@@ -703,3 +712,35 @@ std::vector<std::string> fileList::getvsList() const {
     return this->vsList;
 }
 
+
+
+// ---------------------
+// ---------------------
+// ---------------------
+
+void runShift::setvsList(std::vector<std::string> &vsList) {
+    this->vsList=vsList;
+}
+
+void runShift::shift() {
+    qDebug().noquote() << "- runShift::shift().";
+    emit(sendstdStr(tr("- Start shifting pictures.\n")));
+    emit(sendProgress(0));
+
+    int iCount=0;
+    int iFileNb=this->vsList.size();
+    for(const auto &file: this->vsList) {
+
+        std::string sTmp(spdFunc::getExifDate(file));
+        if (!sTmp.empty())
+            emit(sendstdStr(QString::fromStdString(sTmp)));
+
+
+        emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
+    }
+
+
+    emit(sendProgress(100));
+    emit(sendstdStr(tr("- Shifting done.\n")));
+    emit(finished());
+}
