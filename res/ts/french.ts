@@ -376,29 +376,20 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="23"/>
         <source>- MainWIndow::MainWIndow(): init main windows.</source>
-        <translation type="unfinished">- MainWIndow::MainWIndow(): initialisation de la fenêtre principale.</translation>
+        <translation type="obsolete">- MainWIndow::MainWIndow(): initialisation de la fenêtre principale.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="65"/>
-        <source>- MainWIndow::on_bBrowse_clicked().</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="67"/>
         <source>- MainWIndow::on_bBrowse_clicked(): config dialog.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): configuration de la boite de dialogue.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): configuration de la boite de dialogue.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="78"/>
         <source>- MainWIndow::on_bBrowse_clicked(): set dialog tricks.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): ajout des bidouilles pour la boite de dialogue.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): ajout des bidouilles pour la boite de dialogue.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="86"/>
         <source>- MainWIndow::on_bBrowse_clicked(): grab filenames.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): acquisition des noms de fichier.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): acquisition des noms de fichier.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="99"/>
@@ -406,38 +397,28 @@
         <translation type="unfinished">- Chemin selectionée: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="103"/>
         <source>- MainWIndow::on_bBrowse_clicked(): double check file type.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): verification du type de fichier.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): verification du type de fichier.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="107"/>
         <source>- MainWIndow::on_bBrowse_clicked(): this is a directory.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): c&apos;est un répertoire.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): c&apos;est un répertoire.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="109"/>
         <source>- MainWIndow::on_bBrowse_clicked(): path: </source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): chemin: </translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): chemin: </translation>
     </message>
     <message>
         <source>- MainWIndow::on_bBrowse_clicked::fileNb(lambda): error </source>
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked::fileNb(lambda): erreur </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="115"/>
-        <source>- MainWIndow::on_bBrowse_clicked(): </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="115"/>
         <source> files.</source>
-        <translation type="unfinished"> fichiers.</translation>
+        <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="118"/>
         <source>- MainWIndow::on_bBrowse_clicked(): show only one file having a good ext.</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): montre le premier fichier s&apos;il a la bonne extension.</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): montre le premier fichier s&apos;il a la bonne extension.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="121"/>
@@ -445,28 +426,21 @@
         <translation type="unfinished">- Charge l&apos;image </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="136"/>
         <source>- MainWIndow::on_bBrowse_clicked(): start this-&gt;getfileList().</source>
-        <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): lance this-&gt;getfileList().</translation>
+        <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): lance this-&gt;getfileList().</translation>
     </message>
     <message>
         <source>- MainWIndow::on_bBrowse_clicked(): start this-&gt;startSlideshow().</source>
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): lance this-&gt;startSlideshow().</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="149"/>
         <source>- ◬ MainWIndow::on_bBrowse_clicked(): ☠ Cannot process with this path: </source>
-        <translation type="unfinished">- ◬ MainWIndow::on_bBrowse_clicked(): ☠ ne peux pas continuer avec ce chemin: </translation>
+        <translation type="obsolete">- ◬ MainWIndow::on_bBrowse_clicked(): ☠ ne peux pas continuer avec ce chemin: </translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="150"/>
         <source>- ◬ Cannot process with this path: </source>
         <translation type="unfinished">- ◬ Ne peux pas continuer avec ce chemin: </translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="187"/>
-        <source>- MainWIndow::on_bDST_clicked().</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="190"/>
@@ -483,18 +457,6 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="202"/>
-        <source>
-bTest clicked ---
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="213"/>
-        <source>- MainWIndow::on_bRot_clicked().</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../mainwindow.cpp" line="236"/>
         <source>- Auto wrap off.
 </source>
@@ -509,21 +471,11 @@ bTest clicked ---
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="245"/>
-        <source>-  MainWIndow::on_cBQuiet_clicked().</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../mainwindow.cpp" line="248"/>
         <source>- Toggle verbosity on.
 </source>
         <translation type="unfinished">- Mode verbeux activé.
 </translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="252"/>
-        <source>-  MainWIndow::on_cBScroll_clicked().</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="255"/>
@@ -538,11 +490,6 @@ bTest clicked ---
 </source>
         <translation type="unfinished">- Défilement automatique désactivé.
 </translation>
-    </message>
-    <message>
-        <location filename="../../mainwindow.cpp" line="261"/>
-        <source>- MainWIndow::on_bReset_clicked().</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="315"/>
@@ -569,15 +516,12 @@ bTest clicked ---
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="462"/>
-        <location filename="../../mainwindow.cpp" line="464"/>
         <source>- MainWIndow::on_bSelectfile_clicked(): slideshow timer status: </source>
-        <translation type="unfinished">- MainWIndow::on_bSelectfile_clicked(): status du timer du diaporama: </translation>
+        <translation type="obsolete">- MainWIndow::on_bSelectfile_clicked(): status du timer du diaporama: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="525"/>
         <source>- MainWIndow::update_Log(): Scroll to the end.</source>
-        <translation type="unfinished">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
+        <translation type="obsolete">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="565"/>
@@ -592,9 +536,8 @@ bTest clicked ---
         <translation type="unfinished"> fichiers enlevés.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="620"/>
         <source>- MainWIndow::get_fsDialog_vector(): vector size: </source>
-        <translation type="unfinished">- MainWIndow::get_fsDialog_vector(): taille du vecteur: </translation>
+        <translation type="obsolete">- MainWIndow::get_fsDialog_vector(): taille du vecteur: </translation>
     </message>
     <message>
         <source>	 - Number of files: </source>
@@ -609,36 +552,31 @@ bTest clicked ---
         <translation type="obsolete">- fileList::getList(): recursive_directory_iterator() completé.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="556"/>
         <source>- MainWIndow::getfileList(): store all picture filenames in vsList.</source>
-        <translation type="unfinished">- MainWIndow::getfileList(): stock les noms des images dans vsList.</translation>
+        <translation type="obsolete">- MainWIndow::getfileList(): stock les noms des images dans vsList.</translation>
     </message>
     <message>
         <source>- MainWIndow::getfileList(): sort vsList.</source>
         <translation type="obsolete">- MainWIndow::getfileList(): trie de vsList.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="488"/>
         <source>- MainWIndow::setvsList(): copy </source>
-        <translation type="unfinished">- MainWIndow::setvsList(): copie de </translation>
+        <translation type="obsolete">- MainWIndow::setvsList(): copie de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="493"/>
         <source> elements.</source>
-        <translation type="unfinished"> éléments.</translation>
+        <translation type="obsolete"> éléments.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="488"/>
         <source>elements.</source>
-        <translation type="unfinished">éléments.</translation>
+        <translation type="obsolete">éléments.</translation>
     </message>
 </context>
 <context>
     <name>fileList</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="669"/>
         <source> files.</source>
-        <translation type="unfinished"> fichiers.</translation>
+        <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="672"/>
@@ -646,14 +584,12 @@ bTest clicked ---
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="677"/>
         <source>- fileList::getList(): parse recursive_directory_iterator().</source>
-        <translation type="unfinished">- fileList::getList(): parcourt le recursive_directory_iterator().</translation>
+        <translation type="obsolete">- fileList::getList(): parcourt le recursive_directory_iterator().</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="693"/>
         <source>- fileList::getList(): sort vsList.</source>
-        <translation type="unfinished">- fileList::getList(): trie vsList.</translation>
+        <translation type="obsolete">- fileList::getList(): trie vsList.</translation>
     </message>
     <message>
         <source> elements.</source>
@@ -668,68 +604,51 @@ bTest clicked ---
         <translation type="obsolete">éléments.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="691"/>
         <source>- fileList::getList(): recursive_directory_iterator() loop complete.</source>
-        <translation type="unfinished">- fileList::getList(): recursive_directory_iterator() completé.</translation>
+        <translation type="obsolete">- fileList::getList(): recursive_directory_iterator() completé.</translation>
     </message>
 </context>
 <context>
     <name>fsDialog</name>
     <message>
-        <location filename="../../fsdialog.cpp" line="9"/>
         <source>- fsDialog::fsDialog(): window initialized.</source>
-        <translation type="unfinished">- fsDialog::fsDialog(): fenêtre initialisée.</translation>
+        <translation type="obsolete">- fsDialog::fsDialog(): fenêtre initialisée.</translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="17"/>
         <source>- fsDialog::fsDialog(): fill list with </source>
-        <translation type="unfinished">- fsDialog::fsDialog(): remplit la list avec </translation>
+        <translation type="obsolete">- fsDialog::fsDialog(): remplit la list avec </translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="17"/>
         <source>elements.</source>
-        <translation type="unfinished">éléments.</translation>
+        <translation type="obsolete">éléments.</translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="24"/>
         <source>- fsDialog::fsDialog(): item </source>
-        <translation type="unfinished">- fsDialog::fsDialog(): element </translation>
+        <translation type="obsolete">- fsDialog::fsDialog(): element </translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="24"/>
         <source> selected.</source>
-        <translation type="unfinished"> selectionnée.</translation>
+        <translation type="obsolete"> selectionnée.</translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="32"/>
         <source>- fsDialog::~fsDialog(): window closed.</source>
-        <translation type="unfinished">- fsDialog::~fsDialog(): fenêtre fermée.</translation>
+        <translation type="obsolete">- fsDialog::~fsDialog(): fenêtre fermée.</translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="37"/>
-        <source>- fsDialog::on_buttonBox_accepted().</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../fsdialog.cpp" line="44"/>
         <source>- fsDialog::setFilelist(&amp;&amp;): copy: </source>
-        <translation type="unfinished">- fsDialog::setFilelist(&amp;&amp;): copie: </translation>
+        <translation type="obsolete">- fsDialog::setFilelist(&amp;&amp;): copie: </translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="44"/>
         <source> elements.</source>
-        <translation type="unfinished"> éléments.</translation>
+        <translation type="obsolete"> éléments.</translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="54"/>
-        <location filename="../../fsdialog.cpp" line="67"/>
         <source>- fsDialog::on_bOK_clicked(): current size </source>
-        <translation type="unfinished">- fsDialog::on_bOK_clicked(): taille actuelle </translation>
+        <translation type="obsolete">- fsDialog::on_bOK_clicked(): taille actuelle </translation>
     </message>
     <message>
-        <location filename="../../fsdialog.cpp" line="60"/>
         <source>- fsDialog::on_bOK_clicked(): keep </source>
-        <translation type="unfinished">- fsDialog::on_bOK_clicked(): garde </translation>
+        <translation type="obsolete">- fsDialog::on_bOK_clicked(): garde </translation>
     </message>
     <message>
         <location filename="../../fsdialog.ui" line="29"/>
