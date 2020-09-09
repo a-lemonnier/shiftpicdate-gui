@@ -174,11 +174,13 @@ class runShift: public QObject {
   Q_OBJECT
 
 public:
-    explicit runShift(QObject *parent=Q_NULLPTR): QObject(parent) { qDebug().noquote(); }
+    explicit runShift(QObject *parent=Q_NULLPTR): QObject(parent), Diff(0), bIsDST(false) { qDebug().noquote(); }
     virtual ~runShift() { }
 
     void setvsList(std::vector<std::string> &vsList);
-
+    void setDiff(long long t);
+    void setDST(bool bIsDST=true);
+    
 public slots:
     void shift();
 
@@ -190,6 +192,9 @@ signals:
 private:
    std::vector<std::string> vsList;
 
+   long long Diff;
+   bool bIsDST;
+   
 };
 
 

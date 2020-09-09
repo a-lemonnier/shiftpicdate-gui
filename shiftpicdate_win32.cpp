@@ -50,9 +50,11 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
 }
 
 
-bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTimestamp) {
+bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIsDST) {
     bool bStatus=false;
     if (spdFunc::test_ext(sFilename)) {
+        
+        std::string sTimestamp=spdFunc::shiftTimestamp(getExifDate(sFilename), Diff, bIsDST);
         
         std::string sFilename_new=sFilename+"_new";
         std::wstring wsFilename(sFilename.begin(), sFilename.end());
@@ -70,7 +72,7 @@ bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTime
                                   NULL, CLSCTX_INPROC_SERVER,
                                   IID_PPV_ARGS(&piFactory));
             
-            // Create the decoder.
+        // Create the decoder.
         if (SUCCEEDED(hr))
             hr = piFactory->CreateDecoderFromFilename(wsFilename.c_str(), NULL, GENERIC_READ,
                                                           WICDecodeMetadataCacheOnDemand, //For JPEG lossless decoding/encoding.
@@ -246,3 +248,22 @@ long long spdFunc::fileNb(const fs::path &path) {
 }
 
 
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) {
+    
+    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
+    
+    std::stringstream ssS(sTimestamp);
+    
+    std::tm dt={ };
+    if (bIsDST) dt.tm_isdst=bIsDST;
+    
+    ssS >> std::get_time(&dt, dateTimeFormat.c_str());
+    std::time_t iEpoch=std::mktime(&dt);
+    
+    iEpoch+=t;
+    
+    ssS.clear();
+    ssS << std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
+    
+    return ssS.str();
+}

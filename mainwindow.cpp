@@ -197,7 +197,11 @@ void MainWIndow::on_bTest_clicked() {
     
     qDebug().noquote() << tr("\nbTest clicked ---\n");
 
-
+    std::string sTmp("2001:01:01 00:00:00");
+    qDebug().noquote() << QString::fromStdString(sTmp) << "\n";
+    qDebug().noquote() << QString::fromStdString(spdFunc::shiftTimestamp(sTmp, 3600)) << "\n";
+    
+    
     qDebug().noquote() << "\n---\n";
 }
 
@@ -336,9 +340,7 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
     +" or "
     +std::to_string(this->computeDeltaT())
     +"s.\n");
-    
 }
-
 
 void MainWIndow::on_sBMin_valueChanged(int val) {
     ui->bRun->setEnabled(true);
@@ -460,9 +462,7 @@ void MainWIndow::on_bSelectfile_clicked() {
     });
 
     secWindow->exec();
-
 }
-
 
 void MainWIndow::setLogtextTh(const std::string &msg) {
     this->SLog+=QString::fromStdString(msg);
@@ -505,8 +505,6 @@ int  MainWIndow::computeDeltaT() { // compute total secs.
     return this->DeltaT;
 }
 
-
-
 void MainWIndow::update_progressBar_value(int v) {
     ui->progressBar->setValue(v);
 }
@@ -525,7 +523,6 @@ void MainWIndow::update_Log() {
         }
     }
 }
-
 
 void MainWIndow::getfileList() {
     qDebug().noquote() << "- MainWIndow::getfileList().";
@@ -560,15 +557,12 @@ void MainWIndow::getfileList() {
     connect(th, &QThread::finished, th, &QThread::deleteLater);
     connect(th, &QThread::finished, fL, &fileList::deleteLater);
     connect(th, &QThread::started, fL, &fileList::getList);
-    
 
     this->setLogtextTh(tr("- List of files...\n").toStdString());
     
     timer->start(1000);
     th->start();
-
 }
-
 
 void MainWIndow::startSlideshow() {
     qDebug().noquote() << "- MainWIndow::startSlideshow().";
@@ -582,7 +576,6 @@ void MainWIndow::startSlideshow() {
 
         this->picNb=vsList.size();
         this->currentPic=0;
-        // --
 
         // Show the first img
         QPixmap pmap(QString::fromStdString(this->vsList[0]));
@@ -601,7 +594,6 @@ void MainWIndow::startSlideshow() {
 
 
 void MainWIndow::changePic() {
-    //qDebug().noquote() << "- MainWIndow::changePic(): " << this->currentPic << ".";
 
     this->currentPic++;
     if (this->currentPic>this->picNb-1) this->currentPic=0;
@@ -641,7 +633,8 @@ void MainWIndow::run_shift() {
 
   rs->moveToThread(th);
   rs->setvsList(this->vsList);
-
+  rs->setDiff(this->DeltaT);
+  
   // Attach to timer
   connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
 
@@ -732,15 +725,22 @@ void runShift::shift() {
     for(const auto &file: this->vsList) {
 
         std::string sTmp(spdFunc::getExifDate(file));
-        if (!sTmp.empty())
+        if (!sTmp.empty()) {
+            spdFunc::setExifDate(file, this->Diff, this->bIsDST);
             emit(sendstdStr(QString::fromStdString(sTmp)));
-
-
+        }
         emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
 
-
     emit(sendProgress(100));
-    emit(sendstdStr(tr("- Shifting done.\n")));
+    emit(sendstdStr(tr("- Shifting completed.\n")));
     emit(finished());
+}
+
+void runShift::setDiff(long long t) {
+    this->Diff= (t>0) ? t : 0;
+}
+
+void runShift::setDST(bool bIsDST) {
+    this->bIsDST=bIsDST;
 }

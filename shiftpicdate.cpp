@@ -125,13 +125,22 @@ long long spdFunc::fileNb(const fs::path &path) {
     return n;
 }
 
-
-std::string spdFunc::stoFullStdString(size_t t) {
-
-
-//    std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
-
-
-
-    return "0";
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) {
+    
+    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
+    
+    std::stringstream ssS(sTimestamp);
+    
+    std::tm dt={ };
+    if (bIsDST) dt.tm_isdst=bIsDST;
+    
+    ssS >> std::get_time(&dt, dateTimeFormat.c_str());
+    std::time_t iEpoch=std::mktime(&dt);
+    
+    iEpoch+=t;
+    
+    ssS.clear();
+    ssS << std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
+    
+    return ssS.str();
 }
