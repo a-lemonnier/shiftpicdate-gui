@@ -65,6 +65,10 @@ void MainWIndow::on_bBrowse_clicked() {
     // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked().");
 
     // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): config dialog.");
+
+    this->vsList.clear();
+
+
     QFileDialog dialog(this);
 
 #if defined(__linux__)
@@ -683,7 +687,7 @@ void fileList::getList() {
             if (sTmp.empty())
                 emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\n")));
             else
-                emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+" - "+sTmp+"\n")));
+                emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\t"+sTmp+"\n")));
 
          }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
