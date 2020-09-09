@@ -727,7 +727,7 @@ void runShift::shift() {
         std::string sTmp(spdFunc::getExifDate(file));
         if (!sTmp.empty()) {
             spdFunc::setExifDate(file, this->Diff, this->bIsDST);
-            emit(sendstdStr(QString::fromStdString(sTmp)));
+            emit(sendstdStr(QString::fromStdString("\t"+file+"\t"+sTmp+".\n")));
         }
         emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
