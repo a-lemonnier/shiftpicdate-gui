@@ -66,9 +66,13 @@ void MainWIndow::on_bBrowse_clicked() {
 
     qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): config dialog.");
     QFileDialog dialog(this);
-//    dialog.setFileMode(QFileDialog::DirectoryOnly);
+
+#if defined(__linux__)
     dialog.setOption(QFileDialog::ShowDirsOnly, true);
-    //dialog.setOption(QFileDialog::DontUseNativeDialog, true);
+#else
+    dialog.setFileMode(QFileDialog::DirectoryOnly);
+#endif
+
     dialog.setViewMode(QFileDialog::List);
     
     qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): set dialog tricks.");
