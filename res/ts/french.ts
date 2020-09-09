@@ -364,7 +364,7 @@
         <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="520"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="558"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="558"/>
-        <location filename="../../mainwindow.cpp" line="269"/>
+        <location filename="../../mainwindow.cpp" line="273"/>
         <source>No picture selected.</source>
         <translation type="unfinished">Aucune image sélectionnée.</translation>
     </message>
@@ -391,32 +391,32 @@
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): configuration de la boite de dialogue.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="74"/>
+        <location filename="../../mainwindow.cpp" line="78"/>
         <source>- MainWIndow::on_bBrowse_clicked(): set dialog tricks.</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): ajout des bidouilles pour la boite de dialogue.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="82"/>
+        <location filename="../../mainwindow.cpp" line="86"/>
         <source>- MainWIndow::on_bBrowse_clicked(): grab filenames.</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): acquisition des noms de fichier.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="95"/>
+        <location filename="../../mainwindow.cpp" line="99"/>
         <source>- Path selected: </source>
         <translation type="unfinished">- Chemin selectionée: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="99"/>
+        <location filename="../../mainwindow.cpp" line="103"/>
         <source>- MainWIndow::on_bBrowse_clicked(): double check file type.</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): verification du type de fichier.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="103"/>
+        <location filename="../../mainwindow.cpp" line="107"/>
         <source>- MainWIndow::on_bBrowse_clicked(): this is a directory.</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): c&apos;est un répertoire.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="105"/>
+        <location filename="../../mainwindow.cpp" line="109"/>
         <source>- MainWIndow::on_bBrowse_clicked(): path: </source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): chemin: </translation>
     </message>
@@ -425,27 +425,27 @@
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked::fileNb(lambda): erreur </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="111"/>
+        <location filename="../../mainwindow.cpp" line="115"/>
         <source>- MainWIndow::on_bBrowse_clicked(): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="111"/>
+        <location filename="../../mainwindow.cpp" line="115"/>
         <source> files.</source>
         <translation type="unfinished"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="114"/>
+        <location filename="../../mainwindow.cpp" line="118"/>
         <source>- MainWIndow::on_bBrowse_clicked(): show only one file having a good ext.</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): montre le premier fichier s&apos;il a la bonne extension.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="117"/>
+        <location filename="../../mainwindow.cpp" line="121"/>
         <source>- Load image </source>
         <translation type="unfinished">- Charge l&apos;image </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="132"/>
+        <location filename="../../mainwindow.cpp" line="136"/>
         <source>- MainWIndow::on_bBrowse_clicked(): start this-&gt;getfileList().</source>
         <translation type="unfinished">- MainWIndow::on_bBrowse_clicked(): lance this-&gt;getfileList().</translation>
     </message>
@@ -454,113 +454,113 @@
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): lance this-&gt;startSlideshow().</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="145"/>
+        <location filename="../../mainwindow.cpp" line="149"/>
         <source>- ◬ MainWIndow::on_bBrowse_clicked(): ☠ Cannot process with this path: </source>
         <translation type="unfinished">- ◬ MainWIndow::on_bBrowse_clicked(): ☠ ne peux pas continuer avec ce chemin: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="146"/>
+        <location filename="../../mainwindow.cpp" line="150"/>
         <source>- ◬ Cannot process with this path: </source>
         <translation type="unfinished">- ◬ Ne peux pas continuer avec ce chemin: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="183"/>
+        <location filename="../../mainwindow.cpp" line="187"/>
         <source>- MainWIndow::on_bDST_clicked().</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="186"/>
+        <location filename="../../mainwindow.cpp" line="190"/>
         <source>- DST is disable.
 </source>
         <translation type="unfinished">- DST est désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="190"/>
+        <location filename="../../mainwindow.cpp" line="194"/>
         <source>- DST is enable: +1h.
 </source>
         <translation type="unfinished">- DST est activé: +1h.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="198"/>
+        <location filename="../../mainwindow.cpp" line="202"/>
         <source>
 bTest clicked ---
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="209"/>
+        <location filename="../../mainwindow.cpp" line="213"/>
         <source>- MainWIndow::on_bRot_clicked().</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="232"/>
+        <location filename="../../mainwindow.cpp" line="236"/>
         <source>- Auto wrap off.
 </source>
         <translation type="unfinished">-Saut de ligne désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="236"/>
+        <location filename="../../mainwindow.cpp" line="240"/>
         <source>- Auto wrap on.
 </source>
         <translation type="unfinished">-Saut de ligne automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="241"/>
+        <location filename="../../mainwindow.cpp" line="245"/>
         <source>-  MainWIndow::on_cBQuiet_clicked().</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="244"/>
+        <location filename="../../mainwindow.cpp" line="248"/>
         <source>- Toggle verbosity on.
 </source>
         <translation type="unfinished">- Mode verbeux activé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="248"/>
+        <location filename="../../mainwindow.cpp" line="252"/>
         <source>-  MainWIndow::on_cBScroll_clicked().</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="251"/>
+        <location filename="../../mainwindow.cpp" line="255"/>
         <source>- Toggle auto scroll on.
 </source>
         <translation type="unfinished">- Défilement automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="252"/>
+        <location filename="../../mainwindow.cpp" line="256"/>
         <source>- Toggle auto scroll off.
 </source>
         <translation type="unfinished">- Défilement automatique désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="257"/>
+        <location filename="../../mainwindow.cpp" line="261"/>
         <source>- MainWIndow::on_bReset_clicked().</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="311"/>
-        <location filename="../../mainwindow.cpp" line="325"/>
-        <location filename="../../mainwindow.cpp" line="338"/>
-        <location filename="../../mainwindow.cpp" line="351"/>
-        <location filename="../../mainwindow.cpp" line="364"/>
+        <location filename="../../mainwindow.cpp" line="315"/>
+        <location filename="../../mainwindow.cpp" line="329"/>
+        <location filename="../../mainwindow.cpp" line="342"/>
+        <location filename="../../mainwindow.cpp" line="355"/>
+        <location filename="../../mainwindow.cpp" line="368"/>
         <source>-&gt; Shift by </source>
         <translation type="unfinished">-&gt; Décalage de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="313"/>
-        <location filename="../../mainwindow.cpp" line="327"/>
+        <location filename="../../mainwindow.cpp" line="317"/>
+        <location filename="../../mainwindow.cpp" line="331"/>
         <source> or </source>
         <translation type="unfinished"> ou </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="387"/>
+        <location filename="../../mainwindow.cpp" line="391"/>
         <source>Qt5 GUI for changing picture timestamps.
 
 </source>
@@ -569,30 +569,30 @@ bTest clicked ---
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="458"/>
-        <location filename="../../mainwindow.cpp" line="460"/>
+        <location filename="../../mainwindow.cpp" line="462"/>
+        <location filename="../../mainwindow.cpp" line="464"/>
         <source>- MainWIndow::on_bSelectfile_clicked(): slideshow timer status: </source>
         <translation type="unfinished">- MainWIndow::on_bSelectfile_clicked(): status du timer du diaporama: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="521"/>
+        <location filename="../../mainwindow.cpp" line="525"/>
         <source>- MainWIndow::update_Log(): Scroll to the end.</source>
         <translation type="unfinished">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="561"/>
+        <location filename="../../mainwindow.cpp" line="565"/>
         <source>- List of files...
 </source>
         <translation type="unfinished">- Liste des fichiers...
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="615"/>
+        <location filename="../../mainwindow.cpp" line="619"/>
         <source> files removed.</source>
         <translation type="unfinished"> fichiers enlevés.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="616"/>
+        <location filename="../../mainwindow.cpp" line="620"/>
         <source>- MainWIndow::get_fsDialog_vector(): vector size: </source>
         <translation type="unfinished">- MainWIndow::get_fsDialog_vector(): taille du vecteur: </translation>
     </message>
@@ -609,7 +609,7 @@ bTest clicked ---
         <translation type="obsolete">- fileList::getList(): recursive_directory_iterator() completé.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="552"/>
+        <location filename="../../mainwindow.cpp" line="556"/>
         <source>- MainWIndow::getfileList(): store all picture filenames in vsList.</source>
         <translation type="unfinished">- MainWIndow::getfileList(): stock les noms des images dans vsList.</translation>
     </message>
@@ -618,17 +618,17 @@ bTest clicked ---
         <translation type="obsolete">- MainWIndow::getfileList(): trie de vsList.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="484"/>
+        <location filename="../../mainwindow.cpp" line="488"/>
         <source>- MainWIndow::setvsList(): copy </source>
         <translation type="unfinished">- MainWIndow::setvsList(): copie de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="489"/>
+        <location filename="../../mainwindow.cpp" line="493"/>
         <source> elements.</source>
         <translation type="unfinished"> éléments.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="484"/>
+        <location filename="../../mainwindow.cpp" line="488"/>
         <source>elements.</source>
         <translation type="unfinished">éléments.</translation>
     </message>
@@ -636,22 +636,22 @@ bTest clicked ---
 <context>
     <name>fileList</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="665"/>
+        <location filename="../../mainwindow.cpp" line="669"/>
         <source> files.</source>
         <translation type="unfinished"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="668"/>
+        <location filename="../../mainwindow.cpp" line="672"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="673"/>
+        <location filename="../../mainwindow.cpp" line="677"/>
         <source>- fileList::getList(): parse recursive_directory_iterator().</source>
         <translation type="unfinished">- fileList::getList(): parcourt le recursive_directory_iterator().</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="689"/>
+        <location filename="../../mainwindow.cpp" line="693"/>
         <source>- fileList::getList(): sort vsList.</source>
         <translation type="unfinished">- fileList::getList(): trie vsList.</translation>
     </message>
@@ -668,7 +668,7 @@ bTest clicked ---
         <translation type="obsolete">éléments.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="687"/>
+        <location filename="../../mainwindow.cpp" line="691"/>
         <source>- fileList::getList(): recursive_directory_iterator() loop complete.</source>
         <translation type="unfinished">- fileList::getList(): recursive_directory_iterator() completé.</translation>
     </message>
@@ -783,14 +783,14 @@ bTest clicked ---
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="720"/>
+        <location filename="../../mainwindow.cpp" line="724"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="736"/>
+        <location filename="../../mainwindow.cpp" line="740"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.
