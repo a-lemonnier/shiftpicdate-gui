@@ -52,8 +52,6 @@ if(WIN32)
     fsdialog.h
     shiftpicdate_win32.cpp
     shiftpicdate_win32.h
-    stdafx.cpp
-    stdafx.h
     ${QM_FILES}
     ${res_rcc}
     ${EXIV2_FILES}
