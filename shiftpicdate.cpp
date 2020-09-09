@@ -10,8 +10,8 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
 
            try {
                pImg=Exiv2::ImageFactory::open(sFilename);
-               pImg->readMetadata();
                assert(pImg.get() != 0);
+               pImg->readMetadata();
                Exiv2::ExifData &exifData=pImg->exifData();
                Res=exifData["Exif.Image.DateTime"].toString();
            }
@@ -31,7 +31,54 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
 }
 
 
-bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTimestamp) {
+bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST) {
+
+        if (test_ext(sFilename)) {
+                const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
+
+                Exiv2::Image::AutoPtr pImg;
+
+                try {
+                    pImg=Exiv2::ImageFactory::open(sFilename);
+                    assert(pImg.get() != 0);
+                    pImg->readMetadata();
+
+                    Exiv2::ExifData &exifData = pImg->exifData();
+
+                    std::stringstream ssS(exifData["Exif.Image.DateTime"].toString());
+
+                    std::tm dt={ };
+                    if (bIsDST) dt.tm_isdst=bIsDST;
+
+                    // chaine vers epoch
+                    ssS >> std::get_time(&dt, dateTimeFormat.c_str());
+                    std::time_t iEpoch=std::mktime(&dt);
+
+                    // decalage
+                    iEpoch+=Diff;
+
+                    ssS.clear();
+
+                    // epoch vers chaine
+                    ssS << std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
+
+                    exifData["Exif.Image.DateTime"]=ssS.str();
+
+                    pImg->setExifData(exifData);
+                    pImg->writeMetadata();
+                    pImg->readMetadata();
+                }
+                catch (Exiv2::AnyError& e) {
+                    std::cerr << "- spdFunc::setExifDate(): " << e << ".\n";
+                }
+                catch (...) {
+                    std::cerr << "- spdFunc::setExifDate(): error with " << sFilename << ".\n";
+                }
+
+                pImg.release();
+            }
+            else
+                std::cerr << "- spdFunc::setExifDate(): File does not exist.\n";
 
     return true;
 }
@@ -78,3 +125,13 @@ long long spdFunc::fileNb(const fs::path &path) {
     return n;
 }
 
+
+std::string spdFunc::stoFullStdString(size_t t) {
+
+
+//    std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
+
+
+
+    return "0";
+}

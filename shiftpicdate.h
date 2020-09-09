@@ -63,11 +63,12 @@ namespace fs = boost::filesystem;
 
 namespace spdFunc {
     std::string getExifDate(const std::string &sFilename);
-    bool setExifDate(const std::string &sFilename, const std::string &sTimestamp);
+    bool setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST);
 
     long long fileNb(const fs::path &path);
 
     std::string stoyear(long long t);
+    std::string stoFullStdString(size_t t);
     void test();
     bool test_ext(const std::string &sS);
 }
@@ -77,11 +78,13 @@ namespace spdFunc {
 
 
 std::string spdFunc::getExifDate(const std::string &sFilename);
-bool spdFunc::setExifDate(const std::string &sFilename, const std::string &sTimestamp);
+bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST);
 
 long long spdFunc::fileNb(const fs::path &path);
 
 std::string spdFunc::stoyear(long long t);
+std::string spdFunc::stoFullStdString(size_t t);
+
 void spdFunc::test();
 bool spdFunc::test_ext(const std::string &sS);
 
