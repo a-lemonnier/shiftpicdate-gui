@@ -4,6 +4,7 @@
 MainWIndow::MainWIndow(QWidget *parent)
 : QMainWindow(parent)
 , ui(new Ui::MainWIndow)
+, qTranslator(QTranslator())
 , SLog(tr("- Init.\n"))
 , sFilename(".")
 , DeltaY(0)
@@ -17,11 +18,28 @@ MainWIndow::MainWIndow(QWidget *parent)
 , isAutoScroll(true)
 , iPicRot(-90)
 , iSlideshowInterval(1000)
-, currentPic(0) {
+, currentPic(0)
+, selectedLang(Lang::EN) {
 
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
-    
+
+    QString defaultLocale = QLocale::system().name();
+    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
+    if (defaultLocale.toStdString().find("fr") ||
+        defaultLocale.toStdString().find("FR") ||
+        defaultLocale.toStdString().find("Fr")) {
+        this->selectedLang=Lang::FR;
+        if (qTranslator.load("french.qm"))
+          qApp->installTranslator(&qTranslator);
+        this->setLogtext(tr("- Switch language to French.").toStdString());
+        ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
+
+         ui->retranslateUi(this);
+    }
+    else ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+
     ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     
@@ -51,7 +69,6 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->bStop->setEnabled(false);
 
     ui->lEPath->setEnabled(false);
-    ui->lEPath->setText(".");
     ui->lEPath->setStyleSheet(spdStyle::lEPathRed);
     ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
     ui->tBLog->setStyleSheet("");
@@ -66,19 +83,18 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
 
     qeBlur.setEnabled(false);
-    qeBlur.setBlurRadius(5);
+    qeBlur.setBlurRadius(2);
 
     this->centralWidget()->setGraphicsEffect(&qeBlur);
 
     // Define some connection
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
-    connect(ui->tBLog->verticalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
+    connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
 }
 
 MainWIndow::~MainWIndow() { delete ui; }
 
 void MainWIndow::on_bBrowse_clicked() {
-
     qeBlur.setEnabled(true);
 
     ui->lEPath->setStyleSheet("");
@@ -354,10 +370,10 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
 
 void MainWIndow::on_sBMin_valueChanged(int val) {
     ui->sBYear->setStyleSheet(spdStyle::TimeField);
-    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay ->setStyleSheet(spdStyle::TimeField);
     ui->sBHour->setStyleSheet(spdStyle::TimeField);
-    ui->sBMin->setStyleSheet(spdStyle::TimeField);
-    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin ->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec ->setStyleSheet(spdStyle::TimeField);
 
     ui->bRun->setEnabled(true);
     
@@ -390,8 +406,7 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
                      +"s.\n");
 }
 
-void MainWIndow::on_bZoomIn_clicked() { ui->tBLog->zoomIn(1); }
-
+void MainWIndow::on_bZoomIn_clicked()  { ui->tBLog->zoomIn(1);  }
 void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
 
 void MainWIndow::on_rBInfo_clicked() { // About...
@@ -715,3 +730,30 @@ void runShift::shift() {
 void runShift::setDiff(long long t) { this->Diff= (t>0) ? t : 0; }
 
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
+
+void MainWIndow::on_bFlag_released() {
+  qApp->removeTranslator(&qTranslator);
+
+  if (this->selectedLang==Lang::EN) {
+    this->selectedLang=Lang::FR;
+    if (qTranslator.load("french.qm"))
+      qApp->installTranslator(&qTranslator);
+    this->setLogtext(tr("- Switch language to French.\n").toStdString());
+    ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
+  }
+  else {
+    this->selectedLang=Lang::EN;
+    this->setLogtext(tr("- Switch language to English.\n").toStdString());
+    ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+  }
+  ui->retranslateUi(this);
+}
+
+
+void MainWIndow::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange)
+      ui->retranslateUi(this);
+    else QWidget::changeEvent(event);
+}
+
+

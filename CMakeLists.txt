@@ -16,7 +16,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Qml REQUIRED)
 
 file(GLOB TS_FILES "res/ts/*.ts")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -68,11 +68,11 @@ endif(UNIX)
 
 
 if (WIN32)
-    target_link_libraries(shiftpicdate-gui  PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets )
+    target_link_libraries(shiftpicdate-gui  PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml )
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets )
-    target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lexiv2 -lexif)
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml )
+    target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lstdc++fs -lexiv2)
 endif (UNIX)
 

@@ -2,10 +2,9 @@
 
 
 std::string spdFunc::getExifDate(const std::string &sFilename) {
-    std::string Res="invalid metadata";
+    std::string Res;
         
     if (  fs::exists(fs::path(sFilename)) && test_ext(sFilename)) {
-        
         std::wstring wsFilename(sFilename.begin(), sFilename.end());
 
         CoInitialize( nullptr );
@@ -37,15 +36,9 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
             pDecoder.Release();
             pFactory.Release();
         }
-        else
-            std::cerr << "Cannot create decoder.\n";
-        
-        CoUninitialize( );
-        
+        else std::cerr << "Cannot create decoder.\n";
+        CoUninitialize( );   
     }
-    else
-        return "invalid file.";
-    
     return Res;
 }
 
@@ -103,10 +96,9 @@ bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIs
 
         if (SUCCEEDED(hr)) hr = piDecoder->GetFrameCount(&count);
 
-        if (SUCCEEDED(hr)) {
-            // Process each frame of the image.
-            for (UINT i=0; i<count && SUCCEEDED(hr); i++) {
-                // Frame variables.
+        if (SUCCEEDED(hr)) { // Process each frame of the image.
+            for (UINT i=0; i<count && SUCCEEDED(hr); i++) { // Frame variables.
+
                 IWICBitmapFrameDecode *piFrameDecode = NULL;
                 IWICBitmapFrameEncode *piFrameEncode = NULL;
                 IWICMetadataQueryReader *piFrameQReader = NULL;
@@ -199,7 +191,7 @@ bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIs
             fs::remove(sFilename_new);
     }
     else
-        return "invalid file.";
+      bStatus=false;
     
     return bStatus;
 }
@@ -239,7 +231,6 @@ bool spdFunc::test_ext(const std::string &sS) {
     return res;
 }
 
-
 long long spdFunc::fileNb(const fs::path &path) {
     long long n=-1;
     try { n=std::distance(fs::recursive_directory_iterator{path}, fs::recursive_directory_iterator{}); }
@@ -247,12 +238,14 @@ long long spdFunc::fileNb(const fs::path &path) {
     return n;
 }
 
-
 std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) {
     
     const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
-    
-    std::stringstream ssS(sTimestamp);
+
+    std::stringstream ssS;
+
+    if (sTimestamp.empty()) ssS << "1970:01:01 00:00:00";
+    else ssS << sTimestamp;
     
     std::tm dt={ };
     if (bIsDST) dt.tm_isdst=bIsDST;
@@ -264,6 +257,6 @@ std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, 
     
     ssS.clear();
     ssS << std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
-    
+
     return ssS.str();
 }

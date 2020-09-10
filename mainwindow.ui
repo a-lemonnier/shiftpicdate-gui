@@ -849,6 +849,32 @@
           </property>
          </spacer>
         </item>
+        <item>
+         <widget class="QPushButton" name="bFlag">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="res/res.qrc">
+            <normaloff>:/flag/eng.svg</normaloff>:/flag/eng.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>16</height>
+           </size>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item row="5" column="0">

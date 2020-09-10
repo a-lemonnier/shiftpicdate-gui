@@ -31,7 +31,8 @@
 #include <QLabel>
 #include <QDateTime>
 #include <QGraphicsEffect>
-#include <QHoverEvent>
+#include <QQmlEngine>
+#include <QQmlContext>
 
 #include <algorithm>
 #include <memory>
@@ -88,6 +89,8 @@ public:
     std::vector<std::string> getvsList();
     void startSlideshow();
 
+    enum Lang { FR, EN };
+
 public slots:
     void update_progressBar_value(int v);
     void update_Log_value(QString);
@@ -111,24 +114,24 @@ private slots:
 
     void on_sBDay_valueChanged(int val);
     void on_sBYear_valueChanged(int val);
-    void on_sBSec_valueChanged(int arg1);
-    void on_sBMin_valueChanged(int arg1);
-    void on_sBHour_valueChanged(int arg1);
+    void on_sBSec_valueChanged(int val);
+    void on_sBMin_valueChanged(int val);
+    void on_sBHour_valueChanged(int val);
 
     void on_cBScroll_clicked(bool checked);
     void on_cBHidepic_clicked(bool checked);
     void on_bRot_clicked();
-
     void on_bNext_clicked();
-
     void on_bPrev_clicked();
-
     void on_bStop_clicked();
-
     void on_bSelectfile_clicked();
+
+    void on_bFlag_released();
 
 private:
     Ui::MainWIndow *ui;
+
+    QTranslator qTranslator;
 
     QTimer *timer, *timer_ss;
 
@@ -160,12 +163,15 @@ private:
     long long picNb;
     long long currentPic;
 
-    int computeDeltaT();
+    Lang selectedLang;
 
+    int computeDeltaT();
 
 signals:
     void LogTimout();
 
+protected:
+    void changeEvent(QEvent*);
 };
 
 
@@ -193,8 +199,6 @@ private:
 
     std::string sList;
     std::vector<std::string> vsList;
-
-
 };
 
 class runShift: public QObject {

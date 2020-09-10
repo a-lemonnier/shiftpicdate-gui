@@ -45,8 +45,8 @@ namespace spdStyle {
 
     const QString bRunGreen=
             "font: 75 9pt 'DejaVu Sans Condensed'; "
-            "color: rgb(0, 255, 0); "
-            "border-color: rgb(0, 255, 0);";
+            "color: rgb(0, 200, 0); "
+            "border-color: rgb(0, 200, 0);";
 
     const QString tbLogGreen=
             "QTextBrowser {"
