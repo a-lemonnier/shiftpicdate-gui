@@ -59,11 +59,27 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->tBLog->verticalScrollBar()->setStyleSheet("");
     ui->tBLog->verticalScrollBar()->setStyleSheet("");
 
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
+    qeBlur.setEnabled(false);
+    qeBlur.setBlurRadius(5);
+
+    this->centralWidget()->setGraphicsEffect(&qeBlur);
+
+    // Define some connection
+    connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
+    connect(ui->tBLog->verticalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
 }
 
 MainWIndow::~MainWIndow() { delete ui; }
 
 void MainWIndow::on_bBrowse_clicked() {
+
+    qeBlur.setEnabled(true);
 
     ui->lEPath->setStyleSheet("");
     ui->bBrowse->setStyleSheet("");
@@ -126,22 +142,20 @@ void MainWIndow::on_bBrowse_clicked() {
                 this->getfileList();
                 this->setEnabled(true);
             }
-
-            ui->bRun->setEnabled(true);
-            ui->bReset->setEnabled(true);
-            ui->bSelectfile->setEnabled(true);
-            ui->bQuit->setEnabled(true);
-
-            ui->bRun->setStyleSheet(spdStyle::bRunGreen);
-            ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
-            ui->tBLog->setStyleSheet(spdStyle::ScrollBar);
         }
         else
             this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
     }
+    qeBlur.setEnabled(false);
 }
 
 void MainWIndow::on_bRun_clicked() {
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
   ui->bQuit->setEnabled(true);
   ui->bBrowse->setEnabled(false);
   ui->bReset->setEnabled(false);
@@ -214,8 +228,7 @@ void MainWIndow::on_cBWrap_clicked(bool checked) {
 
 void MainWIndow::on_cBQuiet_clicked(bool checked) {
     this->isQuiet=checked;
-    if (!checked)
-        this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
+    if (!checked) this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
 }
 
 void MainWIndow::on_cBScroll_clicked(bool checked) {
@@ -275,9 +288,21 @@ void MainWIndow::on_bReset_clicked() {
     ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
     ui->bRun->setStyleSheet("");
     ui->tBLog->setStyleSheet("");
+
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
 }
 
-void MainWIndow::on_sBDay_valueChanged(int val) {   
+void MainWIndow::on_sBDay_valueChanged(int val) {
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     ui->bRun->setEnabled(true);
     
     this->DeltaD=val;
@@ -290,6 +315,12 @@ void MainWIndow::on_sBDay_valueChanged(int val) {
 }
 
 void MainWIndow::on_sBYear_valueChanged(int val) { 
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     ui->bRun->setEnabled(true);
     
     this->DeltaY=val;
@@ -303,6 +334,12 @@ void MainWIndow::on_sBYear_valueChanged(int val) {
 }
 
 void MainWIndow::on_sBSec_valueChanged(int val) {
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     ui->bRun->setEnabled(true);
     
     this->DeltaS=val;
@@ -316,6 +353,12 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
 }
 
 void MainWIndow::on_sBMin_valueChanged(int val) {
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     ui->bRun->setEnabled(true);
     
     this->DeltaM=val;
@@ -329,6 +372,12 @@ void MainWIndow::on_sBMin_valueChanged(int val) {
 }
 
 void MainWIndow::on_sBHour_valueChanged(int val) {
+    ui->sBYear->setStyleSheet(spdStyle::TimeField);
+    ui->sBDay->setStyleSheet(spdStyle::TimeField);
+    ui->sBHour->setStyleSheet(spdStyle::TimeField);
+    ui->sBMin->setStyleSheet(spdStyle::TimeField);
+    ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     ui->bRun->setEnabled(true);
     
     this->DeltaH=val;
@@ -346,6 +395,8 @@ void MainWIndow::on_bZoomIn_clicked() { ui->tBLog->zoomIn(1); }
 void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
 
 void MainWIndow::on_rBInfo_clicked() { // About...
+    this->qeBlur.setEnabled(true);
+
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
 
@@ -366,6 +417,7 @@ void MainWIndow::on_rBInfo_clicked() { // About...
     
     ui->progressBar->setValue(currentProgress);
     ui->rBInfo->setChecked(false);
+    this->qeBlur.setEnabled(false);
 }
 
 void MainWIndow::on_cBHidepic_clicked(bool checked) { ui->picLabel->setHidden(checked); }
@@ -405,20 +457,22 @@ void MainWIndow::on_bStop_clicked() {
 }
 
 void MainWIndow::on_bSelectfile_clicked() {
-    this->setWindowOpacity(0.1);
+    qeBlur.setEnabled(true);
+
+    this->timer_ss->stop();
 
     fsDialog* secWindow= new fsDialog(this);
 
     connect(secWindow, &fsDialog::sendvector, this, &MainWIndow::get_fsDialog_vector);//, Qt::BlockingQueuedConnection);
     connect(secWindow, &fsDialog::destroyed, this, &MainWIndow::deleteLater);
-    connect(secWindow, &fsDialog::sendvector, this, [=]() {
+    connect(secWindow, &fsDialog::sendvector, this, [this]() {
         timer_ss->stop();
         startSlideshow();
     });
 
     secWindow->exec();
 
-    this->setWindowOpacity(1.0);
+    qeBlur.setEnabled(false);
 }
 
 void MainWIndow::setLogtextTh(const std::string &msg) {
@@ -455,7 +509,16 @@ int  MainWIndow::computeDeltaT() { // compute total secs.
     return this->DeltaT;
 }
 
-void MainWIndow::update_progressBar_value(int v) { ui->progressBar->setValue(v); }
+void MainWIndow::update_progressBar_value(int v) {
+
+    int r=255-static_cast<float>(v)/100*255;
+    int g=static_cast<float>(v)/100*255;
+
+    ui->progressBar->setStyleSheet(QString::fromStdString("color: rgb("+std::to_string(r)+", "+std::to_string(g)+", 0);"));
+
+    ui->progressBar->setValue(v);
+}
+
 void MainWIndow::update_Log_value(QString str) { this->setLogtextTh(str.toUtf8().constData()); }
 
 void MainWIndow::update_Log() {
@@ -488,6 +551,20 @@ void MainWIndow::getfileList() {
     connect(fL, &fileList::finished, this, [=](){
         this->vsList=fL->getvsList();
         this->startSlideshow();
+
+        ui->bRun->setEnabled(true);
+        ui->bReset->setEnabled(true);
+        ui->bSelectfile->setEnabled(true);
+        ui->bQuit->setEnabled(true);
+
+        ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
+        ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
+        ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
+        ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
+        ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
+
+        ui->bRun->setStyleSheet(spdStyle::bRunGreen);
+        ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
     }, Qt::BlockingQueuedConnection);
 
     connect(th, &QThread::finished, th, &QThread::deleteLater);
@@ -518,7 +595,8 @@ void MainWIndow::startSlideshow() {
         // Timer --
         timer_ss=new QTimer(this);
         connect(timer_ss, &QTimer::timeout, this, &MainWIndow::changePic);
-        connect(timer_ss, &QTimer::destroyed, timer_ss,  &QTimer::deleteLater); // ?
+        connect(timer_ss, &QTimer::destroyed, timer_ss, &QTimer::deleteLater);
+//        connect(ui->bSelectfile, &QPushButton::clicked, timer_ss, &QTimer::stop);
         timer_ss->start(this->iSlideshowInterval);
         // --
     }

@@ -31,6 +31,7 @@
 #include <QLabel>
 #include <QDateTime>
 #include <QGraphicsEffect>
+#include <QHoverEvent>
 
 #include <algorithm>
 #include <memory>
@@ -69,9 +70,9 @@ namespace Ui { class MainWIndow; }
 QT_END_NAMESPACE
 
 
-class MainWIndow : public QMainWindow
-{
+class MainWIndow : public QMainWindow {
     Q_OBJECT
+
     QThread lFThread;
 
 public:
@@ -130,6 +131,8 @@ private:
     Ui::MainWIndow *ui;
 
     QTimer *timer, *timer_ss;
+
+    QGraphicsBlurEffect qeBlur;
 
     QString SLog;
     std::vector<QString> QSLog;

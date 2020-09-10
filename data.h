@@ -10,11 +10,32 @@ namespace spdData {
 
 namespace spdStyle {
 
+    const QString TimeField=
+            "border-style: outset;"
+            "border-radius: 7px;"
+            "border-color: red;"
+            "min-height: 27px;"
+            "min-width: 25px";
+
+    const QString TimeFieldGreen=
+            "border: 1px solid green;"
+            "border-style: outset;"
+            "border-radius: 7px;"
+            "border-color: green;"
+            "min-height: 25px;"
+            "min-width: 25px";
+
     const QString bBrowseRed=
-            "color:red; border-color: red;";
+            "font: 75 9pt 'DejaVu Sans Condensed'; "
+            "color: rgb(255, 0, 0); "
+            "border-color: rgb(255, 0, 0);";
 
     const QString lEPathRed=
-            "border: 1px solid red; "
+            "border: 1px solid red;"
+            "border-style: outset;"
+            "border-radius: 8px;"
+            "border-color: red;"
+            "min-height: 25px;"
             "background: qlineargradient("
                 "spread:pad, "
                 "x1:0.376, y1:0.534091, "
@@ -28,12 +49,43 @@ namespace spdStyle {
             "border-color: rgb(0, 255, 0);";
 
     const QString tbLogGreen=
+            "QTextBrowser {"
             "background-color: qlineargradient("
-                "spread:pad, "
-                "x1:0.03, y1:1, "
-                "x2:0.10, y2:0.68, "
-                "stop:0 rgba(0, 255, 0, 120), "
-                "stop:0.5 rgba(255, 255, 255, 0));";
+                    "spread:pad, "
+                    "x1:0.03, y1:1, "
+                    "x2:0.10, y2:0.68, "
+                    "stop:0 rgba(0, 255, 0, 120), "
+                    "stop:0.5 rgba(255, 255, 255, 0));"
+            "}"
+            "QScrollBar:vertical {"
+            "    width:10px;    "
+            "    margin: 0px 0px 0px 0px;"
+            "}"
+            "QScrollBar::add-line:vertical {"
+            "    height: 0px;"
+            "    subcontrol-position: bottom;"
+            "    subcontrol-origin: margin;"
+            "}"
+            "QScrollBar::sub-line:vertical {"
+            "    height: 0 px;"
+            "    subcontrol-position: top;"
+            "    subcontrol-origin: margin;"
+            "}"
+            "QScrollBar:horizontal {"
+            "    width:10px;    "
+            "    margin: 0px 0px 0px 0px;"
+            "}"
+            "QScrollBar::add-line:horizontal {"
+            "    height: 0px;"
+            "    subcontrol-position: bottom;"
+            "    subcontrol-origin: margin;"
+            "}"
+            "QScrollBar::sub-line:horizontal {"
+            "    height: 0 px;"
+            "    subcontrol-position: top;"
+            "    subcontrol-origin: margin;"
+            "}"
+;
 
     const QString ScrollBar=
             "QScrollBar:vertical {"
