@@ -620,10 +620,6 @@ void MainWIndow::changePic() {
 
 void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
     this->setLogtext("- "+std::to_string(abs(static_cast<long long>(vs.size()-this->vsList.size())))+tr(" files removed.").toStdString());
-    // qDebug().noquote() << tr("- MainWIndow::get_fsDialog_vector(): vector size: ") << vs.size() << ".";
-    for(const auto &str: vs)
-        // qDebug().noquote() << "- MainWIndow::get_fsDialog_vector(): " << QString::fromStdString(str);
-
     this->vsList=vs;
 }
 
