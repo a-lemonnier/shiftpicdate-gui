@@ -201,14 +201,8 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 
 void MainWIndow::on_bTest_clicked() {
     ui->bReset->setEnabled(true);
-    
     // qDebug().noquote() << tr("\nbTest clicked ---\n");
 
-    std::string sTmp("2001:01:01 00:00:00");
-    // qDebug().noquote() << QString::fromStdString(sTmp) << "\n";
-    // qDebug().noquote() << QString::fromStdString(spdFunc::shiftTimestamp(sTmp, 3600)) << "\n";
-    
-    
     // qDebug().noquote() << "\n---\n";
 }
 
@@ -219,15 +213,11 @@ void MainWIndow::on_bRot_clicked() {
 
         this->iPicRot=90;
 
-        QMatrix rm;
-        rm.rotate(this->iPicRot);
+        QPixmap cPmap(ui->picLabel->pixmap(Qt::ReturnByValue));
+            
+        QTransform transform(QTransform().rotate(this->iPicRot));
+        cPmap = cPmap.transformed(transform);
 
-//         QPixmap cPmap=ui->picLabel->pixmap(Qt::ReturnByValueConstant(0)); //Qt::ReturnByValue
-        
-        QPixmap cPmap(*ui->picLabel->pixmap());
-        
-        cPmap = cPmap.transformed(rm);
-        
         ui->picLabel->setPixmap(cPmap);
         this->iPicRot=0;
     }
@@ -608,10 +598,11 @@ void MainWIndow::changePic() {
     this->currentPic++;
     if (this->currentPic>this->picNb-1) this->currentPic=0;
 
-    QMatrix rm;
-    rm.rotate(this->iPicRot);
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
-    pmap = pmap.transformed(rm);
+    
+    QTransform transform(QTransform().rotate(this->iPicRot));
+    pmap = pmap.transformed(transform);
+
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
     ui->picLabel->setToolTipDuration(1000);
