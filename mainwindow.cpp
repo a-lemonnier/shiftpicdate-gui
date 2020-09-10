@@ -214,11 +214,11 @@ void MainWIndow::on_bRot_clicked() {
         this->iPicRot=90;
 
         // keep this
-        //QPixmap cPmap(*ui->picLabel->pixmap());
+        QPixmap cPmap(*ui->picLabel->pixmap());
         
         // QTBUG-48701 enum ReturnByValueConstant { ReturnByValue };
         // ReturnByValue not member of Qt ?
-        QPixmap cPmap(ui->picLabel->pixmap(Qt::ReturnByValueConstant::ReturnByValue));
+        // QPixmap cPmap(ui->picLabel->pixmap(Qt::ReturnByValue);
         
         QTransform transform(QTransform().rotate(this->iPicRot));
         cPmap = cPmap.transformed(transform);
