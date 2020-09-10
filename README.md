@@ -1,4 +1,5 @@
-# shiftpicdate-gui
+# shiftpicdate-gui [![Build Status](https://cloud.drone.io/api/badges/a-lemonnier/shiftpicdate-gui/status.svg)](https://cloud.drone.io/a-lemonnier/shiftpicdate-gui) ![C/C++ CI](https://github.com/a-lemonnier/shiftpicdate-gui/workflows/C/C++%20CI/badge.svg)
+
 Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 
 
