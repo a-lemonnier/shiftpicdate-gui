@@ -25,6 +25,7 @@
 #include <QPainterPath>
 #include <QRect>
 #include <QWidget>
+#include <QTransform>
 
 #include <algorithm>
 #include <memory>
