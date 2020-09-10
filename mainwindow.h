@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <Qt>
 #include <QMainWindow>
 #include <QObject>
 #include <QDir>
