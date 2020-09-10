@@ -31,8 +31,6 @@
 #include <QLabel>
 #include <QDateTime>
 #include <QGraphicsEffect>
-#include <QQmlEngine>
-#include <QQmlContext>
 
 #include <algorithm>
 #include <memory>
