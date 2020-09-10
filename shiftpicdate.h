@@ -18,6 +18,8 @@
 #include <thread>
 #include <future>
 
+#include <cassert>
+
 #if defined(_WIN32) || defined(WIN32)
 #include <windows.h>
 #include <objidl.h>
