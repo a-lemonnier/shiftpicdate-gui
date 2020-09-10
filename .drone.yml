@@ -10,7 +10,7 @@ steps:
   image: ubuntu:19.10
   commands:
     - apt-get update -y
-    - apt-get install -y make gcc g++ cmake exiv2 libexiv2-dev  qt5-default qtbase5-dev qtbase5-dev-tools qtcreator
+    - apt-get install -y make gcc g++ cmake exiv2 libexiv2-dev  qt5-default qtbase5-dev qttools5-dev qtbase5-dev-tools qtcreator
     - cmake .
     - make
     - ./shiftpicdate-gui
