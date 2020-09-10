@@ -27,7 +27,6 @@
 #include <QWidget>
 #include <QTransform>
 #include <QLabel>
-#include <qnamespace.h> // remove this
 
 #include <algorithm>
 #include <memory>
