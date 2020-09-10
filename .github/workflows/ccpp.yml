@@ -23,6 +23,4 @@ jobs:
       run: mkdir build && cd build && cmake ..
     - name: build
       run: cmake --build build
-    - name: run
-      run: ./build/./shiftpicdate-gui
 
