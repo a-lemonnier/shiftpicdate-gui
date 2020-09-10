@@ -222,7 +222,7 @@ void MainWIndow::on_bRot_clicked() {
         QMatrix rm;
         rm.rotate(this->iPicRot);
 
-        QPixmap cPmap=ui->picLabel->pixmap(Qt::ReturnByValue);
+        QPixmap cPmap=ui->picLabel->pixmap(Qt::ReturnByValueConstant::ReturnByValue); 
         cPmap = cPmap.transformed(rm);
 
         ui->picLabel->setPixmap(cPmap);
