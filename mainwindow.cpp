@@ -1,7 +1,6 @@
 ﻿#include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-
 MainWIndow::MainWIndow(QWidget *parent)
 : QMainWindow(parent)
 , ui(new Ui::MainWIndow)
@@ -20,14 +19,13 @@ MainWIndow::MainWIndow(QWidget *parent)
 , iSlideshowInterval(1000)
 , currentPic(0) {
 
-    // qDebug().noquote().noquote() << tr("- MainWIndow::MainWIndow(): init main windows.");
-
     ui->setupUi(this);
+    this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
     
     ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     
-    //ui->bTest->setHidden(true);
+    ui->bTest->setHidden(true);
     
     ui->bRun->setEnabled(false);
     ui->bReset->setEnabled(false);
@@ -52,20 +50,23 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->bPrev->setEnabled(false);
     ui->bStop->setEnabled(false);
 
+    ui->lEPath->setEnabled(false);
     ui->lEPath->setText(".");
+    ui->lEPath->setStyleSheet(spdStyle::lEPathRed);
+    ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
+    ui->tBLog->setStyleSheet("");
+
+    ui->tBLog->verticalScrollBar()->setStyleSheet("");
+    ui->tBLog->verticalScrollBar()->setStyleSheet("");
 
 }
 
-MainWIndow::~MainWIndow() {
-    delete ui;
-}
-
+MainWIndow::~MainWIndow() { delete ui; }
 
 void MainWIndow::on_bBrowse_clicked() {
-    // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked().");
 
-    // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): config dialog.");
-
+    ui->lEPath->setStyleSheet("");
+    ui->bBrowse->setStyleSheet("");
     this->vsList.clear();
 
     QFileDialog dialog(this);
@@ -78,7 +79,6 @@ void MainWIndow::on_bBrowse_clicked() {
 
     dialog.setViewMode(QFileDialog::List);
     
-    // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): set dialog tricks.");
     // See on QT forum ***
     QListView *list = dialog.findChild<QListView*>("listView");
     if (list)  list->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -86,15 +86,9 @@ void MainWIndow::on_bBrowse_clicked() {
     if (tree)  tree->setSelectionMode(QAbstractItemView::MultiSelection);
     // ***
     
-    // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): grab filenames.");
     QStringList fileNames={""};
-    //dialog.setDirectory("");
 
-    if (dialog.exec())
-        fileNames=dialog.selectedFiles();
-
-
-    // qDebug().noquote() << "- MainWIndow::on_bBrowse_clicked(): path: " << fileNames[0] << ".";
+    if (dialog.exec()) fileNames=dialog.selectedFiles();
 
     ui->lEPath->setText(fileNames[0]);
     ui->lEPath->setEnabled(false);
@@ -103,22 +97,15 @@ void MainWIndow::on_bBrowse_clicked() {
     for(const auto &str: fileNames)
         this->setLogtext(str.toUtf8().toStdString()+"\n");
     
-    // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): double check file type.");
-
     if (fs::is_directory(fileNames[0].toUtf8().toStdString())) {
-
-        // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): this is a directory.");
         this->sFilename=fileNames[0].toUtf8().toStdString()+"/";
-        // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): path: ") << QString::fromStdString(this->sFilename);
 
         // if one pic has been selected then display it
         long long llFilenb=spdFunc::fileNb(this->sFilename);
 
         if (llFilenb>-1) {
-            // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): ") << spdFunc::fileNb(this->sFilename) << tr(" files.");
             if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
 
-                // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): show only one file having a good ext.");
                 QString oneFilename=QString::fromStdString((*fs::recursive_directory_iterator(this->sFilename)).path().string());
 
                 this->setLogtext(tr("- Load image ").toStdString()+oneFilename.toStdString()+": ");
@@ -132,12 +119,9 @@ void MainWIndow::on_bBrowse_clicked() {
                 QPixmap pmap(oneFilename);
                 ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
-
                 delete imgr;
             }
             else {
-                // qDebug().noquote() << tr("- MainWIndow::on_bBrowse_clicked(): start this->getfileList().");
-
                 this->setEnabled(false);
                 this->getfileList();
                 this->setEnabled(true);
@@ -147,20 +131,17 @@ void MainWIndow::on_bBrowse_clicked() {
             ui->bReset->setEnabled(true);
             ui->bSelectfile->setEnabled(true);
             ui->bQuit->setEnabled(true);
-        }
-        else {
-            // qDebug().noquote() << tr("- \u25EC MainWIndow::on_bBrowse_clicked(): \u2620 Cannot process with this path: ") << QString::fromStdString(this->sFilename);
-            this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
-        }
-    }
 
+            ui->bRun->setStyleSheet(spdStyle::bRunGreen);
+            ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+            ui->tBLog->setStyleSheet(spdStyle::ScrollBar);
+        }
+        else
+            this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
+    }
 }
 
-
 void MainWIndow::on_bRun_clicked() {
-
-    // qDebug().noquote() << "- MainWIndow::on_bRun_clicked().";
-
   ui->bQuit->setEnabled(true);
   ui->bBrowse->setEnabled(false);
   ui->bReset->setEnabled(false);
@@ -170,9 +151,7 @@ void MainWIndow::on_bRun_clicked() {
   ui->sBMin->setEnabled(false);
   ui->sBSec->setEnabled(false);
 
-
   this->run_shift();
-
 
   ui->bQuit->setEnabled(true);
   ui->bBrowse->setEnabled(true);
@@ -183,11 +162,10 @@ void MainWIndow::on_bRun_clicked() {
   ui->sBMin->setEnabled(true);
   ui->sBSec->setEnabled(true);
 
+  ui->tBLog->setStyleSheet("");
 }
 
-
 void MainWIndow::on_bDST_clicked(bool checked) {
-    // qDebug().noquote() << tr("- MainWIndow::on_bDST_clicked().");
     if (!checked) {
         this->isDST=false;
         this->setLogtext(tr("- DST is disable.\n").toStdString());
@@ -198,36 +176,28 @@ void MainWIndow::on_bDST_clicked(bool checked) {
     }
 }
 
-
 void MainWIndow::on_bTest_clicked() {
     ui->bReset->setEnabled(true);
-    // qDebug().noquote() << tr("\nbTest clicked ---\n");
-
-    // qDebug().noquote() << "\n---\n";
 }
 
 void MainWIndow::on_bRot_clicked() {
-    // qDebug().noquote() << tr("- MainWIndow::on_bRot_clicked().");
     if (!this->timer_ss->isActive()) {
-        // qDebug().noquote() << "- MainWIndow::on_bRot_clicked(): Stop timer.";
-
         this->iPicRot=90;
 
         // keep this
         QPixmap cPmap(*ui->picLabel->pixmap());
         
         // QTBUG-48701 enum ReturnByValueConstant { ReturnByValue };
-        // ReturnByValue not member of Qt ?
+        // ReturnByValue not member of Qt: ver < 5.15.0 ?
         // QPixmap cPmap(ui->picLabel->pixmap(Qt::ReturnByValue);
-        
+
         QTransform transform(QTransform().rotate(this->iPicRot));
         cPmap = cPmap.transformed(transform);
 
         ui->picLabel->setPixmap(cPmap);
         this->iPicRot=0;
     }
-    else
-        this->iPicRot=90;
+    else this->iPicRot=90;
 }
 
 
@@ -243,14 +213,12 @@ void MainWIndow::on_cBWrap_clicked(bool checked) {
 }
 
 void MainWIndow::on_cBQuiet_clicked(bool checked) {
-    // qDebug().noquote() << tr("-  MainWIndow::on_cBQuiet_clicked().");
     this->isQuiet=checked;
     if (!checked)
         this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
 }
 
 void MainWIndow::on_cBScroll_clicked(bool checked) {
-    // qDebug().noquote() << tr("-  MainWIndow::on_cBScroll_clicked().");
     this->isAutoScroll=checked;
     if (!this->isQuiet) {
         if (checked) this->setLogtext(tr("- Toggle auto scroll on.\n").toStdString());
@@ -259,8 +227,6 @@ void MainWIndow::on_cBScroll_clicked(bool checked) {
 }
 
 void MainWIndow::on_bReset_clicked() {
-    // qDebug().noquote() << tr("- MainWIndow::on_bReset_clicked().");
-
     ui->bRun->setEnabled(true);
     ui->sBYear->setEnabled(true);
     ui->sBDay->setEnabled(true);
@@ -304,34 +270,36 @@ void MainWIndow::on_bReset_clicked() {
     this->timer_ss->stop();
     ui->picLabel->setToolTipDuration(-1);
     ui->statusbar->showMessage("Reset...");
+
+    ui->lEPath->setStyleSheet(spdStyle::lEPathRed);
+    ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
+    ui->bRun->setStyleSheet("");
+    ui->tBLog->setStyleSheet("");
 }
 
-
-void MainWIndow::on_sBDay_valueChanged(int val) {
-    
+void MainWIndow::on_sBDay_valueChanged(int val) {   
     ui->bRun->setEnabled(true);
     
     this->DeltaD=val;
     this->computeDeltaT();
-    this->setLogtext(tr("-> Shift by ").toStdString()+
-    spdFunc::stoyear( this->computeDeltaT())
-    +tr(" or ").toStdString()
-    +std::to_string(this->computeDeltaT())
-    +"s.\n");
+    this->setLogtext(tr("-> Shift by ").toStdString()
+                     +spdFunc::stoyear( this->computeDeltaT())
+                     +tr(" or ").toStdString()
+                     +std::to_string(this->computeDeltaT())
+                     +"s.\n");
 }
 
-void MainWIndow::on_sBYear_valueChanged(int val) {
-    
+void MainWIndow::on_sBYear_valueChanged(int val) { 
     ui->bRun->setEnabled(true);
     
     this->DeltaY=val;
     this->computeDeltaT();
     
-    this->setLogtext(tr("-> Shift by ").toStdString()+
-    spdFunc::stoyear( this->computeDeltaT())
-    +tr(" or ").toStdString()
-    +std::to_string(this->computeDeltaT())
-    +"s.\n");
+    this->setLogtext(tr("-> Shift by ").toStdString()
+                     +spdFunc::stoyear( this->computeDeltaT())
+                     +tr(" or ").toStdString()
+                     +std::to_string(this->computeDeltaT())
+                     +"s.\n");
 }
 
 void MainWIndow::on_sBSec_valueChanged(int val) {
@@ -340,11 +308,11 @@ void MainWIndow::on_sBSec_valueChanged(int val) {
     this->DeltaS=val;
     this->computeDeltaT();
     
-    this->setLogtext(tr("-> Shift by ").toStdString()+
-    spdFunc::stoyear( this->computeDeltaT())
-    +" or "
-    +std::to_string(this->computeDeltaT())
-    +"s.\n");
+    this->setLogtext(tr("-> Shift by ").toStdString()
+                     +spdFunc::stoyear( this->computeDeltaT())
+                     +" or "
+                     +std::to_string(this->computeDeltaT())
+                     +"s.\n");
 }
 
 void MainWIndow::on_sBMin_valueChanged(int val) {
@@ -353,11 +321,11 @@ void MainWIndow::on_sBMin_valueChanged(int val) {
     this->DeltaM=val;
     this->computeDeltaT();
     
-    this->setLogtext(tr("-> Shift by ").toStdString()+
-    spdFunc::stoyear( this->computeDeltaT())
-    +" or "
-    +std::to_string(this->computeDeltaT())
-    +"s.\n");
+    this->setLogtext(tr("-> Shift by ").toStdString()
+                     +spdFunc::stoyear( this->computeDeltaT())
+                     +" or "
+                     +std::to_string(this->computeDeltaT())
+                     +"s.\n");
 }
 
 void MainWIndow::on_sBHour_valueChanged(int val) {
@@ -366,33 +334,30 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
     this->DeltaH=val;
     this->computeDeltaT();
     
-    this->setLogtext(tr("-> Shift by ").toStdString()+spdFunc::stoyear( this->computeDeltaT())
-    +" or "       +std::to_string(this->computeDeltaT())
-    +"s.\n");
+    this->setLogtext(tr("-> Shift by ").toStdString()
+                     +spdFunc::stoyear( this->computeDeltaT())
+                     +" or "
+                     +std::to_string(this->computeDeltaT())
+                     +"s.\n");
 }
 
-void MainWIndow::on_bZoomIn_clicked() {
-    // qDebug().noquote() << "-  MainWIndow::on_bZoomIn_clicked().";
-    ui->tBLog->zoomIn(1);
-}
+void MainWIndow::on_bZoomIn_clicked() { ui->tBLog->zoomIn(1); }
 
-void MainWIndow::on_bZoomOut_clicked() {
-    // qDebug().noquote() << "-  MainWIndow::on_bZoomOut_clicked().";
-    ui->tBLog->zoomOut(1);
-}
+void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
 
 void MainWIndow::on_rBInfo_clicked() { // About...
-    // qDebug().noquote() << "-  MainWIndow::on_rBInfo_clicked().";
-
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
-    
-    QString infoMsg;
-    infoMsg= "shiftpicdate-gui 0.1\n\n";
-    infoMsg+=tr("Qt5 GUI for changing picture timestamps.\n\n");
-    infoMsg+="MIT - A. Lemonnier - 2020\n";
-    
+
+    QString infoMsg;    
+    infoMsg=QString::fromStdString("<p><strong>shiftpicdate-gui</strong> "+std::string(VER)+"<br /><br />");
+    infoMsg+=tr("Qt5 GUI for changing picture timestamps.<br /></p>");
+    infoMsg+="<p><a href='https://github.com/a-lemonnier/shiftpicdate-gui'>github.com/a-lemonnier/shiftpicdate-gui</a><br />";
+    infoMsg+="MIT - A. Lemonnier - "+QDate::currentDate().toString("yyyy")+"</p>";
+
     QMessageBox msgBox;
+    msgBox.setTextFormat(Qt::RichText);
+    msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
     msgBox.setSizePolicy(QSizePolicy::Policy::Expanding,
                          QSizePolicy::Policy::Expanding);
     msgBox.setText(infoMsg);
@@ -403,20 +368,13 @@ void MainWIndow::on_rBInfo_clicked() { // About...
     ui->rBInfo->setChecked(false);
 }
 
-void MainWIndow::on_cBHidepic_clicked(bool checked) {
-    // qDebug().noquote() << "- MainWIndow::on_cBHidepic_clicked().";
-    ui->picLabel->setHidden(checked);
-}
+void MainWIndow::on_cBHidepic_clicked(bool checked) { ui->picLabel->setHidden(checked); }
 
 void MainWIndow::on_bNext_clicked() {
-    // qDebug().noquote() << "- MainWIndow::on_bNext_clicked().";
-
-    if (this->timer_ss->isActive())
-        timer_ss->stop();
+    if (this->timer_ss->isActive()) timer_ss->stop();
 
     this->currentPic++;
-    if (this->currentPic>this->picNb-1)
-        this->currentPic=0;
+    if (this->currentPic>this->picNb-1) this->currentPic=0;
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
 
@@ -425,18 +383,13 @@ void MainWIndow::on_bNext_clicked() {
     ui->picLabel->setToolTipDuration(1000);
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
-
 }
 
 void MainWIndow::on_bPrev_clicked() {
-    // qDebug().noquote() << "- MainWIndow::on_bPrev_clicked().";
-
-    if (this->timer_ss->isActive())
-        timer_ss->stop();
+    if (this->timer_ss->isActive()) timer_ss->stop();
 
     this->currentPic--;
-    if (this->currentPic<0)
-        this->currentPic=this->picNb-1;
+    if (this->currentPic<0) this->currentPic=this->picNb-1;
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
 
@@ -448,30 +401,28 @@ void MainWIndow::on_bPrev_clicked() {
 }
 
 void MainWIndow::on_bStop_clicked() {
-    // qDebug().noquote() << "- MainWIndow::on_bStop_clicked()().";
     if (this->timer_ss->isActive()) timer_ss->stop();
 }
 
 void MainWIndow::on_bSelectfile_clicked() {
-    // qDebug().noquote() << "- MainWIndow::on_bSelectfile_clicked().";
+    this->setWindowOpacity(0.1);
 
     fsDialog* secWindow= new fsDialog(this);
 
     connect(secWindow, &fsDialog::sendvector, this, &MainWIndow::get_fsDialog_vector);//, Qt::BlockingQueuedConnection);
     connect(secWindow, &fsDialog::destroyed, this, &MainWIndow::deleteLater);
     connect(secWindow, &fsDialog::sendvector, this, [=]() {
-        // qDebug().noquote() << tr("- MainWIndow::on_bSelectfile_clicked(): slideshow timer status: ") << timer_ss->isActive() << ".";
         timer_ss->stop();
-        // qDebug().noquote() << tr("- MainWIndow::on_bSelectfile_clicked(): slideshow timer status: ") << timer_ss->isActive() << ".";
         startSlideshow();
     });
 
     secWindow->exec();
+
+    this->setWindowOpacity(1.0);
 }
 
 void MainWIndow::setLogtextTh(const std::string &msg) {
-    this->SLog+=QString::fromStdString(msg);
-    
+    this->SLog+=QString::fromStdString(msg); 
     if (this->isAutoScroll)
         ui->tBLog->verticalScrollBar()->setValue(ui->tBLog->verticalScrollBar()->maximum());
 }
@@ -485,15 +436,9 @@ void MainWIndow::setLogtext(const std::string &msg) {
     }
 }
 
-void MainWIndow::setvsList(std::vector<std::string> &vsList) {
-    // qDebug().noquote() << tr("- MainWIndow::setvsList(): copy ") << vsList.size() << tr("elements.");
-    this->vsList=vsList;
-}
+void MainWIndow::setvsList(std::vector<std::string> &vsList) { this->vsList=vsList; }
 
-std::vector<std::string> MainWIndow::getvsList() {
-    // qDebug().noquote() << "- MainWIndow::getvsList(): " << this->vsList.size() << tr(" elements.");
-    return this->vsList;
-}
+std::vector<std::string> MainWIndow::getvsList() { return this->vsList; }
 
 int  MainWIndow::computeDeltaT() { // compute total secs.
     constexpr int cM=60;
@@ -510,38 +455,26 @@ int  MainWIndow::computeDeltaT() { // compute total secs.
     return this->DeltaT;
 }
 
-void MainWIndow::update_progressBar_value(int v) {
-    ui->progressBar->setValue(v);
-}
-
-void MainWIndow::update_Log_value(QString str) {
-    this->setLogtextTh(str.toUtf8().constData());
-}
+void MainWIndow::update_progressBar_value(int v) { ui->progressBar->setValue(v); }
+void MainWIndow::update_Log_value(QString str) { this->setLogtextTh(str.toUtf8().constData()); }
 
 void MainWIndow::update_Log() {
-    // qDebug().noquote() << "- MainWIndow::update_Log().";
     if (!this->isQuiet) {
         ui->tBLog->setText(this->SLog);
-        if (this->isAutoScroll) {
-            // qDebug().noquote() << tr("- MainWIndow::update_Log(): Scroll to the end.");
+        if (this->isAutoScroll)
             ui->tBLog->verticalScrollBar()->setValue(ui->tBLog->verticalScrollBar()->maximum());
-        }
     }
 }
 
 void MainWIndow::getfileList() {
-    // qDebug().noquote() << "- MainWIndow::getfileList().";
-
     fileList *fL=new fileList();
     QThread *th=new QThread();
     
-    // Update textBrowser every n sec
     timer=new QTimer(nullptr);
     
     fL->moveToThread(th);
     fL->setfileName(this->sFilename);
-    
-    // Attach to timer
+
     connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
     
     // Update textBrowser at least one time
@@ -553,8 +486,6 @@ void MainWIndow::getfileList() {
 
     // Start slideshow when the thread is finished.
     connect(fL, &fileList::finished, this, [=](){
-        // List of pics
-        // qDebug().noquote() << tr("- MainWIndow::getfileList(): store all picture filenames in vsList.");
         this->vsList=fL->getvsList();
         this->startSlideshow();
     }, Qt::BlockingQueuedConnection);
@@ -570,10 +501,7 @@ void MainWIndow::getfileList() {
 }
 
 void MainWIndow::startSlideshow() {
-    // qDebug().noquote() << "- MainWIndow::startSlideshow().";
-
     if (!this->vsList.empty()) {
-
         ui->bRot->setEnabled(true);
         ui->bNext->setEnabled(true);
         ui->bPrev->setEnabled(true);
@@ -597,9 +525,7 @@ void MainWIndow::startSlideshow() {
     else qWarning() << "- MainWIndow::startSlideshow(): empty list.";
 }
 
-
 void MainWIndow::changePic() {
-
     this->currentPic++;
     if (this->currentPic>this->picNb-1) this->currentPic=0;
 
@@ -622,22 +548,16 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
     this->vsList=vs;
 }
 
-
 void MainWIndow::run_shift() {
-
-  // qDebug().noquote() << "- MainWIndow::run_shift().\n";
-
   runShift *rs=new runShift();
   QThread *th=new QThread();
 
-  // Update textBrowser every n sec
   timer=new QTimer(nullptr);
 
   rs->moveToThread(th);
   rs->setvsList(this->vsList);
   rs->setDiff(this->DeltaT);
   
-  // Attach to timer
   connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
 
   connect(th, &QThread::finished, this, [=](){ this->timer->stop(); this->update_Log(); });
@@ -655,24 +575,17 @@ void MainWIndow::run_shift() {
 
 }
 
-
 // ---------------------
 // ---------------------
 // ---------------------
 
 void fileList::getList() {
-    // qDebug().noquote() << "- fileList::getList().";
-
+    int iCount=0;
     size_t iFileNb=spdFunc::fileNb(this->fileName);
-    // qDebug().noquote() << "- fileList::getList(): " << iFileNb << tr(" files.");
 
-    // qDebug().noquote() << "- fileList::getList(): emit(sendstdStr()).";
+    emit(fLProgress(0)); // Set progressBar to 0
     emit(sendstdStr(QString::fromStdString(tr("\t - Number of files: ").toStdString()+std::to_string(iFileNb)+" -\n")));
 
-    int iCount=0;
-    emit(fLProgress(0)); // Set progressBar to 0
-
-    // qDebug().noquote() << tr("- fileList::getList(): parse recursive_directory_iterator().");
     this->vsList.clear();
     for(const auto &str: fs::recursive_directory_iterator(this->fileName)) {
         if (spdFunc::test_ext(str.path().filename().string())) {
@@ -686,52 +599,34 @@ void fileList::getList() {
          }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
-    // qDebug().noquote() << tr("- fileList::getList(): recursive_directory_iterator() loop complete.");
-
-    // qDebug().noquote() << tr("- fileList::getList(): sort vsList.");
     std::sort(this->vsList.begin(), this->vsList.end());
 
     emit(fLProgress(100)); // Set progressBar to 100
-
-    // qDebug().noquote() << "- fileList::getList(): emit(finished()).";
     emit(finished());
 }
 
-void fileList::setfileName(std::string& str) {
-    // qDebug().noquote() << "- fileList::setfileName().";
-    this->fileName=str;
-}
+void fileList::setfileName(std::string& str) { this->fileName=str; }
 
-
-std::vector<std::string> fileList::getvsList() const {
-    return this->vsList;
-}
-
-
+std::vector<std::string> fileList::getvsList() const { return this->vsList; }
 
 // ---------------------
 // ---------------------
 // ---------------------
 
-void runShift::setvsList(std::vector<std::string> &vsList) {
-    this->vsList=vsList;
-}
+void runShift::setvsList(std::vector<std::string> &vsList) { this->vsList=vsList; }
 
 void runShift::shift() {
-    // qDebug().noquote() << "- runShift::shift().";
-    emit(sendstdStr(tr("- Start shifting pictures.\n")));
     emit(sendProgress(0));
+    emit(sendstdStr(tr("- Start shifting pictures.\n")));
 
-    int iCount=0;
-    int iFileNb=this->vsList.size();
+    int iCount=0, iFileNb=this->vsList.size();
     for(const auto &file: this->vsList) {
-
         std::string sTmp(spdFunc::getExifDate(file));
         if (!sTmp.empty()) {
             spdFunc::setExifDate(file, this->Diff, this->bIsDST);
             emit(sendstdStr(QString::fromStdString("\t"+file+"\t"+sTmp+".\n")));
         }
-        emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
+        emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb)));
     }
 
     emit(sendProgress(100));
@@ -739,10 +634,6 @@ void runShift::shift() {
     emit(finished());
 }
 
-void runShift::setDiff(long long t) {
-    this->Diff= (t>0) ? t : 0;
-}
+void runShift::setDiff(long long t) { this->Diff= (t>0) ? t : 0; }
 
-void runShift::setDST(bool bIsDST) {
-    this->bIsDST=bIsDST;
-}
+void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }

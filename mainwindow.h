@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define VER "0.2"
+
 #include <Qt>
 #include <QMainWindow>
 #include <QObject>
@@ -27,6 +29,8 @@
 #include <QWidget>
 #include <QTransform>
 #include <QLabel>
+#include <QDateTime>
+#include <QGraphicsEffect>
 
 #include <algorithm>
 #include <memory>
@@ -58,6 +62,7 @@ namespace fs = boost::filesystem;
 #endif
 
 #include "fsdialog.h"
+#include "data.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWIndow; }

@@ -3,31 +3,14 @@
 
 #include <iostream>
 #include <cmath>
-
 #include <vector>
-
 #include <algorithm>
-
 #include <string>
 #include <iomanip>
 #include <sstream>
 #include <locale>
-
 #include <chrono>
-
-#include <thread>
-#include <future>
-
 #include <cassert>
-
-#if defined(_WIN32) || defined(WIN32)
-#include <windows.h>
-#include <objidl.h>
-#include <strsafe.h>
-#include <gdiplus.h>
-using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
-#endif
 
 #ifdef __unix__
 #include <exiv2/exiv2.hpp>

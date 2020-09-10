@@ -21,18 +21,14 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
            catch (...) {
                std::cerr << "- spdFunc::getExifDate(): error with " << sFilename << ".\n";
            }
-
            pImg.release();
        }
-       else
-           std::cerr << "- spdFunc::getExifDate(): File does not exist.\n";
-
+       else std::cerr << "- spdFunc::getExifDate(): File does not exist.\n";
    return Res;
 }
 
 
 bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST) {
-
         if (test_ext(sFilename)) {
                 const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
 
@@ -74,12 +70,9 @@ bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool 
                 catch (...) {
                     std::cerr << "- spdFunc::setExifDate(): error with " << sFilename << ".\n";
                 }
-
                 pImg.release();
             }
-            else
-                std::cerr << "- spdFunc::setExifDate(): File does not exist.\n";
-
+            else std::cerr << "- spdFunc::setExifDate(): File does not exist.\n";
     return true;
 }
 
@@ -87,26 +80,26 @@ bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool 
 std::string spdFunc::stoyear(long long t) {
     std::stringstream ssS;
 
-    long long M=60;
-    long long H=60*M;
-    long long D=24*H;
-    long long Y=365*D;
+    constexpr long long M=60;
+    constexpr long long H=60*M;
+    constexpr long long D=24*H;
+    constexpr long long Y=365*D;
 
     long long t0=-t;
 
     if (t<0)
         ssS << "-"
-        << (  t0 / Y)               << "y "
-        << (  t0 % Y) / D           << "d "
-        << (( t0 % Y) % D) / H      << "h "
-        << (((t0 % Y) % D) % H) / M << "m "
-        << (((t0 % Y) % D) % H) % M << "s";
+            << (  t0 / Y)               << "y "
+            << (  t0 % Y) / D           << "d "
+            << (( t0 % Y) % D) / H      << "h "
+            << (((t0 % Y) % D) % H) / M << "m "
+            << (((t0 % Y) % D) % H) % M << "s";
     else
         ssS << (  t / Y)           << "y "
-        << (  t % Y) / D           << "d "
-        << (( t % Y) % D) / H      << "h "
-        << (((t % Y) % D) % H) / M << "m "
-        << (((t % Y) % D) % H) % M << "s";
+            << (  t % Y) / D           << "d "
+            << (( t % Y) % D) / H      << "h "
+            << (((t % Y) % D) % H) / M << "m "
+            << (((t % Y) % D) % H) % M << "s";
 
     return ssS.str();
 }
@@ -125,10 +118,8 @@ long long spdFunc::fileNb(const fs::path &path) {
     return n;
 }
 
-std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) {
-    
-    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
-    
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) { 
+    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };    
     std::stringstream ssS(sTimestamp);
     
     std::tm dt={ };

@@ -23,21 +23,6 @@ qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 qt5_add_resources(res_rcc res/res.qrc)
 
 
-if(ANDROID)
-  add_library(shiftpicdate-gui SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    fsdialog.ui
-    fsdialog.cpp
-    fsdialog.h
-    shiftpicdate.cpp
-    shiftpicdate.h
-    ${QM_FILES}
-  )
-endif(ANDROID)
-
 if(WIN32)
 
 #  set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
@@ -52,6 +37,7 @@ if(WIN32)
     fsdialog.h
     shiftpicdate_win32.cpp
     shiftpicdate_win32.h
+    data.h
     ${QM_FILES}
     ${res_rcc}
     ${EXIV2_FILES}
@@ -73,6 +59,7 @@ if(UNIX)
         fsdialog.h
         shiftpicdate.cpp
         shiftpicdate.h
+        data.h
         ${QM_FILES}
         ${res_rcc}
   )

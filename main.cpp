@@ -1,14 +1,9 @@
 #include "mainwindow.h"
-#include "fsdialog.h"
 
 #include <QApplication>
 #include <QTranslator>
 
-#include <filesystem>
-#include <iostream>
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     QTranslator* translator = new QTranslator();
@@ -16,7 +11,6 @@ int main(int argc, char *argv[])
         a.installTranslator(translator);
 
     MainWIndow w;
-
     w.show();
 
     return a.exec();

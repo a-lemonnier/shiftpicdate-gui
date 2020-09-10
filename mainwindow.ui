@@ -272,6 +272,9 @@
             <property name="acceptDrops">
              <bool>false</bool>
             </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -302,8 +305,8 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
-              <height>200</height>
+              <width>300</width>
+              <height>300</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -326,6 +329,9 @@
             </property>
             <property name="autoFillBackground">
              <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>No picture selected.</string>
@@ -374,6 +380,9 @@
               <property name="statusTip">
                <string>Path to the directory.</string>
               </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string>./</string>
               </property>
@@ -402,6 +411,10 @@
              <widget class="QPushButton" name="bBrowse">
               <property name="statusTip">
                <string>Select a directory.</string>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border-color: red;
+</string>
               </property>
               <property name="text">
                <string>Browse</string>
@@ -689,6 +702,9 @@
          <widget class="QPushButton" name="bRun">
           <property name="statusTip">
            <string>Change all timsestamps.</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Run</string>
