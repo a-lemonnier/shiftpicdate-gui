@@ -319,7 +319,7 @@
         <location filename="../../mainwindow.ui" line="331"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="542"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="542"/>
-        <location filename="../../mainwindow.cpp" line="272"/>
+        <location filename="../../mainwindow.cpp" line="274"/>
         <source>No picture selected.</source>
         <translation type="unfinished">Aucune image sélectionnée.</translation>
     </message>
@@ -412,57 +412,57 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="235"/>
+        <location filename="../../mainwindow.cpp" line="237"/>
         <source>- Auto wrap off.
 </source>
         <translation type="unfinished">-Saut de ligne désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="239"/>
+        <location filename="../../mainwindow.cpp" line="241"/>
         <source>- Auto wrap on.
 </source>
         <translation type="unfinished">-Saut de ligne automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="247"/>
+        <location filename="../../mainwindow.cpp" line="249"/>
         <source>- Toggle verbosity on.
 </source>
         <translation type="unfinished">- Mode verbeux activé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="254"/>
+        <location filename="../../mainwindow.cpp" line="256"/>
         <source>- Toggle auto scroll on.
 </source>
         <translation type="unfinished">- Défilement automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="255"/>
+        <location filename="../../mainwindow.cpp" line="257"/>
         <source>- Toggle auto scroll off.
 </source>
         <translation type="unfinished">- Défilement automatique désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="314"/>
-        <location filename="../../mainwindow.cpp" line="328"/>
-        <location filename="../../mainwindow.cpp" line="341"/>
-        <location filename="../../mainwindow.cpp" line="354"/>
-        <location filename="../../mainwindow.cpp" line="367"/>
+        <location filename="../../mainwindow.cpp" line="316"/>
+        <location filename="../../mainwindow.cpp" line="330"/>
+        <location filename="../../mainwindow.cpp" line="343"/>
+        <location filename="../../mainwindow.cpp" line="356"/>
+        <location filename="../../mainwindow.cpp" line="369"/>
         <source>-&gt; Shift by </source>
         <translation type="unfinished">-&gt; Décalage de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="316"/>
-        <location filename="../../mainwindow.cpp" line="330"/>
+        <location filename="../../mainwindow.cpp" line="318"/>
+        <location filename="../../mainwindow.cpp" line="332"/>
         <source> or </source>
         <translation type="unfinished"> ou </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="390"/>
+        <location filename="../../mainwindow.cpp" line="392"/>
         <source>Qt5 GUI for changing picture timestamps.
 
 </source>
@@ -479,14 +479,14 @@
         <translation type="obsolete">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="564"/>
+        <location filename="../../mainwindow.cpp" line="566"/>
         <source>- List of files...
 </source>
         <translation type="unfinished">- Liste des fichiers...
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="619"/>
+        <location filename="../../mainwindow.cpp" line="621"/>
         <source> files removed.</source>
         <translation type="unfinished"> fichiers enlevés.</translation>
     </message>
@@ -534,7 +534,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="668"/>
+        <location filename="../../mainwindow.cpp" line="670"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
@@ -651,14 +651,14 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="720"/>
+        <location filename="../../mainwindow.cpp" line="722"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="736"/>
+        <location filename="../../mainwindow.cpp" line="738"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.
