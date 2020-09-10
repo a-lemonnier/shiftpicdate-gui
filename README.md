@@ -16,6 +16,9 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 > TODO:
 - "dialog.setOption(QFileDialog::ShowDirsOnly, true)" does not work on Windows, deprecated "QFileDialog::DirectoryOnly" used instead.
 
+> Binaries 
+[![Download shiftpicdate-gui](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/shiftpicdate-gui/files/latest/download)
+
 > Gentoo amd64 EN
 ![shiftpicdate-gui](doc/shiftpicdate-gui_2.png)
 
