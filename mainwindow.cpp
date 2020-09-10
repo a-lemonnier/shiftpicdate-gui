@@ -213,8 +213,9 @@ void MainWIndow::on_bRot_clicked() {
 
         this->iPicRot=90;
 
-        QPixmap cPmap(ui->picLabel->pixmap(Qt::ReturnByValue));
-            
+        QPixmap cPmap=ui->picLabel->pixmap(Qt::ReturnByValue);
+        
+        
         QTransform transform(QTransform().rotate(this->iPicRot));
         cPmap = cPmap.transformed(transform);
 

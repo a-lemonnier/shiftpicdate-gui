@@ -20,7 +20,7 @@ fsDialog::fsDialog(QWidget *parent) :
 
     // show clicked img on the right panel
     connect(ui->listWidget, &QListWidget::itemClicked, this,
-            [=](QListWidgetItem* lwItem) {
+            [this](QListWidgetItem* lwItem) {
             // qDebug().noquote() << tr("- fsDialog::fsDialog(): item ") << lwItem->text() << tr(" selected.");
             QPixmap pmap(lwItem->text());
             ui->tlPic->setPixmap(pmap.scaled(ui->tlPic->size().height(), ui->tlPic->size().width(),Qt::KeepAspectRatio));
@@ -50,7 +50,6 @@ std::vector<std::string> fsDialog::getFilelist() {
 }
 
 void fsDialog::on_bOK_clicked() {
-
     // qDebug().noquote() << tr("- fsDialog::on_bOK_clicked(): current size ") <<  (int)ui->listWidget->count() << ".";
 
     std::vector<std::string> vsTmp;
