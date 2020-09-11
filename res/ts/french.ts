@@ -369,10 +369,9 @@
         <translation type="unfinished">Aucune image sélectionnée.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="8"/>
         <source>- Init.
 </source>
-        <translation type="unfinished">- Initialisation.
+        <translation type="obsolete">- Initialisation.
 </translation>
     </message>
     <message>
@@ -436,6 +435,12 @@
     <message>
         <source>- ◬ MainWIndow::on_bBrowse_clicked(): ☠ Cannot process with this path: </source>
         <translation type="obsolete">- ◬ MainWIndow::on_bBrowse_clicked(): ☠ ne peux pas continuer avec ce chemin: </translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="8"/>
+        <source>- Initialisation.
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="36"/>
