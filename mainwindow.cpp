@@ -649,7 +649,7 @@ void MainWIndow::startSlideshow() {
         timer_ss->start(this->iSlideshowInterval);
         // --
     }
-    else qWarning() << "- MainWIndow::startSlideshow(): empty list.";
+    else std::cerr << "- MainWIndow::startSlideshow(): empty list.";
 }
 
 void MainWIndow::changePic() {
