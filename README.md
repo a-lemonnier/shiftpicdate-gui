@@ -32,7 +32,7 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 
 > Build
 
-- gentoo - shiftpicdate-gui % cmake .
+- gentoo - shiftpicdate-gui/ % cmake .
 ```
 -- The CXX compiler identification is GNU 10.2.0
 -- Detecting CXX compiler ABI info
@@ -46,7 +46,7 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 
 ```
 
-- gentoo - shiftpicdate-gui % make
+- gentoo - shiftpicdate-gui/ % make
 ```
 Scanning dependencies of target shiftpicdate-gui_autogen
 [  9%] Automatic MOC and UIC for target shiftpicdate-gui
