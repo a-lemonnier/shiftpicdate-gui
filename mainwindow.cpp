@@ -699,7 +699,6 @@ void MainWIndow::run_shift() {
 
   timer->start(1000);
   th->start();
-
 }
 
 void MainWIndow::changeEvent(QEvent *event) {

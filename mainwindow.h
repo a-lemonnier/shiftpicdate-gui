@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QThread>
-//#include <QDebug>
 #include <QTranslator>
 #include <QMessageBox>
 #include <QMetaType>
@@ -179,7 +178,7 @@ class fileList: public QObject {
 
 public:
 
-    explicit fileList(QObject *parent=Q_NULLPTR): QObject(parent) { qDebug().noquote(); }
+    explicit fileList(QObject *parent=Q_NULLPTR): QObject(parent) {  }
     virtual ~fileList() { }
 
     void setfileName(std::string &str);
@@ -204,7 +203,7 @@ class runShift: public QObject {
   Q_OBJECT
 
 public:
-    explicit runShift(QObject *parent=Q_NULLPTR): QObject(parent), Diff(0), bIsDST(false) { qDebug().noquote(); }
+    explicit runShift(QObject *parent=Q_NULLPTR): QObject(parent), Diff(0), bIsDST(false) {  }
     virtual ~runShift() { }
 
     void setvsList(std::vector<std::string> &vsList);

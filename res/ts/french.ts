@@ -606,7 +606,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="721"/>
+        <location filename="../../mainwindow.cpp" line="720"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
@@ -729,14 +729,14 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="754"/>
+        <location filename="../../mainwindow.cpp" line="753"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="767"/>
+        <location filename="../../mainwindow.cpp" line="766"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.
