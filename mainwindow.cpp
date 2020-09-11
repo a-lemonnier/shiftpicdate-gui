@@ -172,27 +172,27 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBMin->setStyleSheet(spdStyle::TimeField);
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
 
-  ui->bQuit->setEnabled(true);
-  ui->bBrowse->setEnabled(false);
-  ui->bReset->setEnabled(false);
-  ui->sBYear->setEnabled(false);
-  ui->sBDay->setEnabled(false);
-  ui->sBHour->setEnabled(false);
-  ui->sBMin->setEnabled(false);
-  ui->sBSec->setEnabled(false);
+    ui->bQuit->setEnabled(true);
+    ui->bBrowse->setEnabled(false);
+    ui->bReset->setEnabled(false);
+    ui->sBYear->setEnabled(false);
+    ui->sBDay->setEnabled(false);
+    ui->sBHour->setEnabled(false);
+    ui->sBMin->setEnabled(false);
+    ui->sBSec->setEnabled(false);
 
-  this->run_shift();
+    this->run_shift();
 
-  ui->bQuit->setEnabled(true);
-  ui->bBrowse->setEnabled(true);
-  ui->bReset->setEnabled(true);
-  ui->sBYear->setEnabled(true);
-  ui->sBDay->setEnabled(true);
-  ui->sBHour->setEnabled(true);
-  ui->sBMin->setEnabled(true);
-  ui->sBSec->setEnabled(true);
+    ui->bQuit->setEnabled(true);
+    ui->bBrowse->setEnabled(true);
+    ui->bReset->setEnabled(true);
+    ui->sBYear->setEnabled(true);
+    ui->sBDay->setEnabled(true);
+    ui->sBHour->setEnabled(true);
+    ui->sBMin->setEnabled(true);
+    ui->sBSec->setEnabled(true);
 
-  ui->tBLog->setStyleSheet("");
+    ui->tBLog->setStyleSheet("");
 }
 
 void MainWIndow::on_bDST_clicked(bool checked) {
@@ -214,8 +214,7 @@ void MainWIndow::on_bRot_clicked() {
     if (!this->timer_ss->isActive()) {
         this->iPicRot=90;
 
-        // keep this
-        QPixmap cPmap(*ui->picLabel->pixmap());
+        QPixmap cPmap(*ui->picLabel->pixmap()); // keep this till QT 6 or 7...
         
         // QTBUG-48701 enum ReturnByValueConstant { ReturnByValue };
         // ReturnByValue not member of Qt: ver < 5.15.0 ?
@@ -415,9 +414,26 @@ void MainWIndow::on_rBInfo_clicked() { // About...
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
 
+    std::string sysInfo;
+
+    sysInfo="<p><small><i>";
+    sysInfo+=QSysInfo::machineHostName().toStdString()+"<br/>"
+            + QSysInfo::prettyProductName().toStdString()+" "
+            + QSysInfo::productVersion().toStdString()+" "
+            +"- "+QSysInfo::kernelType().toStdString()+" "
+            +QSysInfo::kernelVersion().toStdString()+" "
+            +QSysInfo::currentCpuArchitecture().toStdString()+"<br/>"
+            +"Build: "+"Qt "+std::string(qVersion())+ " - "
+            +QSysInfo::buildCpuArchitecture().toStdString()+" "
+            +"- ABI: "+QSysInfo::buildAbi().toStdString()
+            +".";
+    sysInfo+="</i></small></p>";
+
+
     QString infoMsg;    
     infoMsg=QString::fromStdString("<p><strong>shiftpicdate-gui</strong> "+std::string(VER)+"<br /><br />");
-    infoMsg+=tr("Qt5 GUI for changing picture timestamps.<br /></p>");
+    infoMsg+=tr("Qt5 GUI for changing picture timestamps.</p>");
+    infoMsg+=QString::fromStdString(sysInfo);
     infoMsg+="<p><a href='https://github.com/a-lemonnier/shiftpicdate-gui'>github.com/a-lemonnier/shiftpicdate-gui</a><br />";
     infoMsg+="MIT - A. Lemonnier - "+QDate::currentDate().toString("yyyy")+"</p>";
 
@@ -488,6 +504,24 @@ void MainWIndow::on_bSelectfile_clicked() {
     secWindow->exec();
 
     qeBlur.setEnabled(false);
+}
+
+void MainWIndow::on_bFlag_released() {
+  qApp->removeTranslator(&qTranslator);
+
+  if (this->selectedLang==Lang::EN) {
+    this->selectedLang=Lang::FR;
+    if (qTranslator.load("french.qm"))
+      qApp->installTranslator(&qTranslator);
+    this->setLogtext(tr("- Switch language to French.\n").toStdString());
+    ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
+  }
+  else {
+    this->selectedLang=Lang::EN;
+    this->setLogtext(tr("- Switch language to English.\n").toStdString());
+    ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+  }
+  ui->retranslateUi(this);
 }
 
 void MainWIndow::setLogtextTh(const std::string &msg) {
@@ -668,6 +702,13 @@ void MainWIndow::run_shift() {
 
 }
 
+void MainWIndow::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::LanguageChange)
+      ui->retranslateUi(this);
+    else QWidget::changeEvent(event);
+}
+
+
 // ---------------------
 // ---------------------
 // ---------------------
@@ -730,30 +771,3 @@ void runShift::shift() {
 void runShift::setDiff(long long t) { this->Diff= (t>0) ? t : 0; }
 
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
-
-void MainWIndow::on_bFlag_released() {
-  qApp->removeTranslator(&qTranslator);
-
-  if (this->selectedLang==Lang::EN) {
-    this->selectedLang=Lang::FR;
-    if (qTranslator.load("french.qm"))
-      qApp->installTranslator(&qTranslator);
-    this->setLogtext(tr("- Switch language to French.\n").toStdString());
-    ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
-  }
-  else {
-    this->selectedLang=Lang::EN;
-    this->setLogtext(tr("- Switch language to English.\n").toStdString());
-    ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
-  }
-  ui->retranslateUi(this);
-}
-
-
-void MainWIndow::changeEvent(QEvent *event) {
-    if (event->type() == QEvent::LanguageChange)
-      ui->retranslateUi(this);
-    else QWidget::changeEvent(event);
-}
-
-
