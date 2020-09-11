@@ -242,11 +242,13 @@ std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, 
     
     const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
 
-    std::stringstream ssS;
+    std::stringstream ssS(sTimestamp);
 
-    if (sTimestamp.empty()) ssS << "1970:01:01 00:00:00";
-    else ssS << sTimestamp;
-    
+  if (sTimestamp.empty()) {
+    ssS.clear();
+    ssS << "1970:01:01 00:00:00";
+  }
+
     std::tm dt={ };
     if (bIsDST) dt.tm_isdst=bIsDST;
     
