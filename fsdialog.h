@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QDir>
 #include <QThread>
-#include <QDebug>
+//#include <QDebug>
 #include <QTranslator>
 #include <QMessageBox>
 #include <QMetaType>

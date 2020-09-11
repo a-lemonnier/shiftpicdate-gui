@@ -182,8 +182,6 @@ bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIs
 
         CoUninitialize( );
 
-        std::cout << sFilename_new << "->" << sFilename << "\n";
-
         std::error_code ec;
         if (!SUCCEEDED(hr) || !fs::copy_file(sFilename_new, sFilename,  fs::copy_options::overwrite_existing, ec))
             std::cerr << "Error while copying file: "<< ec.message() << "\n";

@@ -9,7 +9,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QThread>
-#include <QDebug>
+//#include <QDebug>
 #include <QTranslator>
 #include <QMessageBox>
 #include <QMetaType>
