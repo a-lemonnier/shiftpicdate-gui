@@ -11,6 +11,7 @@
 #include <locale>
 #include <chrono>
 #include <cassert>
+#include <tuple>
 
 #ifdef __unix__
 #include <exiv2/exiv2.hpp>
@@ -48,12 +49,15 @@ namespace fs = boost::filesystem;
 
 namespace spdFunc {
     std::string getExifDate(const std::string &sFilename);
+    long getExifEpoch(const std::string &sFilename);
+    std::pair<std::string, long> getExifDateEpoch(const std::string &sFilename); // very slow !
     bool setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST);
 
-    long long fileNb(const fs::path &path);
+    long fileNb(const fs::path &path);
 
-    std::string stoyear(long long t);
-    std::string shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST);
+    std::tuple<long, long, long, long, long, long> decompEpoch(long t);
+    std::string stoyear(long t);
+    std::string shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST);
     
     void test();
     bool test_ext(const std::string &sS);
@@ -62,14 +66,17 @@ namespace spdFunc {
 // ----------------------------------------------------
 
 
-
 std::string spdFunc::getExifDate(const std::string &sFilename);
+long spdFunc::getExifEpoch(const std::string &sFilename);
+std::pair<std::string, long> spdFunc::getExifDateEpoch(const std::string &sFilename);
+
 bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST=false);
 
-long long spdFunc::fileNb(const fs::path &path);
+long spdFunc::fileNb(const fs::path &path);
 
-std::string spdFunc::stoyear(long long t);
-std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST=false);
+std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t);
+std::string spdFunc::stoyear(long t);
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST=false);
 
 void spdFunc::test();
 bool spdFunc::test_ext(const std::string &sS);

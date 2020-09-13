@@ -31,10 +31,24 @@
 #include <QDateTime>
 #include <QGraphicsEffect>
 #include <QSysInfo>
+#include <QLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
+
+#include <QValueAxis>
+
+#include <ctime>
 #include <algorithm>
 #include <memory>
 #include <cassert>
+#include <random>
 
 #if __has_include (<filesystem>)
 #include <filesystem>
@@ -52,7 +66,6 @@ namespace fs = boost::filesystem;
 #error "No filesystem header found"
 #endif
 
-
 #if defined(_WIN32) || defined(WIN32)
 #include "shiftpicdate_win32.h"
 #endif
@@ -67,7 +80,6 @@ namespace fs = boost::filesystem;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWIndow; }
 QT_END_NAMESPACE
-
 
 class MainWIndow : public QMainWindow {
     Q_OBJECT
@@ -96,6 +108,7 @@ public slots:
     void changePic();
     void get_fsDialog_vector(std::vector<std::string> &);
     void run_shift();
+    void plotHist();
 
 private slots:
     void on_bBrowse_clicked();
@@ -129,6 +142,10 @@ private slots:
 private:
     Ui::MainWIndow *ui;
 
+    QtCharts::QChartView *chartView;
+    QtCharts::QChart *Chart;
+    QtCharts::QBarSeries *bSerie;
+
     QTranslator qTranslator;
 
     QTimer *timer, *timer_ss;
@@ -141,13 +158,16 @@ private:
     std::string sFilename;
     std::vector<std::string> vsList;
 
-    long long DeltaY;
-    long long DeltaD;
-    long long DeltaH;
-    long long DeltaM;
-    long long DeltaS;
+    std::vector<std::pair<std::string, std::time_t> > vBins;
 
-    long long DeltaT;
+
+    long DeltaY;
+    long DeltaD;
+    long DeltaH;
+    long DeltaM;
+    long DeltaS;
+
+    long DeltaT;
 
     bool isDST;
     bool isQuiet;
@@ -158,8 +178,8 @@ private:
 
     int iSlideshowInterval;
 
-    long long picNb;
-    long long currentPic;
+    long picNb;
+    long currentPic;
 
     Lang selectedLang;
 
@@ -195,7 +215,6 @@ signals:
 private:
     std::string fileName;
 
-    std::string sList;
     std::vector<std::string> vsList;
 };
 
@@ -207,7 +226,7 @@ public:
     virtual ~runShift() { }
 
     void setvsList(std::vector<std::string> &vsList);
-    void setDiff(long long t);
+    void setDiff(long t);
     void setDST(bool bIsDST=true);
     
 public slots:
@@ -221,7 +240,7 @@ signals:
 private:
    std::vector<std::string> vsList;
 
-   long long Diff;
+   long Diff;
    bool bIsDST;
    
 };

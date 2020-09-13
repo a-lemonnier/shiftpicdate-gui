@@ -20,10 +20,10 @@ MainWIndow::MainWIndow(QWidget *parent)
 , iSlideshowInterval(1000)
 , currentPic(0)
 , selectedLang(Lang::EN) {
-
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
 
+    // Set translation --
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
@@ -35,16 +35,17 @@ MainWIndow::MainWIndow(QWidget *parent)
           qApp->installTranslator(&qTranslator);
         this->setLogtext(tr("- Switch language to French.").toStdString());
         ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
-
-         ui->retranslateUi(this);
+        ui->retranslateUi(this);
     }
     else ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+    // ------------------
 
     ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     
+    // Enable widgets --
     ui->bTest->setHidden(true);
-    
+
     ui->bRun->setEnabled(false);
     ui->bReset->setEnabled(false);
     ui->bSelectfile->setEnabled(false);
@@ -52,6 +53,16 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBYear->setEnabled(true);
     ui->sBDay->setEnabled(true);
     ui->bDST->setEnabled(true);
+
+    ui->bRot->setEnabled(false);
+    ui->bNext->setEnabled(false);
+    ui->bPrev->setEnabled(false);
+    ui->bStop->setEnabled(false);
+
+    ui->lEPath->setEnabled(false);
+    // -----------------
+
+    // Set values --
     ui->bDST->setChecked(this->isDST);
     
     ui->cBScroll->setChecked(true);
@@ -62,13 +73,9 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBHour->setValue(this->DeltaH);
     ui->sBMin->setValue(this->DeltaM);
     ui->sBSec->setValue(this->DeltaS);
-    
-    ui->bRot->setEnabled(false);
-    ui->bNext->setEnabled(false);
-    ui->bPrev->setEnabled(false);
-    ui->bStop->setEnabled(false);
+    // -------------
 
-    ui->lEPath->setEnabled(false);
+    // Set Styles --
     ui->lEPath->setStyleSheet(spdStyle::lEPathRed);
     ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
     ui->tBLog->setStyleSheet("");
@@ -81,13 +88,35 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBHour->setStyleSheet(spdStyle::TimeField);
     ui->sBMin->setStyleSheet(spdStyle::TimeField);
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
+    // -------------
 
+    // Blur --
     qeBlur.setEnabled(false);
     qeBlur.setBlurRadius(2);
-
     this->centralWidget()->setGraphicsEffect(&qeBlur);
+    // -------
 
-    // Define some connection
+    // Histo --
+    this->bSerie=new QtCharts::QBarSeries;
+    this->Chart=new QtCharts::QChart();
+    this->chartView = new QtCharts::QChartView(this->Chart);
+
+    this->bSerie->setUseOpenGL(true);
+
+    this->Chart->setAnimationOptions(QtCharts::QChart::AllAnimations);
+    this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
+    this->Chart->setToolTip(tr("Time line."));
+
+    this->chartView->setRenderHint(QPainter::Antialiasing);
+    this->chartView->setMaximumHeight(125);
+
+    ui->hlBarChart->setSizeConstraint(QLayout::SetFixedSize);
+    ui->hlBarChart->addWidget(this->chartView);
+
+    this->plotHist(); // put this after getting file list
+    // --------
+
+    // Define some connections
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
     connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
 }
@@ -133,7 +162,7 @@ void MainWIndow::on_bBrowse_clicked() {
         this->sFilename=fileNames[0].toUtf8().toStdString()+"/";
 
         // if one pic has been selected then display it
-        long long llFilenb=spdFunc::fileNb(this->sFilename);
+        long llFilenb=spdFunc::fileNb(this->sFilename);
 
         if (llFilenb>-1) {
             if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
@@ -143,11 +172,14 @@ void MainWIndow::on_bBrowse_clicked() {
                 this->setLogtext(tr("- Load image ").toStdString()+oneFilename.toStdString()+": ");
 
                 ui->bReset->setEnabled(true);
+
+                // Read pictures
                 QImageReader* imgr=new QImageReader(oneFilename);
                 imgr->read();
 
                 this->setLogtext(imgr->errorString().toStdString()+"\n");
 
+                // Rescale pictures
                 QPixmap pmap(oneFilename);
                 ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
@@ -206,9 +238,11 @@ void MainWIndow::on_bDST_clicked(bool checked) {
     }
 }
 
-void MainWIndow::on_bTest_clicked() {
-    ui->bReset->setEnabled(true);
-}
+void MainWIndow::on_bZoomIn_clicked()  { ui->tBLog->zoomIn(1);  }
+void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
+void MainWIndow::on_bTest_clicked() { ui->bReset->setEnabled(true); }
+void MainWIndow::on_cBHidepic_clicked(bool checked) { ui->picLabel->setHidden(checked); }
+void MainWIndow::on_bStop_clicked() { if (this->timer_ss->isActive()) timer_ss->stop(); }
 
 void MainWIndow::on_bRot_clicked() {
     if (!this->timer_ss->isActive()) {
@@ -405,8 +439,7 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
                      +"s.\n");
 }
 
-void MainWIndow::on_bZoomIn_clicked()  { ui->tBLog->zoomIn(1);  }
-void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
+
 
 void MainWIndow::on_rBInfo_clicked() { // About...
     this->qeBlur.setEnabled(true);
@@ -414,8 +447,8 @@ void MainWIndow::on_rBInfo_clicked() { // About...
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
 
+    // Show some sys info...
     std::string sysInfo;
-
     sysInfo="<p><small><i>";
     sysInfo+=QSysInfo::machineHostName().toStdString()+"<br/>"
             + QSysInfo::prettyProductName().toStdString()+" "
@@ -428,7 +461,6 @@ void MainWIndow::on_rBInfo_clicked() { // About...
             +"- ABI: "+QSysInfo::buildAbi().toStdString()
             +".";
     sysInfo+="</i></small></p>";
-
 
     QString infoMsg;    
     infoMsg=QString::fromStdString("<p><strong>shiftpicdate-gui</strong> "+std::string(VER)+"<br /><br />");
@@ -451,12 +483,10 @@ void MainWIndow::on_rBInfo_clicked() { // About...
     this->qeBlur.setEnabled(false);
 }
 
-void MainWIndow::on_cBHidepic_clicked(bool checked) { ui->picLabel->setHidden(checked); }
-
 void MainWIndow::on_bNext_clicked() {
     if (this->timer_ss->isActive()) timer_ss->stop();
 
-    this->currentPic++;
+    this->currentPic++; // Next pic
     if (this->currentPic>this->picNb-1) this->currentPic=0;
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
@@ -483,10 +513,6 @@ void MainWIndow::on_bPrev_clicked() {
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 }
 
-void MainWIndow::on_bStop_clicked() {
-    if (this->timer_ss->isActive()) timer_ss->stop();
-}
-
 void MainWIndow::on_bSelectfile_clicked() {
     qeBlur.setEnabled(true);
 
@@ -496,11 +522,8 @@ void MainWIndow::on_bSelectfile_clicked() {
 
     connect(secWindow, &fsDialog::sendvector, this, &MainWIndow::get_fsDialog_vector);//, Qt::BlockingQueuedConnection);
     connect(secWindow, &fsDialog::destroyed, this, &MainWIndow::deleteLater);
-    connect(secWindow, &fsDialog::sendvector, this, [this]() {
-        timer_ss->stop();
-        startSlideshow();
-    });
-
+    connect(secWindow, &fsDialog::sendvector, this, [this]() { timer_ss->stop();
+                                                               startSlideshow(); });
     secWindow->exec();
 
     qeBlur.setEnabled(false);
@@ -559,12 +582,10 @@ int  MainWIndow::computeDeltaT() { // compute total secs.
 }
 
 void MainWIndow::update_progressBar_value(int v) {
-
     int r=255-static_cast<float>(v)/100*255;
     int g=static_cast<float>(v)/100*255;
-
+    // Color as function of v
     ui->progressBar->setStyleSheet(QString::fromStdString("color: rgb("+std::to_string(r)+", "+std::to_string(g)+", 0);"));
-
     ui->progressBar->setValue(v);
 }
 
@@ -671,7 +692,7 @@ void MainWIndow::changePic() {
 }
 
 void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
-    this->setLogtext("- "+std::to_string(abs(static_cast<long long>(vs.size()-this->vsList.size())))+tr(" files removed.").toStdString());
+    this->setLogtext("- "+std::to_string(abs(static_cast<long>(vs.size()-this->vsList.size())))+tr(" files removed.").toStdString());
     this->vsList=vs;
 }
 
@@ -701,6 +722,38 @@ void MainWIndow::run_shift() {
   th->start();
 }
 
+
+void MainWIndow::plotHist() {
+/*
+1. Get a vector of epochs.
+2. Determine if the files spread over one years, or one month or one day.
+3.
+If they spread over 12m then fill 12 bins that are numbered: "1", "2", "..." or by month if there the place to put it.
+If they spread over 1m then fill 4 bins of 7 days.
+And so on until 24h.
+
+4. Fill the sets and axis ticks.
+5. Plot after GetList and SelectFiles.
+
+*/
+
+    std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::uniform_real_distribution<double> distrib(0.5,1);
+
+    for(int i=0;i<10;i++) {
+       QtCharts::QBarSet *set=new QtCharts::QBarSet(QString::fromStdString("data_"+std::to_string(i)));
+       for(int j=0;j<10;j++)
+           *set << distrib(gen);
+       bSerie->append(set);
+    }
+
+    this->Chart->addSeries(this->bSerie);
+
+    this->Chart->legend()->setVisible(false);
+}
+
+
 void MainWIndow::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange)
       ui->retranslateUi(this);
@@ -708,9 +761,8 @@ void MainWIndow::changeEvent(QEvent *event) {
 }
 
 
-// ---------------------
-// ---------------------
-// ---------------------
+// fileList:: ------------
+// -----------------------
 
 void fileList::getList() {
     int iCount=0;
@@ -723,7 +775,8 @@ void fileList::getList() {
     for(const auto &str: fs::recursive_directory_iterator(this->fileName)) {
         if (spdFunc::test_ext(str.path().filename().string())) {
             this->vsList.emplace_back(str.path().string());
-            std::string sTmp(spdFunc::getExifDate(str.path().generic_string()));
+            auto [sTmp, Epoch]=spdFunc::getExifDateEpoch(str.path().string());
+            sTmp+=" "+std::to_string(Epoch)+" s";
             if (sTmp.empty())
                 emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\n")));
             else
@@ -742,8 +795,8 @@ void fileList::setfileName(std::string& str) { this->fileName=str; }
 
 std::vector<std::string> fileList::getvsList() const { return this->vsList; }
 
-// ---------------------
-// ---------------------
+
+// runShift:: ----------
 // ---------------------
 
 void runShift::setvsList(std::vector<std::string> &vsList) { this->vsList=vsList; }
@@ -761,12 +814,11 @@ void runShift::shift() {
         }
         emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb)));
     }
-
     emit(sendProgress(100));
     emit(sendstdStr(tr("- Shifting completed.\n")));
     emit(finished());
 }
 
-void runShift::setDiff(long long t) { this->Diff= (t>0) ? t : 0; }
+void runShift::setDiff(long t) { this->Diff= (t>0) ? t : 0; }
 
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }

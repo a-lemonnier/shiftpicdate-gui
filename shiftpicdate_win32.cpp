@@ -42,8 +42,105 @@ std::string spdFunc::getExifDate(const std::string &sFilename) {
     return Res;
 }
 
+long spdFunc::getExifEpoch(const std::string &sFilename) {
+    long lEpoch;
 
-bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIsDST) {
+    if (  fs::exists(fs::path(sFilename)) && test_ext(sFilename)) {
+        std::string Res;
+        const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
+        
+        std::wstring wsFilename(sFilename.begin(), sFilename.end());
+
+        CoInitialize( nullptr );
+        
+        CComPtr<IWICImagingFactory> pFactory;
+        CComPtr<IWICBitmapDecoder> pDecoder;
+        CComPtr<IWICBitmapFrameDecode> pFrame;
+        CComPtr<IWICMetadataQueryReader> pMetadataReader;
+        
+        CoCreateInstance( CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&pFactory );
+        
+        auto hr=pFactory->CreateDecoderFromFilename(wsFilename.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &pDecoder );
+        
+        if (SUCCEEDED(hr)) {
+            pDecoder->GetFrame( 0, &pFrame );
+            
+            pFrame->GetMetadataQueryReader( &pMetadataReader );
+            
+            PROPVARIANT value;
+            PropVariantInit( &value );
+            
+            pMetadataReader->GetMetadataByName( L"/app1/ifd/exif/{ushort=36867}", &value );
+            if (value.vt == VT_LPSTR)
+                Res=std::string(value.pszVal);
+            PropVariantClear( &value );
+
+            std::tm dt={ };
+            std::stringstream ssS(Res);
+            ssS >> std::get_time(&dt, dateTimeFormat.c_str());
+            lEpoch=std::mktime(&dt);
+            
+            pMetadataReader.Release();
+            pFrame.Release();
+            pDecoder.Release();
+            pFactory.Release();
+        }
+        else std::cerr << "Cannot create decoder.\n";
+        CoUninitialize( );   
+    }
+    return lEpoch;
+}
+
+std::pair<std::string, long> spdFunc::getExifDateEpoch(const std::string &sFilename) {
+    std::string Res;    
+    long lEpoch;
+
+    if (  fs::exists(fs::path(sFilename)) && test_ext(sFilename)) {
+        const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
+        
+        std::wstring wsFilename(sFilename.begin(), sFilename.end());
+
+        CoInitialize( nullptr );
+        
+        CComPtr<IWICImagingFactory> pFactory;
+        CComPtr<IWICBitmapDecoder> pDecoder;
+        CComPtr<IWICBitmapFrameDecode> pFrame;
+        CComPtr<IWICMetadataQueryReader> pMetadataReader;
+        
+        CoCreateInstance( CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&pFactory );
+        
+        auto hr=pFactory->CreateDecoderFromFilename(wsFilename.c_str(), NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &pDecoder );
+        
+        if (SUCCEEDED(hr)) {
+            pDecoder->GetFrame( 0, &pFrame );
+            
+            pFrame->GetMetadataQueryReader( &pMetadataReader );
+            
+            PROPVARIANT value;
+            PropVariantInit( &value );
+            
+            pMetadataReader->GetMetadataByName( L"/app1/ifd/exif/{ushort=36867}", &value );
+            if (value.vt == VT_LPSTR)
+                Res=std::string(value.pszVal);
+            PropVariantClear( &value );
+
+            std::tm dt={ };
+            std::stringstream ssS(Res);
+            ssS >> std::get_time(&dt, dateTimeFormat.c_str());
+            lEpoch=std::mktime(&dt);
+            
+            pMetadataReader.Release();
+            pFrame.Release();
+            pDecoder.Release();
+            pFactory.Release();
+        }
+        else std::cerr << "Cannot create decoder.\n";
+        CoUninitialize( );   
+    }
+    return {Res, lEpoch};
+}
+
+bool spdFunc::setExifDate(const std::string &sFilename, long Diff, bool bIsDST) {
     bool bStatus=false;
     if (spdFunc::test_ext(sFilename)) {
         
@@ -194,16 +291,30 @@ bool spdFunc::setExifDate(const std::string &sFilename, long long Diff, bool bIs
     return bStatus;
 }
 
+std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t) {
+    constexpr long M=60;
+    constexpr long H=60*M;
+    constexpr long D=24*H;
+    constexpr long Mo=52*7*H+1;
+    constexpr long Y=365*D;
 
-std::string spdFunc::stoyear(long long t) {
+    return {(    t / Y ),
+            (    t % Y ) / Mo,
+            ((   t % Y ) % Mo ) / D,
+            (((  t % Y ) % Mo ) % D ) / H,
+            (((( t % Y ) % Mo ) % D ) % H ) / M,
+            (((( t % Y ) % Mo ) % D ) % H ) % M  };
+}
+
+std::string spdFunc::stoyear(long t) {
     std::stringstream ssS;
     
-    constexpr long long M=60;
-    constexpr long long H=60*M;
-    constexpr long long D=24*H;
-    constexpr long long Y=365*D;
+    constexpr long M=60;
+    constexpr long H=60*M;
+    constexpr long D=24*H;
+    constexpr long Y=365*D;
     
-    long long t0=-t;
+    long t0=-t;
     
     if (t<0)
         ssS << "-"
@@ -229,14 +340,14 @@ bool spdFunc::test_ext(const std::string &sS) {
     return res;
 }
 
-long long spdFunc::fileNb(const fs::path &path) {
-    long long n=-1;
+long spdFunc::fileNb(const fs::path &path) {
+    long n=-1;
     try { n=std::distance(fs::recursive_directory_iterator{path}, fs::recursive_directory_iterator{}); }
     catch (fs::filesystem_error &err) {std::cerr << "- spdFunc::fileNb(): error: "  << ": " << err.what() << "\n";}
     return n;
 }
 
-std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long long t, bool bIsDST) {
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST) {
     
     const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
 

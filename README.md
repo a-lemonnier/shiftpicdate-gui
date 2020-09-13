@@ -7,13 +7,14 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 - Qt 5
 - Exiv2 (UNIX)
 - CMake
-- g++ or MSVC++ for C++17
+- g++ / MSVC++ for C++17
 
 > Lang.:
 - English
 - French
 
 > TODO:
+- Timeline
 - "dialog.setOption(QFileDialog::ShowDirsOnly, true)" does not work on Windows, deprecated "QFileDialog::DirectoryOnly" used instead.
 
 > Binaries 
