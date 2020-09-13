@@ -15,6 +15,9 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+if(NOT DEFINED QT_VERSION_MAJOR)
+    set(QT_VERSION_MAJOR 5)
+endif()
 
 find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts REQUIRED)
 
@@ -65,14 +68,12 @@ if(UNIX)
   )
 endif(UNIX)
 
-
-
 if (WIN32)
-    target_link_libraries(shiftpicdate-gui  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
+    target_link_libraries(shiftpicdate-gui  PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts)
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts)
     target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lstdc++fs -lexiv2)
 endif (UNIX)
 
