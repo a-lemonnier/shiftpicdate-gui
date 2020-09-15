@@ -146,18 +146,13 @@ bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool 
 }
 
 std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t) {
-    constexpr long M=60;
-    constexpr long H=60*M;
-    constexpr long D=24*H;
-    constexpr long Mo=52*7*H+1;
-    constexpr long Y=365*D;
-
-    return {(    t / Y ),
-            (    t % Y ) / Mo,
-            ((   t % Y ) % Mo ) / D,
-            (((  t % Y ) % Mo ) % D ) / H,
-            (((( t % Y ) % Mo ) % D ) % H ) / M,
-            (((( t % Y ) % Mo ) % D ) % H ) % M  };
+    struct tm dt = *gmtime(&t);
+    return {dt.tm_year +1900,
+            dt.tm_mon+1,
+            dt.tm_mday,
+            dt.tm_hour,
+            dt.tm_min,
+            dt.tm_sec };
 }
 
 std::string spdFunc::stoyear(long t) {
@@ -166,7 +161,7 @@ std::string spdFunc::stoyear(long t) {
     constexpr long M=60;
     constexpr long H=60*M;
     constexpr long D=24*H;
-    constexpr long Y=365*D;
+    constexpr long Y=365.24*static_cast<float>(D);
 
     long t0=-t;
 

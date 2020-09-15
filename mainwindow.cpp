@@ -19,6 +19,7 @@ MainWIndow::MainWIndow(QWidget *parent)
 , iPicRot(-90)
 , iSlideshowInterval(1000)
 , currentPic(0)
+, lHistCurYear(0)
 , selectedLang(Lang::EN) {
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
@@ -60,6 +61,8 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->bStop->setEnabled(false);
 
     ui->lEPath->setEnabled(false);
+
+    ui->cbYear->setHidden(true);
     // -----------------
 
     // Set values --
@@ -97,28 +100,28 @@ MainWIndow::MainWIndow(QWidget *parent)
     // -------
 
     // Histo --
-    this->bSerie=new QtCharts::QBarSeries;
     this->Chart=new QtCharts::QChart();
     this->chartView = new QtCharts::QChartView(this->Chart);
 
-    this->bSerie->setUseOpenGL(true);
-
     this->Chart->setAnimationOptions(QtCharts::QChart::AllAnimations);
     this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
+
     this->Chart->setToolTip(tr("Time line."));
 
     this->chartView->setRenderHint(QPainter::Antialiasing);
-    this->chartView->setMaximumHeight(125);
+//    this->chartView->setMaximumHeight(125);
 
     ui->hlBarChart->setSizeConstraint(QLayout::SetFixedSize);
     ui->hlBarChart->addWidget(this->chartView);
 
-    this->plotHist(); // put this after getting file list
+    this->chartView->setHidden(true);
+
     // --------
 
     // Define some connections
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
     connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
+    //connect(ui->cbYear, &QComboBox::currentTextChanged, this, &MainWIndow::plotHistY );
 }
 
 MainWIndow::~MainWIndow() { delete ui; }
@@ -547,6 +550,11 @@ void MainWIndow::on_bFlag_released() {
   ui->retranslateUi(this);
 }
 
+void MainWIndow::on_cbYear_activated(const QString &str) {
+    this->lHistCurYear=std::stol(str.toStdString());
+    this->plotHist();
+}
+
 void MainWIndow::setLogtextTh(const std::string &msg) {
     this->SLog+=QString::fromStdString(msg); 
     if (this->isAutoScroll)
@@ -615,7 +623,11 @@ void MainWIndow::getfileList() {
     
     connect(fL, &fileList::fLProgress, this,  &MainWIndow::update_progressBar_value);
     connect(fL, &fileList::sendstdStr, this,  &MainWIndow::update_Log_value);
+    connect(fL, &fileList::sendEpoch, this, &MainWIndow::addEpoch);
+
     connect(fL, &fileList::finished, th, &QThread::quit);
+    connect(fL, &fileList::finished, this, &MainWIndow::plotHist);
+
 
     // Start slideshow when the thread is finished.
     connect(fL, &fileList::finished, this, [=](){
@@ -696,6 +708,8 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
     this->vsList=vs;
 }
 
+void MainWIndow::addEpoch(long t) { this->vEpoch.push_back(t); }
+
 void MainWIndow::run_shift() {
   runShift *rs=new runShift();
   QThread *th=new QThread();
@@ -724,35 +738,127 @@ void MainWIndow::run_shift() {
 
 
 void MainWIndow::plotHist() {
-/*
-1. Get a vector of epochs.
-2. Determine if the files spread over one years, or one month or one day.
-3.
-If they spread over 12m then fill 12 bins that are numbered: "1", "2", "..." or by month if there the place to put it.
-If they spread over 1m then fill 4 bins of 7 days.
-And so on until 24h.
+    using namespace QtCharts;
 
-4. Fill the sets and axis ticks.
-5. Plot after GetList and SelectFiles.
+    if (!this->vEpoch.empty()) {
+        std::stringstream ss;
 
-*/
+        ui->cbYear->setHidden(false);
+        this->chartView->setHidden(false);
 
-    std::random_device rd;
-    std::mt19937_64 gen(rd());
-    std::uniform_real_distribution<double> distrib(0.5,1);
+        typedef std::tuple<long, long, long, long, long, long> ymdHMS;
 
-    for(int i=0;i<10;i++) {
-       QtCharts::QBarSet *set=new QtCharts::QBarSet(QString::fromStdString("data_"+std::to_string(i)));
-       for(int j=0;j<10;j++)
-           *set << distrib(gen);
-       bSerie->append(set);
+        std::vector<ymdHMS> vtEpoch;
+
+        struct PicStat {
+            long Y;
+            long M;
+            long D;
+            long n;
+        };
+
+        struct PicDay {
+            long Y;
+            long M;
+            long D;
+        };
+
+        std::vector<PicStat> vStat;
+        std::vector<PicDay> vDay;
+
+        std::sort(this->vEpoch.begin(), this->vEpoch.end());
+
+        for(const auto &t: this->vEpoch) {
+            if (t!=0) {
+                auto [y, m, d, H, M, S]=spdFunc::decompEpoch(t);
+                vDay.emplace_back(PicDay({y, m, d}));
+            }
+        }
+
+        std::map<long, std::set<long> > mlslMonth;
+
+        PicDay Day;
+        int n=0;
+        for(int i=0; i<vDay.size()-1; i++) {
+            Day=vDay[i];
+            n=0;
+            while(Day.Y==vDay[i+n].Y &&
+                  Day.M==vDay[i+n].M &&
+                  Day.D==vDay[i+n].D   )  if (i+n<vDay.size()) n++;
+            i+=n;
+            vStat.emplace_back(PicStat({Day.Y, Day.M, Day.D, n}));
+        }
+
+        std::set<long> sY, sM, sD;
+        for(const auto &t: vStat) {
+            sY.insert(t.Y);
+            sM.insert(t.M);
+            sD.insert(t.D);
+        }
+
+
+        if (this->lHistCurYear==0) {
+            for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
+            ui->cbYear->removeItem(0);
+            ui->cbYear->setCurrentIndex(ui->cbYear->count()-1 < 0 ? 0 : ui->cbYear->count()-1);
+        }
+
+        for(const auto &Y: sY) {
+            std::set<long> sM_tmp;
+            for(int i=0; i<vStat.size(); i++) {
+                if (Y==vStat[i].Y)
+                    sM_tmp.insert(vStat[i].M);
+            }
+            mlslMonth.insert({Y, sM_tmp});
+        }
+
+        long y;
+        if (this->lHistCurYear!=0) y=this->lHistCurYear;
+        else y=std::stol(ui->cbYear->currentText().toStdString());
+
+        this->Chart->removeAllSeries();
+
+          for(auto &m: mlslMonth[y]) {
+           QBarSeries *series = new QBarSeries();
+           series->setName(QString::fromStdString("Month: "+std::to_string(m)));
+           for(int d=1;d<32;d++) {
+               QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
+
+               auto it=std::find_if(vStat.begin(), vStat.end(),
+                                    [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
+
+               if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
+               else *set << 0;
+
+               set->setColor(QColor(127,127,127));
+               series->append(set);
+           }
+           series->setUseOpenGL(true);
+           Chart->addSeries(series);
+        }
+
+        this->setLogtext(ss.str());
+
+       QStringList categories;
+       for(auto &m: mlslMonth[y])
+            categories << QString::fromStdString("Month "+std::to_string(m));
+
+       Chart->removeAxis(this->axisX);
+       this->axisX = new QBarCategoryAxis();
+       this->axisX->append(categories);
+
+       Chart->addAxis(this->axisX, Qt::AlignBottom);
+
+//        this->vEpoch.clear(); NO !
+        this->Chart->legend()->setVisible(false);
     }
-
-    this->Chart->addSeries(this->bSerie);
-
-    this->Chart->legend()->setVisible(false);
+    else this->setLogtext("- vEpoch empty.\n");
 }
 
+void MainWIndow::plotHistY(const QString &year) {
+    this->lHistCurYear=std::stol(year.toStdString());
+    this->plotHist();
+}
 
 void MainWIndow::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange)
@@ -779,8 +885,10 @@ void fileList::getList() {
             sTmp+=" "+std::to_string(Epoch)+" s";
             if (sTmp.empty())
                 emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\n")));
-            else
+            else {
+                emit(sendEpoch(Epoch));
                 emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\t"+sTmp+"\n")));
+            }
 
          }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
@@ -822,3 +930,5 @@ void runShift::shift() {
 void runShift::setDiff(long t) { this->Diff= (t>0) ? t : 0; }
 
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
+
+

@@ -44,11 +44,14 @@
 
 #include <QValueAxis>
 
+#include <QBarCategoryAxis>
+
 #include <ctime>
 #include <algorithm>
 #include <memory>
 #include <cassert>
 #include <random>
+#include <tuple>
 
 #if __has_include (<filesystem>)
 #include <filesystem>
@@ -109,6 +112,8 @@ public slots:
     void get_fsDialog_vector(std::vector<std::string> &);
     void run_shift();
     void plotHist();
+    void addEpoch(long t);
+    void plotHistY(const QString &year);
 
 private slots:
     void on_bBrowse_clicked();
@@ -139,12 +144,14 @@ private slots:
 
     void on_bFlag_released();
 
+    void on_cbYear_activated(const QString &);
+
 private:
     Ui::MainWIndow *ui;
 
     QtCharts::QChartView *chartView;
     QtCharts::QChart *Chart;
-    QtCharts::QBarSeries *bSerie;
+    QtCharts::QBarCategoryAxis *axisX;
 
     QTranslator qTranslator;
 
@@ -157,6 +164,7 @@ private:
 
     std::string sFilename;
     std::vector<std::string> vsList;
+    std::vector<long> vEpoch;
 
     std::vector<std::pair<std::string, std::time_t> > vBins;
 
@@ -180,6 +188,8 @@ private:
 
     long picNb;
     long currentPic;
+
+    long lHistCurYear;
 
     Lang selectedLang;
 
@@ -210,6 +220,7 @@ public slots:
 signals:
     void fLProgress(int);
     void sendstdStr(QString);
+    void sendEpoch(long);
     void finished();
 
 private:

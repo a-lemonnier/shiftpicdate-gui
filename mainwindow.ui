@@ -465,6 +465,15 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QComboBox" name="cbYear">
+            <item>
+             <property name="text">
+              <string>Years</string>
+             </property>
+            </item>
+           </widget>
+          </item>
          </layout>
         </item>
         <item row="2" column="0">
