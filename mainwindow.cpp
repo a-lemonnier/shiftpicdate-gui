@@ -813,7 +813,7 @@ void MainWIndow::plotHist() {
                       Day.M==vDay[i+n].M &&
                       Day.D==vDay[i+n].D   )  if (i+n<vDay.size()) n++;
                 i+=n;
-                vStat.emplace_back(PicStat({Day.Y, Day.M, Day.D, n}));
+                vStat.emplace_back(PicStat({Day.Y, Day.M, Day.D, static_cast<long>(n)}));
             }
 
             std::set<long> sY, sM, sD;
