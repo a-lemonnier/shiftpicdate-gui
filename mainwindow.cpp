@@ -768,9 +768,6 @@ void MainWIndow::plotHist() {
 
     if (!this->vEpoch.empty()) {
 
-        ui->cbYear->setHidden(false);
-        this->chartView->setHidden(false);
-
         typedef std::tuple<long, long, long, long, long, long> ymdHMS;
 
         std::vector<ymdHMS> vtEpoch;
@@ -800,96 +797,102 @@ void MainWIndow::plotHist() {
             }
         }
 
-        std::map<long, std::set<long> > mlslMonth;
+        if (vDay.size()>0) {
+            ui->cbYear->setHidden(false);
+            this->chartView->setHidden(false);
 
-        PicDay Day;
-        unsigned int n=0;
-        for(unsigned int i=0; i<vDay.size()-1; i++) {
-            Day=vDay[i];
-            n=0;
-            while(Day.Y==vDay[i+n].Y &&
-                  Day.M==vDay[i+n].M &&
-                  Day.D==vDay[i+n].D   )  if (i+n<vDay.size()) n++;
-            i+=n;
-            vStat.emplace_back(PicStat({Day.Y, Day.M, Day.D, n}));
-        }
+            std::map<long, std::set<long> > mlslMonth;
 
-        std::set<long> sY, sM, sD;
-        for(const auto &t: vStat) {
-            sY.insert(t.Y);
-            sM.insert(t.M);
-            sD.insert(t.D);
-        }
+            PicDay Day;
+            unsigned int n=0;
 
-        ui->cbYear->clear();
-        for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
-        if (this->lHistCurYear!=0)
-            ui->cbYear->setCurrentText(QString::fromStdString(std::to_string(this->lHistCurYear)));
-
-        for(const auto &Y: sY) {
-            std::set<long> sM_tmp;
-            for(unsigned int i=0; i<vStat.size(); i++) {
-                if (Y==vStat[i].Y)
-                    sM_tmp.insert(vStat[i].M);
+            for(unsigned int i=0; i<vDay.size()-1; i++) {
+                Day=vDay[i];
+                n=0;
+                while(Day.Y==vDay[i+n].Y &&
+                      Day.M==vDay[i+n].M &&
+                      Day.D==vDay[i+n].D   )  if (i+n<vDay.size()) n++;
+                i+=n;
+                vStat.emplace_back(PicStat({Day.Y, Day.M, Day.D, n}));
             }
-            mlslMonth.insert({Y, sM_tmp});
-        }
 
-        long y;
-        if (this->lHistCurYear!=0) y=this->lHistCurYear;
-        else y=std::stol(ui->cbYear->currentText().toStdString());
-
-        this->Chart->removeAllSeries();
-
-        for(auto &m: mlslMonth[y]) {
-            QBarSeries *series = new QBarSeries();
-            series->setName(QString::fromStdString("Month: "+std::to_string(m)));
-            for(int d=1;d<32;d++) {
-                QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
-                
-                auto it=std::find_if(vStat.begin(), vStat.end(),
-                                     [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
-                
-                if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
-                else *set << 0;
-                
-                set->setColor(QColor(127,127,127));
-                series->append(set);
+            std::set<long> sY, sM, sD;
+            for(const auto &t: vStat) {
+                sY.insert(t.Y);
+                sM.insert(t.M);
+                sD.insert(t.D);
             }
-            series->setUseOpenGL(true);
-            Chart->addSeries(series);
-        }
 
-        QStringList categories;
-        for(auto &m: mlslMonth[y]) {
-            QString MonthStr;
-            
-            switch (m) {
-                case 1: MonthStr=tr("Janvier"); break;
-                case 2: MonthStr=tr("February"); break;
-                case 3: MonthStr=tr("March"); break;
-                case 4: MonthStr=tr("April"); break;
-                case 5: MonthStr=tr("May"); break;
-                case 6: MonthStr=tr("June"); break;
-                case 7: MonthStr=tr("July"); break;
-                case 8: MonthStr=tr("August"); break;
-                case 9: MonthStr=tr("September"); break;
-                case 10: MonthStr=tr("October"); break;
-                case 11: MonthStr=tr("November"); break;
-                case 12: MonthStr=tr("December"); break;
-                default: break;
+            ui->cbYear->clear();
+            for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
+            if (this->lHistCurYear!=0)
+                ui->cbYear->setCurrentText(QString::fromStdString(std::to_string(this->lHistCurYear)));
+
+            for(const auto &Y: sY) {
+                std::set<long> sM_tmp;
+                for(unsigned int i=0; i<vStat.size(); i++) {
+                    if (Y==vStat[i].Y)
+                        sM_tmp.insert(vStat[i].M);
+                }
+                mlslMonth.insert({Y, sM_tmp});
             }
-            categories << MonthStr;
+
+            long y;
+            if (this->lHistCurYear!=0) y=this->lHistCurYear;
+            else y=std::stol(ui->cbYear->currentText().toStdString());
+
+            this->Chart->removeAllSeries();
+
+            for(auto &m: mlslMonth[y]) {
+                QBarSeries *series = new QBarSeries();
+                series->setName(QString::fromStdString("Month: "+std::to_string(m)));
+                for(int d=1;d<32;d++) {
+                    QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
+
+                    auto it=std::find_if(vStat.begin(), vStat.end(),
+                                         [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
+
+                    if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
+                    else *set << 0;
+
+                    set->setColor(QColor(127,127,127));
+                    series->append(set);
+                }
+                series->setUseOpenGL(true);
+                Chart->addSeries(series);
+            }
+
+            QStringList categories;
+            for(auto &m: mlslMonth[y]) {
+                QString MonthStr;
+
+                switch (m) {
+                    case 1: MonthStr=tr("Janvier"); break;
+                    case 2: MonthStr=tr("February"); break;
+                    case 3: MonthStr=tr("March"); break;
+                    case 4: MonthStr=tr("April"); break;
+                    case 5: MonthStr=tr("May"); break;
+                    case 6: MonthStr=tr("June"); break;
+                    case 7: MonthStr=tr("July"); break;
+                    case 8: MonthStr=tr("August"); break;
+                    case 9: MonthStr=tr("September"); break;
+                    case 10: MonthStr=tr("October"); break;
+                    case 11: MonthStr=tr("November"); break;
+                    case 12: MonthStr=tr("December"); break;
+                    default: break;
+                }
+                categories << MonthStr;
+            }
+
+            if (!this->Chart->axes(Qt::Horizontal).empty())
+                this->Chart->removeAxis(this->axisX);
+            this->axisX = new QBarCategoryAxis();
+            this->axisX->append(categories);
+
+            Chart->addAxis(this->axisX, Qt::AlignBottom);
+
+            this->Chart->legend()->setVisible(false);
         }
-        
-        if (!this->Chart->axes(Qt::Horizontal).empty())
-            this->Chart->removeAxis(this->axisX);
-        this->axisX = new QBarCategoryAxis();
-        this->axisX->append(categories);
-        
-        Chart->addAxis(this->axisX, Qt::AlignBottom);
-        
-        this->Chart->legend()->setVisible(false);
     }
     else this->setLogtext("- vEpoch empty.\n");
 }
