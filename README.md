@@ -16,7 +16,7 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 
 > Gentoo: you should know... 
 
-> Windows: check the sourceforce page: installer contains Qt Dlls that means... it is above 25 Mb and cannot be upload there.
+> Windows: check the sourceforce page: installer contains Qt Dlls that means... it is above 25 Mb and cannot be uploaded there.
 
 > Lang.:
 - English
