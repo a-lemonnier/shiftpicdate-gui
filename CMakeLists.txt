@@ -69,7 +69,7 @@ if(UNIX)
 endif(UNIX)
 
 if (WIN32)
-    target_link_libraries(shiftpicdate-gui  PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
+    target_link_libraries(shiftpicdate-gui WIN32 PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
 endif (WIN32)
 
 if (UNIX)
