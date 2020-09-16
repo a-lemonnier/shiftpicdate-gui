@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define VER "0.2"
+#define VER "0.3"
 
 #include <Qt>
 #include <QMainWindow>

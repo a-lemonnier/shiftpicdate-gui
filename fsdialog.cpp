@@ -22,8 +22,6 @@ fsDialog::fsDialog(QWidget *parent) :
 
 fsDialog::~fsDialog() { delete ui; }
 
-void fsDialog::on_buttonBox_accepted() { this->close(); }
-
 void fsDialog::setFilelist(const std::vector<std::string> &vsList) {
     this->vsList=vsList;
 }
@@ -44,3 +42,5 @@ void fsDialog::on_bOK_clicked() {
     }
     this->close();
 }
+
+

@@ -100,6 +100,8 @@ MainWIndow::MainWIndow(QWidget *parent)
     // -------
 
     // Histo --
+    ui->cbYear->setDuplicatesEnabled(false);
+
     this->Chart=new QtCharts::QChart();
     this->chartView = new QtCharts::QChartView(this->Chart);
 
@@ -121,7 +123,6 @@ MainWIndow::MainWIndow(QWidget *parent)
     // Define some connections
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
     connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
-    //connect(ui->cbYear, &QComboBox::currentTextChanged, this, &MainWIndow::plotHistY );
 }
 
 MainWIndow::~MainWIndow() { delete ui; }
@@ -131,7 +132,6 @@ void MainWIndow::on_bBrowse_clicked() {
 
     ui->lEPath->setStyleSheet("");
     ui->bBrowse->setStyleSheet("");
-    this->vsList.clear();
 
     QFileDialog dialog(this);
 
@@ -150,52 +150,62 @@ void MainWIndow::on_bBrowse_clicked() {
     if (tree)  tree->setSelectionMode(QAbstractItemView::MultiSelection);
     // ***
     
-    QStringList fileNames={""};
+    QStringList fileNames;
+    QStringList fileNames_tmp;
 
-    if (dialog.exec()) fileNames=dialog.selectedFiles();
+    if (dialog.exec()) fileNames_tmp=dialog.selectedFiles();
 
-    ui->lEPath->setText(fileNames[0]);
-    ui->lEPath->setEnabled(false);
-    
-    this->setLogtext(tr("- Path selected: ").toStdString());
-    for(const auto &str: fileNames)
-        this->setLogtext(str.toUtf8().toStdString()+"\n");
-    
-    if (fs::is_directory(fileNames[0].toUtf8().toStdString())) {
-        this->sFilename=fileNames[0].toUtf8().toStdString()+"/";
+    if (fileNames_tmp.empty()) {
+        fileNames.append("");
+        this->setLogtext(tr("- Path selected: empty path.").toStdString()+"\n");
+    }
+    else {
+        this->vsList.clear();
 
-        // if one pic has been selected then display it
-        long llFilenb=spdFunc::fileNb(this->sFilename);
+        fileNames=fileNames_tmp;
+        fileNames_tmp.clear();
+        this->setLogtext(tr("- Path selected: ").toStdString());
+        for(const auto &str: fileNames) this->setLogtext(str.toUtf8().toStdString()+"\n");
 
-        if (llFilenb>-1) {
-            if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
+        ui->lEPath->setText(fileNames[0]);
+        ui->lEPath->setEnabled(false);
 
-                QString oneFilename=QString::fromStdString((*fs::recursive_directory_iterator(this->sFilename)).path().string());
+        if (fs::is_directory(fileNames[0].toUtf8().toStdString())) {
+            this->sFilename=fileNames[0].toUtf8().toStdString()+"/";
 
-                this->setLogtext(tr("- Load image ").toStdString()+oneFilename.toStdString()+": ");
+            // if one pic has been selected then display it
+            long llFilenb=spdFunc::fileNb(this->sFilename);
 
-                ui->bReset->setEnabled(true);
+            if (llFilenb>-1) {
+                if (llFilenb==1 && spdFunc::test_ext((*fs::recursive_directory_iterator(this->sFilename)).path().string())) {
 
-                // Read pictures
-                QImageReader* imgr=new QImageReader(oneFilename);
-                imgr->read();
+                    QString oneFilename=QString::fromStdString((*fs::recursive_directory_iterator(this->sFilename)).path().string());
 
-                this->setLogtext(imgr->errorString().toStdString()+"\n");
+                    this->setLogtext(tr("- Load image ").toStdString()+oneFilename.toStdString()+": ");
 
-                // Rescale pictures
-                QPixmap pmap(oneFilename);
-                ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
+                    ui->bReset->setEnabled(true);
 
-                delete imgr;
+                    // Read pictures
+                    QImageReader* imgr=new QImageReader(oneFilename);
+                    imgr->read();
+
+                    this->setLogtext(imgr->errorString().toStdString()+"\n");
+
+                    // Rescale pictures
+                    QPixmap pmap(oneFilename);
+                    ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
+
+                    delete imgr;
+                }
+                else {
+                    this->setEnabled(false);
+                    this->getfileList();
+                    this->setEnabled(true);
+                }
             }
-            else {
-                this->setEnabled(false);
-                this->getfileList();
-                this->setEnabled(true);
-            }
+            else
+                this->setLogtext(tr("- Cannot process with this path: ").toStdString()+this->sFilename+"!\n");
         }
-        else
-            this->setLogtext(tr("- \u25EC Cannot process with this path: ").toStdString()+this->sFilename+".\n");
     }
     qeBlur.setEnabled(false);
 }
@@ -527,6 +537,18 @@ void MainWIndow::on_bSelectfile_clicked() {
     connect(secWindow, &fsDialog::destroyed, this, &MainWIndow::deleteLater);
     connect(secWindow, &fsDialog::sendvector, this, [this]() { timer_ss->stop();
                                                                startSlideshow(); });
+
+    connect(secWindow, &fsDialog::rejected, this, [this]() {qeBlur.setEnabled(false);});
+
+    connect(secWindow, &fsDialog::finished, this,
+            [this]() {
+                this->lHistCurYear=0;
+                this->vEpoch.clear();
+                for(const auto &file: this->vsList)
+                    this->vEpoch.emplace_back(spdFunc::getExifEpoch(file));
+                this->plotHist();
+    });
+
     secWindow->exec();
 
     qeBlur.setEnabled(false);
@@ -678,7 +700,6 @@ void MainWIndow::startSlideshow() {
         timer_ss=new QTimer(this);
         connect(timer_ss, &QTimer::timeout, this, &MainWIndow::changePic);
         connect(timer_ss, &QTimer::destroyed, timer_ss, &QTimer::deleteLater);
-//        connect(ui->bSelectfile, &QPushButton::clicked, timer_ss, &QTimer::stop);
         timer_ss->start(this->iSlideshowInterval);
         // --
     }
@@ -736,12 +757,10 @@ void MainWIndow::run_shift() {
   th->start();
 }
 
-
 void MainWIndow::plotHist() {
     using namespace QtCharts;
 
     if (!this->vEpoch.empty()) {
-        std::stringstream ss;
 
         ui->cbYear->setHidden(false);
         this->chartView->setHidden(false);
@@ -778,8 +797,8 @@ void MainWIndow::plotHist() {
         std::map<long, std::set<long> > mlslMonth;
 
         PicDay Day;
-        int n=0;
-        for(int i=0; i<vDay.size()-1; i++) {
+        unsigned int n=0;
+        for(unsigned int i=0; i<vDay.size()-1; i++) {
             Day=vDay[i];
             n=0;
             while(Day.Y==vDay[i+n].Y &&
@@ -796,16 +815,14 @@ void MainWIndow::plotHist() {
             sD.insert(t.D);
         }
 
-
-        if (this->lHistCurYear==0) {
-            for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
-            ui->cbYear->removeItem(0);
-            ui->cbYear->setCurrentIndex(ui->cbYear->count()-1 < 0 ? 0 : ui->cbYear->count()-1);
-        }
+        ui->cbYear->clear();
+        for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
+        if (this->lHistCurYear!=0)
+            ui->cbYear->setCurrentText(QString::fromStdString(std::to_string(this->lHistCurYear)));
 
         for(const auto &Y: sY) {
             std::set<long> sM_tmp;
-            for(int i=0; i<vStat.size(); i++) {
+            for(unsigned int i=0; i<vStat.size(); i++) {
                 if (Y==vStat[i].Y)
                     sM_tmp.insert(vStat[i].M);
             }
@@ -818,38 +835,54 @@ void MainWIndow::plotHist() {
 
         this->Chart->removeAllSeries();
 
-          for(auto &m: mlslMonth[y]) {
-           QBarSeries *series = new QBarSeries();
-           series->setName(QString::fromStdString("Month: "+std::to_string(m)));
-           for(int d=1;d<32;d++) {
-               QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
-
-               auto it=std::find_if(vStat.begin(), vStat.end(),
-                                    [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
-
-               if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
-               else *set << 0;
-
-               set->setColor(QColor(127,127,127));
-               series->append(set);
-           }
-           series->setUseOpenGL(true);
-           Chart->addSeries(series);
+        for(auto &m: mlslMonth[y]) {
+            QBarSeries *series = new QBarSeries();
+            series->setName(QString::fromStdString("Month: "+std::to_string(m)));
+            for(int d=1;d<32;d++) {
+                QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
+                
+                auto it=std::find_if(vStat.begin(), vStat.end(),
+                                     [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
+                
+                if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
+                else *set << 0;
+                
+                set->setColor(QColor(127,127,127));
+                series->append(set);
+            }
+            series->setUseOpenGL(true);
+            Chart->addSeries(series);
         }
 
-        this->setLogtext(ss.str());
-
-       QStringList categories;
-       for(auto &m: mlslMonth[y])
-            categories << QString::fromStdString("Month "+std::to_string(m));
-
-       Chart->removeAxis(this->axisX);
-       this->axisX = new QBarCategoryAxis();
-       this->axisX->append(categories);
-
-       Chart->addAxis(this->axisX, Qt::AlignBottom);
-
-//        this->vEpoch.clear(); NO !
+        QStringList categories;
+        for(auto &m: mlslMonth[y]) {
+            QString MonthStr;
+            
+            switch (m) {
+                case 1: MonthStr=tr("Janvier"); break;
+                case 2: MonthStr=tr("February"); break;
+                case 3: MonthStr=tr("March"); break;
+                case 4: MonthStr=tr("April"); break;
+                case 5: MonthStr=tr("May"); break;
+                case 6: MonthStr=tr("June"); break;
+                case 7: MonthStr=tr("July"); break;
+                case 8: MonthStr=tr("August"); break;
+                case 9: MonthStr=tr("September"); break;
+                case 10: MonthStr=tr("October"); break;
+                case 11: MonthStr=tr("November"); break;
+                case 12: MonthStr=tr("December"); break;
+                default: break;
+            }
+            categories << MonthStr;
+        }
+        
+        if (!this->Chart->axes(Qt::Horizontal).empty())
+            this->Chart->removeAxis(this->axisX);
+        this->axisX = new QBarCategoryAxis();
+        this->axisX->append(categories);
+        
+        Chart->addAxis(this->axisX, Qt::AlignBottom);
+        
         this->Chart->legend()->setVisible(false);
     }
     else this->setLogtext("- vEpoch empty.\n");

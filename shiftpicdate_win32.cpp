@@ -313,17 +313,17 @@ std::string spdFunc::stoyear(long t) {
     
     if (t<0)
         ssS << "-"
-        << (  t0 / Y)               << "y "
-        << (  t0 % Y) / D           << "d "
-        << (( t0 % Y) % D) / H      << "h "
-        << (((t0 % Y) % D) % H) / M << "m "
-        << (((t0 % Y) % D) % H) % M << "s";
+            << (  t0 / Y)               << "y "
+            << (  t0 % Y) / D           << "d "
+            << (( t0 % Y) % D) / H      << "h "
+            << (((t0 % Y) % D) % H) / M << "m "
+            << (((t0 % Y) % D) % H) % M << "s";
     else
         ssS << (  t / Y)           << "y "
-        << (  t % Y) / D           << "d "
-        << (( t % Y) % D) / H      << "h "
-        << (((t % Y) % D) % H) / M << "m "
-        << (((t % Y) % D) % H) % M << "s";
+            << (  t % Y) / D           << "d "
+            << (( t % Y) % D) / H      << "h "
+            << (((t % Y) % D) % H) / M << "m "
+            << (((t % Y) % D) % H) % M << "s";
     
     return ssS.str();
 }
@@ -345,14 +345,14 @@ long spdFunc::fileNb(const fs::path &path) {
 std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST) {
     
     const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
-
+    
     std::stringstream ssS(sTimestamp);
-
-  if (sTimestamp.empty()) {
-    ssS.clear();
-    ssS << "1970:01:01 00:00:00";
-  }
-
+    
+    if (sTimestamp.empty()) {
+        ssS.clear();
+        ssS << "1970:01:01 00:00:00";
+    }
+    
     std::tm dt={ };
     if (bIsDST) dt.tm_isdst=bIsDST;
     
@@ -363,6 +363,6 @@ std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool 
     
     ssS.clear();
     ssS << std::put_time(std::localtime(&iEpoch), (dateTimeFormat).c_str());
-
+    
     return ssS.str();
 }

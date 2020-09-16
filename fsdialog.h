@@ -42,11 +42,12 @@ public:
 
 signals:
     void sendvector(std::vector<std::string> &);
+    void sendEpoch(std::vector<long> &);
     void load_img(int);
 
 private slots:
-    void on_buttonBox_accepted();
     void on_bOK_clicked();
+
 
 private:
     Ui::fsDialog *ui;
