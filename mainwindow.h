@@ -52,6 +52,8 @@
 #include <cassert>
 #include <random>
 #include <tuple>
+#include <set>
+#include <map>
 
 #if __has_include (<filesystem>)
 #include <filesystem>
