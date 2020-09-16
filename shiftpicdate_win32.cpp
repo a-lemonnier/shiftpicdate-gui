@@ -292,7 +292,8 @@ bool spdFunc::setExifDate(const std::string &sFilename, long Diff, bool bIsDST) 
 }
 
 std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t) {
-    struct tm dt = *gmtime(&t);
+  time_t Epoch(t);
+  struct tm dt=*std::gmtime(&Epoch);
     return {dt.tm_year +1900,
             dt.tm_mon+1,
             dt.tm_mday,

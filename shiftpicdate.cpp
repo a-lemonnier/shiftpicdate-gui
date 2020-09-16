@@ -44,7 +44,6 @@ long spdFunc::getExifEpoch(const std::string &sFilename) {
                 std::stringstream ssS(exifData["Exif.Image.DateTime"].toString());
 
                 std::tm dt={ };
-//                if (bIsDST) dt.tm_isdst=bIsDST;
 
                 // chaine vers epoch
                 ssS >> std::get_time(&dt, dateTimeFormat.c_str());
@@ -146,7 +145,8 @@ bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool 
 }
 
 std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t) {
-    struct tm dt = *gmtime(&t);
+    time_t Epoch(t);
+    struct tm dt=*std::gmtime(&Epoch);
     return {dt.tm_year +1900,
             dt.tm_mon+1,
             dt.tm_mday,
