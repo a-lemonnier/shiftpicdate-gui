@@ -995,5 +995,4 @@ void runShift::shift() {
 }
 
 void runShift::setDiff(long t) { this->Diff= (t>0) ? t : 0; }
-
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }

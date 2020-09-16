@@ -797,14 +797,14 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="982"/>
+        <location filename="../../mainwindow.cpp" line="981"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="994"/>
+        <location filename="../../mainwindow.cpp" line="993"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.
