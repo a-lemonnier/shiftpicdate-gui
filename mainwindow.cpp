@@ -660,21 +660,23 @@ void MainWIndow::getfileList() {
     // Start slideshow when the thread is finished.
     connect(fL, &fileList::finished, this, [=](){
         this->vsList=fL->getvsList();
-        this->startSlideshow();
+            if (!this->vsList.empty()) {
+            this->startSlideshow();
 
-        ui->bRun->setEnabled(true);
-        ui->bReset->setEnabled(true);
-        ui->bSelectfile->setEnabled(true);
-        ui->bQuit->setEnabled(true);
+            ui->bRun->setEnabled(true);
+            ui->bReset->setEnabled(true);
+            ui->bSelectfile->setEnabled(true);
+            ui->bQuit->setEnabled(true);
 
-        ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
-        ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
-        ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
-        ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
-        ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
 
-        ui->bRun->setStyleSheet(spdStyle::bRunGreen);
-        ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+            ui->bRun->setStyleSheet(spdStyle::bRunGreen);
+            ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+        }
     }, Qt::BlockingQueuedConnection);
 
     connect(th, &QThread::finished, th, &QThread::deleteLater);
@@ -894,7 +896,7 @@ void MainWIndow::plotHist() {
             this->Chart->legend()->setVisible(false);
         }
     }
-    else this->setLogtext("- vEpoch empty.\n");
+    else this->setLogtext(tr("- Empty epoch vector.\n").toStdString());
 }
 
 void MainWIndow::plotHistY(const QString &year) {
