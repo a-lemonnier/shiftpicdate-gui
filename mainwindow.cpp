@@ -20,6 +20,7 @@ MainWIndow::MainWIndow(QWidget *parent)
 , iSlideshowInterval(1000)
 , currentPic(0)
 , lHistCurYear(0)
+, curHistTheme(Theme::DARK)
 , selectedLang(Lang::EN) {
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
@@ -117,6 +118,11 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->hlBarChart->addWidget(this->chartView);
 
     this->chartView->setHidden(true);
+
+    // --------
+
+    // Event --
+    setMouseTracking(true);
 
     // --------
 
@@ -899,6 +905,35 @@ void MainWIndow::changeEvent(QEvent *event) {
     else QWidget::changeEvent(event);
 }
 
+void MainWIndow::mousePressEvent(QMouseEvent *event) {
+    if (!this->chartView->isHidden()) {
+        if (this->curHistTheme==Theme::DARK) {
+            this->setLogtext(tr("- Chose Qt theme for the histogram").toStdString()+".\n");
+            this->curHistTheme=Theme::QT;
+            this->Chart->setTheme(QtCharts::QChart::ChartThemeQt);
+        }
+        else if (this->curHistTheme==Theme::QT) {
+            this->setLogtext(tr("- Chose BlueCerulean theme for the histogram").toStdString()+".\n");
+            this->curHistTheme=Theme::BLUE;
+            this->Chart->setTheme(QtCharts::QChart::ChartThemeBlueCerulean);
+        }
+        else if (this->curHistTheme==Theme::BLUE) {
+            this->setLogtext(tr("- Chose Light theme for the histogram").toStdString()+".\n");
+            this->curHistTheme=Theme::LIGHT;
+            this->Chart->setTheme(QtCharts::QChart::ChartThemeLight);
+        }
+        else if (this->curHistTheme==Theme::LIGHT) {
+            this->setLogtext(tr("- Chose Dark theme for the histogram").toStdString()+".\n");
+            this->curHistTheme=Theme::DARK;
+            this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
+        }
+        else {
+            this->setLogtext(tr("- Chose Dark theme for the histogram").toStdString()+".\n");
+            this->curHistTheme=Theme::DARK;
+            this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
+        }
+    }
+}
 
 // fileList:: ------------
 // -----------------------
@@ -922,7 +957,6 @@ void fileList::getList() {
                 emit(sendEpoch(Epoch));
                 emit(sendstdStr(QString::fromStdString("\t"+str.path().string()+"\t"+sTmp+"\n")));
             }
-
          }
         emit(fLProgress(static_cast<float>((iCount++)*100/iFileNb))); // Set progressBar to n %
     }
@@ -963,5 +997,3 @@ void runShift::shift() {
 void runShift::setDiff(long t) { this->Diff= (t>0) ? t : 0; }
 
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
-
-

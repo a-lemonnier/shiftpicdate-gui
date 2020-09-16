@@ -34,6 +34,8 @@
 #include <QLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QMouseEvent>
+#include <QEvent>
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
@@ -105,6 +107,7 @@ public:
     void startSlideshow();
 
     enum Lang { FR, EN };
+    enum Theme {DARK, LIGHT, QT, BLUE};
 
 public slots:
     void update_progressBar_value(int v);
@@ -193,6 +196,8 @@ private:
 
     long lHistCurYear;
 
+    Theme curHistTheme;
+
     Lang selectedLang;
 
     int computeDeltaT();
@@ -202,6 +207,7 @@ signals:
 
 protected:
     void changeEvent(QEvent*);
+    void mousePressEvent(QMouseEvent *event);
 };
 
 
