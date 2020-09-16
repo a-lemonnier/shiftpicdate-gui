@@ -9,12 +9,20 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 - CMake
 - g++ / MSVC++ for C++17
 
+> Debian/Ubuntu packages (assuming same package names):
+- sudo apt-get install cmake
+- sudo apt-get install qt5-default qtbase5-dev qttools5-dev qtbase5-dev-tools libqt5charts5-dev
+- sudo apt-get install exiv2 libexiv2-dev
+
+> Gentoo: you should know... 
+
+> Windows: check the sourceforce page: installer contains Qt Dlls that is means... it is above 25 Mb and cannot be upload there.
+
 > Lang.:
 - English
 - French
 
 > TODO:
-- Timeline
 - "dialog.setOption(QFileDialog::ShowDirsOnly, true)" does not work on Windows, deprecated "QFileDialog::DirectoryOnly" used instead.
 
 > Binaries 
