@@ -23,6 +23,11 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 - French
 
 > TODO:
+- Selection of one single file...
+- Optimize IO drive perf... but actually, how to fix this with Exiv2 and WIC ?
+- This file selection seems not to be the best way to do what it should do.
+- File selection could be on the main window ?
+- Clean the code.
 - "dialog.setOption(QFileDialog::ShowDirsOnly, true)" does not work on Windows, deprecated "QFileDialog::DirectoryOnly" used instead.
 
 > Binaries 
