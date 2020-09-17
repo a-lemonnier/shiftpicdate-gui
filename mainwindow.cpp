@@ -107,7 +107,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     this->chartView = new QtCharts::QChartView(this->Chart);
 
     this->Chart->setAnimationOptions(QtCharts::QChart::AllAnimations);
-    this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
+    this->Chart->setTheme(QtCharts::QChart::ChartThemeBlueIcy);
 
     this->Chart->setToolTip(tr("Time line."));
 
@@ -705,7 +705,7 @@ void MainWIndow::startSlideshow() {
         ui->bPrev->setEnabled(true);
         ui->bStop->setEnabled(true);
 
-        this->picNb=vsList.size();
+        this->picNb=static_cast<long>(vsList.size());
         this->currentPic=0;
 
         // Show the first img
@@ -870,6 +870,8 @@ void MainWIndow::plotHist() {
             this->setLogtext(tr("- Select year: ").toStdString()+std::to_string(y)+".\n");
 
             if (y!=0) {
+                this->Chart->setTheme(QtCharts::QChart::ChartThemeBlueIcy);
+
                 ui->cbYear->setHidden(false);
                 this->chartView->setHidden(false);
 
