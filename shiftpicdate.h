@@ -61,6 +61,8 @@ namespace spdFunc {
     
     void test();
     bool test_ext(const std::string &sS);
+
+    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
 }
 
 // ----------------------------------------------------

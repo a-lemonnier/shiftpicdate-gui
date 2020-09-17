@@ -28,8 +28,6 @@ qt5_add_resources(res_rcc res/res.qrc)
 
 if(WIN32)
 
-#  set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
-
   add_executable(shiftpicdate-gui
     main.cpp
     mainwindow.cpp
@@ -49,8 +47,7 @@ endif(WIN32)
 
 if(UNIX)
     set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
-    #set(CMAKE_CXX_FLAGS_DEBUG "-g")
-    #set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
     add_executable(shiftpicdate-gui
         main.cpp
@@ -69,6 +66,7 @@ if(UNIX)
 endif(UNIX)
 
 if (WIN32)
+    set_property(TARGET shiftpicdate-gui PROPERTY WIN32_EXECUTABLE true)
     target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
 endif (WIN32)
 

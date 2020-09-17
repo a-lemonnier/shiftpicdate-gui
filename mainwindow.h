@@ -36,6 +36,7 @@
 #include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QEvent>
+#include <QFont>
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
@@ -157,6 +158,7 @@ private:
     QtCharts::QChartView *chartView;
     QtCharts::QChart *Chart;
     QtCharts::QBarCategoryAxis *axisX;
+    QtCharts::QValueAxis *axisY;
 
     QTranslator qTranslator;
 

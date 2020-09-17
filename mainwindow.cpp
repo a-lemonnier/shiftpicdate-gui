@@ -17,7 +17,7 @@ MainWIndow::MainWIndow(QWidget *parent)
 , isQuiet(false)
 , isAutoScroll(true)
 , iPicRot(-90)
-, iSlideshowInterval(1000)
+, iSlideshowInterval(1500)
 , currentPic(0)
 , lHistCurYear(0)
 , curHistTheme(Theme::DARK)
@@ -135,10 +135,6 @@ MainWIndow::~MainWIndow() { delete ui; }
 
 void MainWIndow::on_bBrowse_clicked() {
     qeBlur.setEnabled(true);
-
-    ui->lEPath->setStyleSheet("");
-    ui->bBrowse->setStyleSheet("");
-
     QFileDialog dialog(this);
 
 #if defined(__linux__)
@@ -208,6 +204,8 @@ void MainWIndow::on_bBrowse_clicked() {
                     this->getfileList();
                     this->setEnabled(true);
                 }
+                ui->lEPath->setStyleSheet("");
+                ui->bBrowse->setStyleSheet("");
             }
             else
                 this->setLogtext(tr("- Cannot process with this path: ").toStdString()+this->sFilename+"!\n");
@@ -223,6 +221,7 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBMin->setStyleSheet(spdStyle::TimeField);
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
 
+    ui->bRun->setEnabled(false);
     ui->bQuit->setEnabled(true);
     ui->bBrowse->setEnabled(false);
     ui->bReset->setEnabled(false);
@@ -232,8 +231,14 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBMin->setEnabled(false);
     ui->sBSec->setEnabled(false);
 
+
+    this->chartView->setHidden(true);
+
     this->run_shift();
 
+    this->chartView->setHidden(false);
+
+    ui->bRun->setEnabled(true);
     ui->bQuit->setEnabled(true);
     ui->bBrowse->setEnabled(true);
     ui->bReset->setEnabled(true);
@@ -244,6 +249,7 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBSec->setEnabled(true);
 
     ui->tBLog->setStyleSheet("");
+    ui->bRun->setStyleSheet("");
 }
 
 void MainWIndow::on_bDST_clicked(bool checked) {
@@ -579,7 +585,8 @@ void MainWIndow::on_bFlag_released() {
 }
 
 void MainWIndow::on_cbYear_activated(const QString &str) {
-    this->lHistCurYear=std::stol(str.toStdString());
+    if (!str.isEmpty())
+        this->lHistCurYear=std::stol(str.toStdString());
     this->plotHist();
 }
 
@@ -644,6 +651,8 @@ void MainWIndow::getfileList() {
     fL->moveToThread(th);
     fL->setfileName(this->sFilename);
 
+    this->vEpoch.clear();
+
     connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
     
     // Update textBrowser at least one time
@@ -656,26 +665,26 @@ void MainWIndow::getfileList() {
     connect(fL, &fileList::finished, th, &QThread::quit);
     connect(fL, &fileList::finished, this, &MainWIndow::plotHist);
 
-
-    // Start slideshow when the thread is finished.
+    // Start slideshow/plot when the thread is finished.
     connect(fL, &fileList::finished, this, [=](){
-        this->vsList=fL->getvsList();
+            this->vsList=fL->getvsList();
             if (!this->vsList.empty()) {
-            this->startSlideshow();
 
-            ui->bRun->setEnabled(true);
-            ui->bReset->setEnabled(true);
-            ui->bSelectfile->setEnabled(true);
-            ui->bQuit->setEnabled(true);
+                this->startSlideshow();
 
-            ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
-            ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
-            ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
-            ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
-            ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
+                ui->bRun->setEnabled(true);
+                ui->bReset->setEnabled(true);
+                ui->bSelectfile->setEnabled(true);
+                ui->bQuit->setEnabled(true);
 
-            ui->bRun->setStyleSheet(spdStyle::bRunGreen);
-            ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+                ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
+                ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
+                ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
+                ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
+                ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
+
+                ui->bRun->setStyleSheet(spdStyle::bRunGreen);
+                ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
         }
     }, Qt::BlockingQueuedConnection);
 
@@ -751,11 +760,25 @@ void MainWIndow::run_shift() {
   
   connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
 
-  connect(th, &QThread::finished, this, [=](){ this->timer->stop(); this->update_Log(); });
-
   connect(rs, &runShift::sendProgress, this,  &MainWIndow::update_progressBar_value);
   connect(rs, &runShift::sendstdStr, this,  &MainWIndow::update_Log_value);
   connect(rs, &runShift::finished, th, &QThread::quit);
+
+  connect(rs, &runShift::finished,  this, [this]() {
+        this->timer->stop();
+        this->update_Log();
+
+        this->lHistCurYear=0;
+        ui->cbYear->clear();
+        ui->cbYear->clearFocus();
+        ui->cbYear->addItem(" ");
+        ui->cbYear->setCurrentIndex(0);
+
+        this->getfileList();
+
+        this->Chart->removeAllSeries();
+        this->plotHist();
+  });
 
   connect(th, &QThread::finished, th, &QThread::deleteLater);
   connect(th, &QThread::finished, rs, &runShift::deleteLater);
@@ -769,7 +792,6 @@ void MainWIndow::plotHist() {
     using namespace QtCharts;
 
     if (!this->vEpoch.empty()) {
-
         typedef std::tuple<long, long, long, long, long, long> ymdHMS;
 
         std::vector<ymdHMS> vtEpoch;
@@ -800,15 +822,14 @@ void MainWIndow::plotHist() {
         }
 
         if (vDay.size()>0) {
-            ui->cbYear->setHidden(false);
-            this->chartView->setHidden(false);
 
             std::map<long, std::set<long> > mlslMonth;
 
             PicDay Day;
             unsigned int n=0;
 
-            for(unsigned int i=0; i<vDay.size()-1; i++) {
+            int vDaySize=vDay.size();
+            for(int i=0; i<vDaySize-1; i++) {
                 Day=vDay[i];
                 n=0;
                 while(Day.Y==vDay[i+n].Y &&
@@ -826,7 +847,9 @@ void MainWIndow::plotHist() {
             }
 
             ui->cbYear->clear();
-            for(const auto &t: sY) ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
+            for(const auto &t: sY)
+                ui->cbYear->addItem(QString::fromStdString(std::to_string(t)));
+
             if (this->lHistCurYear!=0)
                 ui->cbYear->setCurrentText(QString::fromStdString(std::to_string(this->lHistCurYear)));
 
@@ -839,68 +862,98 @@ void MainWIndow::plotHist() {
                 mlslMonth.insert({Y, sM_tmp});
             }
 
-            long y;
+            long y=0;
             if (this->lHistCurYear!=0) y=this->lHistCurYear;
-            else y=std::stol(ui->cbYear->currentText().toStdString());
+            else if (!ui->cbYear->currentText().isEmpty())
+                y=std::stol(ui->cbYear->currentText().toStdString());
 
-            this->Chart->removeAllSeries();
+            this->setLogtext(tr("- Select year: ").toStdString()+std::to_string(y)+".\n");
 
-            for(auto &m: mlslMonth[y]) {
-                QBarSeries *series = new QBarSeries();
-                series->setName(QString::fromStdString("Month: "+std::to_string(m)));
-                for(int d=1;d<32;d++) {
-                    QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
+            if (y!=0) {
+                ui->cbYear->setHidden(false);
+                this->chartView->setHidden(false);
 
-                    auto it=std::find_if(vStat.begin(), vStat.end(),
-                                         [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
+                this->Chart->removeAllSeries();
 
-                    if (it!=vStat.end()) *set << vStat[std::distance(vStat.begin(), it)].n ;
-                    else *set << 0;
+                int MaxPic=0;
 
-                    set->setColor(QColor(127,127,127));
-                    series->append(set);
+                for(auto &m: mlslMonth[y]) {
+                    QBarSeries *series = new QBarSeries();
+                    series->setName(QString::fromStdString("Month: "+std::to_string(m)));
+                    for(int d=1;d<32;d++) {
+                        QBarSet *set = new QBarSet(QString::fromStdString("Day: "+std::to_string(d)));
+
+                        auto it=std::find_if(vStat.begin(), vStat.end(),
+                                             [&](const auto &t) { return t.Y==y && t.M==m && t.D==d;});
+
+                        if (it!=vStat.end()) {
+                            int N=vStat[std::distance(vStat.begin(), it)].n;
+                            if (N>MaxPic) MaxPic=N;
+                            *set << N ;
+                        }
+                        else *set << 0;
+
+                        set->setBorderColor(Qt::blue);
+                        set->setBrush(QBrush(Qt::darkBlue));
+
+                        series->append(set);
+                    }
+                    series->setUseOpenGL(true);
+                    Chart->addSeries(series);
                 }
-                series->setUseOpenGL(true);
-                Chart->addSeries(series);
-            }
 
-            QStringList categories;
-            for(auto &m: mlslMonth[y]) {
-                QString MonthStr;
+                QStringList categories;
+                for(auto &m: mlslMonth[y]) {
+                    QString MonthStr;
 
-                switch (m) {
-                    case 1: MonthStr=tr("Janvier"); break;
-                    case 2: MonthStr=tr("February"); break;
-                    case 3: MonthStr=tr("March"); break;
-                    case 4: MonthStr=tr("April"); break;
-                    case 5: MonthStr=tr("May"); break;
-                    case 6: MonthStr=tr("June"); break;
-                    case 7: MonthStr=tr("July"); break;
-                    case 8: MonthStr=tr("August"); break;
-                    case 9: MonthStr=tr("September"); break;
-                    case 10: MonthStr=tr("October"); break;
-                    case 11: MonthStr=tr("November"); break;
-                    case 12: MonthStr=tr("December"); break;
-                    default: break;
+                    switch (m) {
+                        case 1: MonthStr=tr("Janvier"); break;
+                        case 2: MonthStr=tr("February"); break;
+                        case 3: MonthStr=tr("March"); break;
+                        case 4: MonthStr=tr("April"); break;
+                        case 5: MonthStr=tr("May"); break;
+                        case 6: MonthStr=tr("June"); break;
+                        case 7: MonthStr=tr("July"); break;
+                        case 8: MonthStr=tr("August"); break;
+                        case 9: MonthStr=tr("September"); break;
+                        case 10: MonthStr=tr("October"); break;
+                        case 11: MonthStr=tr("November"); break;
+                        case 12: MonthStr=tr("December"); break;
+                        default: break;
+                    }
+                    categories << MonthStr;
                 }
-                categories << MonthStr;
+
+                this->Chart->createDefaultAxes();
+
+                QString HFontfamily(this->Chart->axes(Qt::Horizontal)[0]->titleFont().family());
+                QString VFontfamily(this->Chart->axes(Qt::Vertical)[0]->titleFont().family());
+
+                if (!this->Chart->axes(Qt::Horizontal).empty())
+                    this->Chart->removeAxis(this->Chart->axes(Qt::Horizontal)[0]);
+
+                this->axisX = new QBarCategoryAxis();
+                this->axisX->append(categories);
+                this->axisX->setLabelsFont(QFont(HFontfamily, 7));
+
+                this->Chart->axes(Qt::Vertical)[0]->setTitleText(tr("pics/day"));
+                this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(VFontfamily, 6));
+                this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(VFontfamily, 6));
+                this->Chart->axes(Qt::Vertical)[0]->setRange(0, MaxPic);
+
+                this->Chart->addAxis(this->axisX, Qt::AlignBottom);
+
+                this->Chart->legend()->setVisible(false);
+                this->Chart->setBackgroundBrush(QBrush(QColor(Qt::transparent)));
             }
-
-            if (!this->Chart->axes(Qt::Horizontal).empty())
-                this->Chart->removeAxis(this->axisX);
-            this->axisX = new QBarCategoryAxis();
-            this->axisX->append(categories);
-
-            Chart->addAxis(this->axisX, Qt::AlignBottom);
-
-            this->Chart->legend()->setVisible(false);
         }
     }
     else this->setLogtext(tr("- Empty epoch vector.\n").toStdString());
 }
 
 void MainWIndow::plotHistY(const QString &year) {
-    this->lHistCurYear=std::stol(year.toStdString());
+    if (!year.isEmpty())
+        this->lHistCurYear=std::stol(year.toStdString());
     this->plotHist();
 }
 
@@ -937,6 +990,9 @@ void MainWIndow::mousePressEvent(QMouseEvent *event) {
             this->curHistTheme=Theme::DARK;
             this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
         }
+        this->Chart->axes(Qt::Horizontal)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Horizontal)[0]->titleFont().family(), 7));
+        this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Vertical)[0]->labelsFont().family(), 6));
+        this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(this->Chart->axes(Qt::Vertical)[0]->titleFont().family(), 6));
     }
 }
 
@@ -999,5 +1055,5 @@ void runShift::shift() {
     emit(finished());
 }
 
-void runShift::setDiff(long t) { this->Diff= (t>0) ? t : 0; }
+void runShift::setDiff(long t) { this->Diff=t; }
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }

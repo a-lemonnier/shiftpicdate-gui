@@ -30,7 +30,6 @@ long spdFunc::getExifEpoch(const std::string &sFilename) {
     long lEpoch=0;
 
     if (test_ext(sFilename)) {
-            const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
 
             Exiv2::Image::AutoPtr pImg;
 
@@ -66,8 +65,6 @@ std::pair<std::string, long> spdFunc::getExifDateEpoch(const std::string &sFilen
     long lEpoch=0;
 
     if (test_ext(sFilename)) {
-            const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
-
             Exiv2::Image::AutoPtr pImg;
 
             try {
@@ -99,12 +96,11 @@ std::pair<std::string, long> spdFunc::getExifDateEpoch(const std::string &sFilen
 
 bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool bIsDST) {
         if (test_ext(sFilename)) {
-                const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };
-
                 Exiv2::Image::AutoPtr pImg;
 
                 try {
                     pImg=Exiv2::ImageFactory::open(sFilename);
+
                     assert(pImg.get() != 0);
                     pImg->readMetadata();
 
@@ -130,7 +126,6 @@ bool spdFunc::setExifDate(const std::string &sFilename, const size_t Diff, bool 
 
                     pImg->setExifData(exifData);
                     pImg->writeMetadata();
-                    pImg->readMetadata();
                 }
                 catch (Exiv2::AnyError& e) {
                     std::cerr << "- spdFunc::setExifDate(): " << e << ".\n";
@@ -198,8 +193,7 @@ long spdFunc::fileNb(const fs::path &path) {
     return n;
 }
 
-std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST) {
-    const std::string dateTimeFormat{ "%Y:%m:%d %H:%M:%S" };    
+std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST) { 
     std::stringstream ssS(sTimestamp);
     
     std::tm dt={ };
