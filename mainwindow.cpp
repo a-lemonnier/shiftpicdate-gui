@@ -47,7 +47,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     // ------------------
 
     // Icon --
-    setWindowIcon(QIcon(":/ico/ico1.png"));
+    this->setWindowIcon(QIcon(":/ico/shiftpicdate-gui.ico"));
     // -------
 
     // Version --
