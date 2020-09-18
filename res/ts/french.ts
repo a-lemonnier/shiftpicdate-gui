@@ -175,21 +175,21 @@
         <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
         <source>Add:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ajouter:</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="708"/>
         <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dossier</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="715"/>
         <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="645"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="645"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fichier</translation>
     </message>
     <message>
         <location filename="../../mainwindow.ui" line="785"/>
@@ -552,7 +552,7 @@
     <message>
         <location filename="../../mainwindow.cpp" line="263"/>
         <source>- Error: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- Erreur: </translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="343"/>
@@ -639,101 +639,101 @@
         <translation type="unfinished">Qt5 GUI pour le décalage de la date des images.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="921"/>
+        <location filename="../../mainwindow.cpp" line="918"/>
         <source>- New release: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- Nouvelle version: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1072"/>
+        <location filename="../../mainwindow.cpp" line="1058"/>
         <source>- Select year: </source>
         <translation type="unfinished">- Selection de l&apos;année: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1114"/>
+        <location filename="../../mainwindow.cpp" line="1100"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="870"/>
         <source>Janvier</source>
         <translation type="unfinished">Janvier</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1115"/>
+        <location filename="../../mainwindow.cpp" line="1101"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="871"/>
         <source>February</source>
         <translation type="unfinished">Février</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1116"/>
+        <location filename="../../mainwindow.cpp" line="1102"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="872"/>
         <source>March</source>
         <translation type="unfinished">Mars</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1117"/>
+        <location filename="../../mainwindow.cpp" line="1103"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="873"/>
         <source>April</source>
         <translation type="unfinished">Avril</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1119"/>
+        <location filename="../../mainwindow.cpp" line="1105"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="875"/>
         <source>June</source>
         <translation type="unfinished">Juin</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1120"/>
+        <location filename="../../mainwindow.cpp" line="1106"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="876"/>
         <source>July</source>
         <translation type="unfinished">Juillet</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1121"/>
+        <location filename="../../mainwindow.cpp" line="1107"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="877"/>
         <source>August</source>
         <translation type="unfinished">Août</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1122"/>
+        <location filename="../../mainwindow.cpp" line="1108"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="878"/>
         <source>September</source>
         <translation type="unfinished">Septembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1123"/>
+        <location filename="../../mainwindow.cpp" line="1109"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="879"/>
         <source>October</source>
         <translation type="unfinished">Octobre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1124"/>
+        <location filename="../../mainwindow.cpp" line="1110"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="880"/>
         <source>November</source>
         <translation type="unfinished">Novembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1125"/>
+        <location filename="../../mainwindow.cpp" line="1111"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="881"/>
         <source>December</source>
         <translation type="unfinished">Décembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1144"/>
+        <location filename="../../mainwindow.cpp" line="1130"/>
         <source>pics/day</source>
         <translation type="unfinished">photos/j</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1158"/>
+        <location filename="../../mainwindow.cpp" line="1144"/>
         <source>- Empty epoch vector.
 </source>
         <translation type="unfinished">- Vecteur d&apos;Epoques vide.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1177"/>
+        <location filename="../../mainwindow.cpp" line="1163"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="919"/>
         <source>- Chose BlueCerulean theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème BlueCerulean</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1172"/>
+        <location filename="../../mainwindow.cpp" line="1158"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="914"/>
         <source>- Chose Qt theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Qt</translation>
@@ -741,29 +741,29 @@
     <message>
         <location filename="../../mainwindow.cpp" line="254"/>
         <source>- Continue with one file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- Continue avec un seul fichier</translation>
     </message>
     <message>
         <location filename="../../mainwindow.cpp" line="585"/>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mise-à-jour disponible</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1182"/>
+        <location filename="../../mainwindow.cpp" line="1168"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="924"/>
         <source>- Chose Light theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Light</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1187"/>
-        <location filename="../../mainwindow.cpp" line="1192"/>
+        <location filename="../../mainwindow.cpp" line="1173"/>
+        <location filename="../../mainwindow.cpp" line="1178"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="929"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="934"/>
         <source>- Chose Dark theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Dark</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1118"/>
+        <location filename="../../mainwindow.cpp" line="1104"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="874"/>
         <source>May</source>
         <translation type="unfinished">Mai</translation>
@@ -874,7 +874,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1210"/>
+        <location filename="../../mainwindow.cpp" line="1196"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="949"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
@@ -1004,7 +1004,7 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="1245"/>
+        <location filename="../../mainwindow.cpp" line="1231"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="984"/>
         <source>- Start shifting pictures.
 </source>
@@ -1012,7 +1012,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1257"/>
+        <location filename="../../mainwindow.cpp" line="1243"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="996"/>
         <source>- Shifting completed.
 </source>
