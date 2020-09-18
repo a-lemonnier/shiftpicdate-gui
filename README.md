@@ -33,7 +33,7 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 > Gentoo amd64 FR
 ![shiftpicdate-gui](doc/shiftpicdate-gui.png)
 
-> Windows 10 64 FR
+> (VM) Windows 10 64 EN
 ![shiftpicdate-gui_win](doc/shiftpicdate-gui_win.png)
 
 > Windows 10 64 EN
