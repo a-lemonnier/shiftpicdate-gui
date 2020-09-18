@@ -884,7 +884,7 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
             sRelease.erase(sRelease.find(".exe"), std::string(".exe").size());
         
         sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '-'), sRelease.end());
-        
+
         int dot1, dot2;
         dot1=sRelease.find_first_of(".");
         dot2=sRelease.find_last_of(".");
@@ -916,11 +916,10 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
         
         if (this->hasUpdate) {
             this->setLogtext(tr("- New release: ").toStdString()+
-                            "<a href='www.google.fr'>"+
                             std::to_string(major_ver) + "." +
                             std::to_string(minor_ver) + "." +
                             std::to_string(rev_ver)+
-                            "</a>.\n");
+                            ".\n");
             this->lastRelease=std::to_string(major_ver) + "." +
                               std::to_string(minor_ver) + "." +
                               std::to_string(rev_ver);
