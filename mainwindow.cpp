@@ -822,7 +822,7 @@ void MainWIndow::startSlideshow() {
 }
 
 void MainWIndow::checkForUpdate(){
-    this->setLogtext("- Check update.\n");
+    this->setLogtext(tr("- Check update").toStdString()+".\n");
     QNetworkRequest request;
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
