@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(shiftpicdate-gui LANGUAGES CXX)
 
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
@@ -30,10 +31,8 @@ file(GLOB TS_FILES "res/ts/*.ts")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 qt5_add_resources(res_rcc res/res.qrc)
 
-
 if(WIN32)
   set(OPENSSL_ROOT_DIR C:/Qt/Tools/OpenSSL/Win_x64)
-
   find_package(OpenSSL)
 
   add_executable(shiftpicdate-gui
@@ -75,7 +74,7 @@ endif(UNIX)
 
 if (WIN32)
     set_property(TARGET shiftpicdate-gui PROPERTY WIN32_EXECUTABLE true)
-    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network  OpenSSL::SSL OpenSSL::Crypto)
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::WinExtras OpenSSL::SSL OpenSSL::Crypto)
 endif (WIN32)
 
 if (UNIX)

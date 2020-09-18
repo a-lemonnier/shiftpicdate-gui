@@ -7,5 +7,6 @@
         <file>flag/eng.svg</file>
         <file>flag/fr.svg</file>
         <file>ico/ico1.png</file>
+        <file>ico/shiftpicdate-gui.ico</file>
     </qresource>
 </RCC>

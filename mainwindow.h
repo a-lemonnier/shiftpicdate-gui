@@ -52,20 +52,14 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-#if defined(_WIN32) || defined(WIN32)
-#include <QWinTaskbarButton>
-#endif
-
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QLegend>
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
-
-#include <QValueAxis>
-
 #include <QBarCategoryAxis>
+#include <QValueAxis>
 
 #include <ctime>
 #include <algorithm>
@@ -75,7 +69,6 @@
 #include <tuple>
 #include <set>
 #include <map>
-#include <cctype>
 
 #if __has_include (<filesystem>)
 #include <filesystem>
