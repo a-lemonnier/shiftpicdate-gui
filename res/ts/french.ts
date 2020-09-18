@@ -6,8 +6,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="647"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="647"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="618"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="618"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="635"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="635"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="543"/>
         <source>Path:</source>
         <translation>Chemin:</translation>
@@ -15,8 +15,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="662"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="662"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="620"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="620"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="637"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="637"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="545"/>
         <source>Path to the directory.</source>
         <translation type="unfinished">Chemin vers le dossier.</translation>
@@ -24,35 +24,32 @@
     <message>
         <location filename="../../mainwindow.ui" line="668"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="668"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="622"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="622"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="639"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="639"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="547"/>
         <source>./</source>
         <translation type="unfinished">./</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="694"/>
+        <location filename="../../mainwindow.ui" line="701"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="694"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="624"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="624"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="642"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="642"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="549"/>
         <source>Select a directory.</source>
         <translation type="unfinished">Choisir un repertoire.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="701"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="701"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="626"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="626"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="551"/>
         <source>Browse</source>
         <translation type="unfinished">Parcourir</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="708"/>
+        <location filename="../../mainwindow.ui" line="738"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="708"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="627"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="627"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="646"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="646"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="552"/>
         <source>Select files</source>
         <translation type="unfinished">Selectionner les fichiers</translation>
@@ -60,8 +57,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="271"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="271"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="588"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="588"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="605"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="605"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="553"/>
         <source>Year:</source>
         <translation type="unfinished">Année:</translation>
@@ -69,8 +66,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="278"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="278"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="590"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="590"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="607"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="607"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="555"/>
         <source>Set number of years.</source>
         <translation type="unfinished">Définir le nombre d&apos;années.</translation>
@@ -78,8 +75,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="304"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="304"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="592"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="592"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="609"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="609"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="557"/>
         <source>Day:</source>
         <translation type="unfinished">Jour:</translation>
@@ -87,8 +84,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="311"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="311"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="594"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="594"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="611"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="611"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="559"/>
         <source>Set number of days.</source>
         <translation type="unfinished">Définir le nombre de jours.</translation>
@@ -96,8 +93,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="337"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="337"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="596"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="596"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="613"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="613"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="561"/>
         <source>Hour: </source>
         <translation type="unfinished">Heure: </translation>
@@ -105,8 +102,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="344"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="344"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="598"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="598"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="615"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="615"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="563"/>
         <source>Set number of hours.</source>
         <translation type="unfinished">Définir le nombre d&apos;heures.</translation>
@@ -114,8 +111,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="370"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="370"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="600"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="600"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="617"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="617"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="565"/>
         <source>Min: </source>
         <translation type="unfinished">Min: </translation>
@@ -123,8 +120,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="377"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="377"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="602"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="602"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="619"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="619"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="567"/>
         <source>Set number of minutes.</source>
         <translation type="unfinished">Définir le nombre de minutes.</translation>
@@ -132,8 +129,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="403"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="403"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="604"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="604"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="621"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="621"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="569"/>
         <source>Sec: </source>
         <translation type="unfinished">Sec: </translation>
@@ -141,8 +138,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="410"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="410"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="606"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="606"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="623"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="623"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="571"/>
         <source>Set number of seconds.</source>
         <translation type="unfinished">Définir le nombre de secondes.</translation>
@@ -150,8 +147,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="448"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="448"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="609"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="609"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="626"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="626"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="574"/>
         <source>Enable DST.</source>
         <translation type="unfinished">Activer l&apos;heure d&apos;été.</translation>
@@ -159,8 +156,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="451"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="451"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="611"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="611"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="628"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="628"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="576"/>
         <source>DST</source>
         <translation type="unfinished">Heure d&apos;été</translation>
@@ -168,88 +165,109 @@
     <message>
         <location filename="../../mainwindow.ui" line="472"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="472"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="612"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="612"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="629"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="629"/>
         <source>Years</source>
         <translation type="unfinished">Années</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="755"/>
+        <location filename="../../mainwindow.ui" line="694"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
+        <source>Add:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="708"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="715"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="645"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="645"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.ui" line="785"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="755"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="632"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="632"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="651"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="651"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="581"/>
         <source>Change all timsestamps.</source>
         <translation type="unfinished">Modifier les horaires.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="761"/>
+        <location filename="../../mainwindow.ui" line="791"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="761"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="634"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="634"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="653"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="653"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="583"/>
         <source>Run</source>
         <translation type="unfinished">Lancer</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="781"/>
+        <location filename="../../mainwindow.ui" line="811"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="781"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="636"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="636"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="655"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="655"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="585"/>
         <source>Discard changes.</source>
         <translation type="unfinished">Quitter dans changements.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="784"/>
+        <location filename="../../mainwindow.ui" line="814"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="784"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="638"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="638"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="657"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="657"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="587"/>
         <source>Quit</source>
         <translation type="unfinished">Quitter</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="804"/>
+        <location filename="../../mainwindow.ui" line="834"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="804"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="640"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="659"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="659"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="589"/>
         <source>Reset fields.</source>
         <translation type="unfinished">Vider les champs.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="807"/>
+        <location filename="../../mainwindow.ui" line="837"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="807"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="642"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="642"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="661"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="661"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="591"/>
         <source>Reset</source>
         <translation type="unfinished">Reset</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="827"/>
+        <location filename="../../mainwindow.ui" line="857"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="827"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="643"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="643"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="662"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="662"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="592"/>
         <source>Test</source>
         <translation type="unfinished">Test</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="847"/>
+        <location filename="../../mainwindow.ui" line="877"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="847"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="644"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="663"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="663"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="593"/>
         <source>About</source>
         <translation type="unfinished">À propos</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.ui" line="727"/>
+        <location filename="../../mainwindow.ui" line="757"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="727"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="629"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="629"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="648"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="648"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="578"/>
         <source>Progression.</source>
         <translation type="unfinished">Progression.</translation>
@@ -257,8 +275,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="67"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="67"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="554"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="554"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="571"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="571"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="505"/>
         <source>Auto wrap lines</source>
         <translation type="unfinished">Saut de ligne auto</translation>
@@ -266,8 +284,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="74"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="74"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="555"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="555"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="572"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="572"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="506"/>
         <source>Auto scroll</source>
         <translation type="unfinished">Défilement auto</translation>
@@ -275,8 +293,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="81"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="81"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="556"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="556"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="573"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="573"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="507"/>
         <source>Quiet</source>
         <translation type="unfinished">Silence</translation>
@@ -284,8 +302,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="148"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="148"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="569"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="569"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="586"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="586"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="520"/>
         <source>Hide picture.</source>
         <translation type="unfinished">Cacher l&apos;image.</translation>
@@ -293,8 +311,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="151"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="151"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="571"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="571"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="588"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="588"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="522"/>
         <source>Hide picture</source>
         <translation type="unfinished">Cacher</translation>
@@ -302,8 +320,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="164"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="164"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="573"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="573"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="590"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="590"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="524"/>
         <source>Rotate picture.</source>
         <translation type="unfinished">Tourner l&apos;image.</translation>
@@ -311,8 +329,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="167"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="167"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="575"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="575"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="592"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="592"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="526"/>
         <source>↻</source>
         <translation type="unfinished"></translation>
@@ -324,8 +342,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="186"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="186"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="577"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="577"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="594"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="594"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="528"/>
         <source>Stop slideshow.</source>
         <translation type="unfinished">Arreter le diaporama.</translation>
@@ -333,8 +351,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="192"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="192"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="579"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="579"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="596"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="596"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="530"/>
         <source>▢</source>
         <translation type="unfinished">▢</translation>
@@ -342,8 +360,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="217"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="217"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="581"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="581"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="598"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="598"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="532"/>
         <source>Previous picture.</source>
         <translation type="unfinished">Image précédante.</translation>
@@ -351,8 +369,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="220"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="220"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="583"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="583"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="600"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="600"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="534"/>
         <source>◁</source>
         <translation type="unfinished">◁</translation>
@@ -360,8 +378,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="239"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="239"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="585"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="585"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="602"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="602"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="536"/>
         <source>Next picture.</source>
         <translation type="unfinished">Image suivante.</translation>
@@ -369,8 +387,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="242"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="242"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="587"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="587"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="604"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="604"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="538"/>
         <source>▷</source>
         <translation type="unfinished">▷</translation>
@@ -378,8 +396,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="100"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="100"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="558"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="558"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="575"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="575"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="509"/>
         <source>Zoom in</source>
         <translation type="unfinished">Zoomer</translation>
@@ -387,8 +405,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="106"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="106"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="563"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="563"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="580"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="580"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="514"/>
         <source>+</source>
         <translation type="unfinished">+</translation>
@@ -396,8 +414,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="125"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="125"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="565"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="565"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="582"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="582"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="516"/>
         <source>Zoom out</source>
         <translation type="unfinished">Dézoomer</translation>
@@ -405,8 +423,8 @@
     <message>
         <location filename="../../mainwindow.ui" line="128"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="128"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="567"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="567"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="584"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="584"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="518"/>
         <source>-</source>
         <translation>-</translation>
@@ -414,10 +432,10 @@
     <message>
         <location filename="../../mainwindow.ui" line="600"/>
         <location filename="../../shiftpicdate-gui/mainwindow.ui" line="600"/>
-        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="617"/>
-        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="617"/>
+        <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="634"/>
+        <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="634"/>
         <location filename="../../build-kdev/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="542"/>
-        <location filename="../../mainwindow.cpp" line="327"/>
+        <location filename="../../mainwindow.cpp" line="412"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="321"/>
         <source>No picture selected.</source>
         <translation type="unfinished">Aucune image sélectionnée.</translation>
@@ -445,7 +463,8 @@
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): acquisition des noms de fichier.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="169"/>
+        <location filename="../../mainwindow.cpp" line="177"/>
+        <location filename="../../mainwindow.cpp" line="246"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="173"/>
         <source>- Path selected: </source>
         <translation type="unfinished">- Chemin selectionée: </translation>
@@ -475,7 +494,7 @@
         <translation type="obsolete">- MainWIndow::on_bBrowse_clicked(): montre le premier fichier s&apos;il a la bonne extension.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="186"/>
+        <location filename="../../mainwindow.cpp" line="194"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="190"/>
         <source>- Load image </source>
         <translation type="unfinished">- Charge l&apos;image </translation>
@@ -501,19 +520,20 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="38"/>
+        <location filename="../../mainwindow.cpp" line="42"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="38"/>
         <source>- Switch language to French.</source>
         <translation type="unfinished">- Bascule l&apos;interface en Français.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="112"/>
+        <location filename="../../mainwindow.cpp" line="118"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="112"/>
         <source>Time line.</source>
         <translation type="unfinished">Chronologie.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="162"/>
+        <location filename="../../mainwindow.cpp" line="170"/>
+        <location filename="../../mainwindow.cpp" line="239"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="166"/>
         <source>- Path selected: empty path.</source>
         <translation type="unfinished">- Chemin sélectionné: vide.</translation>
@@ -523,13 +543,19 @@
         <translation type="obsolete">- ◬ Ne peux pas continuer avec ce chemin: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="211"/>
+        <location filename="../../mainwindow.cpp" line="220"/>
+        <location filename="../../mainwindow.cpp" line="295"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="213"/>
         <source>- Cannot process with this path: </source>
         <translation type="unfinished">- Ne peux pas continuer avec ce chemin: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="258"/>
+        <location filename="../../mainwindow.cpp" line="263"/>
+        <source>- Error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="343"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="252"/>
         <source>- DST is disable.
 </source>
@@ -537,7 +563,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="262"/>
+        <location filename="../../mainwindow.cpp" line="347"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="256"/>
         <source>- DST is enable: +1h.
 </source>
@@ -545,7 +571,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="295"/>
+        <location filename="../../mainwindow.cpp" line="380"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="289"/>
         <source>- Auto wrap off.
 </source>
@@ -553,7 +579,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="299"/>
+        <location filename="../../mainwindow.cpp" line="384"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="293"/>
         <source>- Auto wrap on.
 </source>
@@ -561,7 +587,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="305"/>
+        <location filename="../../mainwindow.cpp" line="390"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="299"/>
         <source>- Toggle verbosity on.
 </source>
@@ -569,7 +595,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="311"/>
+        <location filename="../../mainwindow.cpp" line="396"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="305"/>
         <source>- Toggle auto scroll on.
 </source>
@@ -577,7 +603,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="312"/>
+        <location filename="../../mainwindow.cpp" line="397"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="306"/>
         <source>- Toggle auto scroll off.
 </source>
@@ -585,11 +611,11 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="384"/>
-        <location filename="../../mainwindow.cpp" line="403"/>
-        <location filename="../../mainwindow.cpp" line="422"/>
-        <location filename="../../mainwindow.cpp" line="441"/>
-        <location filename="../../mainwindow.cpp" line="460"/>
+        <location filename="../../mainwindow.cpp" line="469"/>
+        <location filename="../../mainwindow.cpp" line="488"/>
+        <location filename="../../mainwindow.cpp" line="507"/>
+        <location filename="../../mainwindow.cpp" line="526"/>
+        <location filename="../../mainwindow.cpp" line="545"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="378"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="397"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="416"/>
@@ -599,130 +625,145 @@
         <translation type="unfinished">-&gt; Décalage de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="386"/>
-        <location filename="../../mainwindow.cpp" line="405"/>
+        <location filename="../../mainwindow.cpp" line="471"/>
+        <location filename="../../mainwindow.cpp" line="490"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="380"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="399"/>
         <source> or </source>
         <translation type="unfinished"> ou </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="492"/>
+        <location filename="../../mainwindow.cpp" line="582"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="486"/>
         <source>Qt5 GUI for changing picture timestamps.&lt;/p&gt;</source>
         <translation type="unfinished">Qt5 GUI pour le décalage de la date des images.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="870"/>
+        <location filename="../../mainwindow.cpp" line="921"/>
+        <source>- New release: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="1072"/>
         <source>- Select year: </source>
         <translation type="unfinished">- Selection de l&apos;année: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="910"/>
+        <location filename="../../mainwindow.cpp" line="1114"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="870"/>
         <source>Janvier</source>
         <translation type="unfinished">Janvier</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="911"/>
+        <location filename="../../mainwindow.cpp" line="1115"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="871"/>
         <source>February</source>
         <translation type="unfinished">Février</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="912"/>
+        <location filename="../../mainwindow.cpp" line="1116"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="872"/>
         <source>March</source>
         <translation type="unfinished">Mars</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="913"/>
+        <location filename="../../mainwindow.cpp" line="1117"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="873"/>
         <source>April</source>
         <translation type="unfinished">Avril</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="915"/>
+        <location filename="../../mainwindow.cpp" line="1119"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="875"/>
         <source>June</source>
         <translation type="unfinished">Juin</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="916"/>
+        <location filename="../../mainwindow.cpp" line="1120"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="876"/>
         <source>July</source>
         <translation type="unfinished">Juillet</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="917"/>
+        <location filename="../../mainwindow.cpp" line="1121"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="877"/>
         <source>August</source>
         <translation type="unfinished">Août</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="918"/>
+        <location filename="../../mainwindow.cpp" line="1122"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="878"/>
         <source>September</source>
         <translation type="unfinished">Septembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="919"/>
+        <location filename="../../mainwindow.cpp" line="1123"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="879"/>
         <source>October</source>
         <translation type="unfinished">Octobre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="920"/>
+        <location filename="../../mainwindow.cpp" line="1124"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="880"/>
         <source>November</source>
         <translation type="unfinished">Novembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="921"/>
+        <location filename="../../mainwindow.cpp" line="1125"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="881"/>
         <source>December</source>
         <translation type="unfinished">Décembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="939"/>
+        <location filename="../../mainwindow.cpp" line="1144"/>
         <source>pics/day</source>
         <translation type="unfinished">photos/j</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="951"/>
+        <location filename="../../mainwindow.cpp" line="1158"/>
         <source>- Empty epoch vector.
 </source>
         <translation type="unfinished">- Vecteur d&apos;Epoques vide.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="974"/>
+        <location filename="../../mainwindow.cpp" line="1177"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="919"/>
         <source>- Chose BlueCerulean theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème BlueCerulean</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="969"/>
+        <location filename="../../mainwindow.cpp" line="1172"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="914"/>
         <source>- Chose Qt theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Qt</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="979"/>
+        <location filename="../../mainwindow.cpp" line="254"/>
+        <source>- Continue with one file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="585"/>
+        <source>Update available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../mainwindow.cpp" line="1182"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="924"/>
         <source>- Chose Light theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Light</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="984"/>
-        <location filename="../../mainwindow.cpp" line="989"/>
+        <location filename="../../mainwindow.cpp" line="1187"/>
+        <location filename="../../mainwindow.cpp" line="1192"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="929"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="934"/>
         <source>- Chose Dark theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Dark</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="914"/>
+        <location filename="../../mainwindow.cpp" line="1118"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="874"/>
         <source>May</source>
         <translation type="unfinished">Mai</translation>
@@ -744,7 +785,7 @@
         <translation type="obsolete">Interface Qt5 pour le décalage des dates des images.&lt;br /&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="576"/>
+        <location filename="../../mainwindow.cpp" line="674"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="570"/>
         <source>- Switch language to French.
 </source>
@@ -752,7 +793,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="581"/>
+        <location filename="../../mainwindow.cpp" line="679"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="575"/>
         <source>- Switch language to English.
 </source>
@@ -776,7 +817,7 @@
         <translation type="obsolete">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="695"/>
+        <location filename="../../mainwindow.cpp" line="793"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="684"/>
         <source>- List of files...
 </source>
@@ -784,7 +825,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="745"/>
+        <location filename="../../mainwindow.cpp" line="859"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="734"/>
         <source> files removed.</source>
         <translation type="unfinished"> fichiers enlevés.</translation>
@@ -833,7 +874,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1007"/>
+        <location filename="../../mainwindow.cpp" line="1210"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="949"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
@@ -963,7 +1004,7 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="1042"/>
+        <location filename="../../mainwindow.cpp" line="1245"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="984"/>
         <source>- Start shifting pictures.
 </source>
@@ -971,7 +1012,7 @@
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1054"/>
+        <location filename="../../mainwindow.cpp" line="1257"/>
         <location filename="../../shiftpicdate-gui/mainwindow.cpp" line="996"/>
         <source>- Shifting completed.
 </source>

@@ -689,6 +689,13 @@
              </spacer>
             </item>
             <item>
+             <widget class="QLabel" name="lAdd">
+              <property name="text">
+               <string>Add:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="bBrowse">
               <property name="statusTip">
                <string>Select a directory.</string>
@@ -698,9 +705,32 @@
 </string>
               </property>
               <property name="text">
-               <string>Browse</string>
+               <string>Directory</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bBrowseFile">
+              <property name="text">
+               <string>File</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_18">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <widget class="QPushButton" name="bSelectfile">

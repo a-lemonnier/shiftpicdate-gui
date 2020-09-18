@@ -19,7 +19,7 @@ if(NOT DEFINED QT_VERSION_MAJOR)
     set(QT_VERSION_MAJOR 5)
 endif()
 
-find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts Network REQUIRED)
 
 file(GLOB TS_FILES "res/ts/*.ts")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -67,11 +67,11 @@ endif(UNIX)
 
 if (WIN32)
     set_property(TARGET shiftpicdate-gui PROPERTY WIN32_EXECUTABLE true)
-    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts )
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network)
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts)
+    target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network)
     target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lstdc++fs -lexiv2)
 endif (UNIX)
 

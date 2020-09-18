@@ -1,7 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define VER "0.3"
+#define APPNAME "shiftpicdate-gui"
+
+#define VER_MAJOR 0
+#define VER_MINOR 3
+#define VER_REV 1
 
 #include <Qt>
 #include <QMainWindow>
@@ -38,6 +42,16 @@
 #include <QEvent>
 #include <QFont>
 
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QUrl>
+
+#include <QJsonParseError>
+#include <QJsonDocument>
+#include <QJsonArray>
+
+
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
@@ -57,6 +71,7 @@
 #include <tuple>
 #include <set>
 #include <map>
+#include <cctype>
 
 #if __has_include (<filesystem>)
 #include <filesystem>
@@ -106,20 +121,21 @@ public:
     void setvsList(std::vector<std::string> &);
     std::vector<std::string> getvsList();
     void startSlideshow();
+    void checkForUpdate();
 
     enum Lang { FR, EN };
     enum Theme {DARK, LIGHT, QT, BLUE};
 
 public slots:
-    void update_progressBar_value(int v);
+    void update_progressBar_value(int);
     void update_Log_value(QString);
     void update_Log();
     void changePic();
     void get_fsDialog_vector(std::vector<std::string> &);
     void run_shift();
     void plotHist();
-    void addEpoch(long t);
-    void plotHistY(const QString &year);
+    void addEpoch(long);
+    void replyFinished(QNetworkReply*);
 
 private slots:
     void on_bBrowse_clicked();
@@ -151,6 +167,8 @@ private slots:
     void on_bFlag_released();
 
     void on_cbYear_activated(const QString &);
+
+    void on_bBrowseFile_clicked();
 
 private:
     Ui::MainWIndow *ui;
@@ -201,6 +219,9 @@ private:
     Theme curHistTheme;
 
     Lang selectedLang;
+
+    bool hasUpdate;
+    std::string lastRelease;
 
     int computeDeltaT();
 

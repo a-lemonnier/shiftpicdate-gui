@@ -40,6 +40,8 @@ Shift the exif/XMP date using Exiv2 (linux) or WIC (win) C++ libraries.
 > Windows 10 64 FR
 ![shiftpicdate-gui_win](doc/shiftpicdate-gui_win.png)
 
+> Windows 10 64 EN
+![shiftpicdate-gui_win](doc/shiftpicdate-gui_win_2.png)
 
 > Build
 

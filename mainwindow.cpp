@@ -21,9 +21,13 @@ MainWIndow::MainWIndow(QWidget *parent)
 , currentPic(0)
 , lHistCurYear(0)
 , curHistTheme(Theme::DARK)
-, selectedLang(Lang::EN) {
+, selectedLang(Lang::EN)
+, hasUpdate(false) {
     ui->setupUi(this);
-    this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+std::string(VER)));
+    this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+
+                                                std::to_string(VER_MAJOR)+"."+
+                                                std::to_string(VER_MINOR)+"."+
+                                                std::to_string(VER_REV)));
 
     // Set translation --
     QString defaultLocale = QLocale::system().name();
@@ -82,6 +86,8 @@ MainWIndow::MainWIndow(QWidget *parent)
     // Set Styles --
     ui->lEPath->setStyleSheet(spdStyle::lEPathRed);
     ui->bBrowse->setStyleSheet(spdStyle::bBrowseRed);
+    ui->bBrowseFile->setStyleSheet(spdStyle::bBrowseRed);
+    ui->tBLog->setAcceptRichText(true);
     ui->tBLog->setStyleSheet("");
 
     ui->tBLog->verticalScrollBar()->setStyleSheet("");
@@ -118,13 +124,15 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->hlBarChart->addWidget(this->chartView);
 
     this->chartView->setHidden(true);
-
     // --------
 
     // Event --
     setMouseTracking(true);
-
     // --------
+
+    // Check update --
+    this->checkForUpdate();
+    // ---------------
 
     // Define some connections
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
@@ -206,10 +214,85 @@ void MainWIndow::on_bBrowse_clicked() {
                 }
                 ui->lEPath->setStyleSheet("");
                 ui->bBrowse->setStyleSheet("");
+                ui->bBrowseFile->setStyleSheet("");
             }
             else
                 this->setLogtext(tr("- Cannot process with this path: ").toStdString()+this->sFilename+"!\n");
         }
+    }
+    qeBlur.setEnabled(false);
+}
+
+void MainWIndow::on_bBrowseFile_clicked() {
+    qeBlur.setEnabled(true);
+    QFileDialog dialog(this);
+
+    dialog.setViewMode(QFileDialog::List);
+
+    QStringList fileNames;
+    QStringList fileNames_tmp;
+
+    if (dialog.exec()) fileNames_tmp=dialog.selectedFiles();
+
+    if (fileNames_tmp.empty()) {
+        fileNames.append("");
+        this->setLogtext(tr("- Path selected: empty path.").toStdString()+"\n");
+    }
+    else {
+        this->vsList.clear();
+
+        fileNames=fileNames_tmp;
+        fileNames_tmp.clear();
+        this->setLogtext(tr("- Path selected: ").toStdString());
+        for(const auto &str: fileNames) this->setLogtext(str.toUtf8().toStdString()+"\n");
+
+        ui->lEPath->setText(fileNames[0]);
+        ui->lEPath->setEnabled(false);
+
+        if (fs::is_regular_file(fileNames[0].toUtf8().toStdString())) {
+            this->sFilename=fileNames[0].toUtf8().toStdString();
+            this->setLogtext(tr("- Continue with one file").toStdString()+": "
+                            +spdFunc::getExifDate(this->sFilename)+".\n");
+
+            ui->bReset->setEnabled(true);
+
+            QImageReader* imgr=new QImageReader(QString::fromStdString(this->sFilename));
+            imgr->read();
+
+            if (imgr->error())
+                std::cerr << tr("- Error: ").toStdString()
+                          << imgr->errorString().toStdString()
+                          << " ( code " << imgr->error() <<" )\n";
+
+            // Rescale pictures
+            QPixmap pmap(QString::fromStdString(this->sFilename));
+            ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
+
+            delete imgr;
+
+            this->setEnabled(false);
+            this->vsList.push_back(this->sFilename);
+            this->setEnabled(true);
+
+            ui->lEPath->setStyleSheet("");
+            ui->bBrowse->setStyleSheet("");
+            ui->bBrowseFile->setStyleSheet("");
+
+            ui->bRun->setEnabled(true);
+            ui->bReset->setEnabled(true);
+            ui->bQuit->setEnabled(true);
+
+            ui->sBYear->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBDay->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBHour->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBMin->setStyleSheet(spdStyle::TimeFieldGreen);
+            ui->sBSec->setStyleSheet(spdStyle::TimeFieldGreen);
+
+            ui->bRun->setStyleSheet(spdStyle::bRunGreen);
+            ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+        }
+        else
+            this->setLogtext(tr("- Cannot process with this path: ").toStdString()+this->sFilename+"!\n");
     }
     qeBlur.setEnabled(false);
 }
@@ -224,6 +307,7 @@ void MainWIndow::on_bRun_clicked() {
     ui->bRun->setEnabled(false);
     ui->bQuit->setEnabled(true);
     ui->bBrowse->setEnabled(false);
+    ui->bBrowseFile->setEnabled(false);
     ui->bReset->setEnabled(false);
     ui->sBYear->setEnabled(false);
     ui->sBDay->setEnabled(false);
@@ -232,15 +316,16 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBSec->setEnabled(false);
 
 
-    this->chartView->setHidden(true);
+    if (this->vsList.size()>1) this->chartView->setHidden(true);
 
     this->run_shift();
 
-    this->chartView->setHidden(false);
+    if (this->vsList.size()>1) this->chartView->setHidden(false);
 
     ui->bRun->setEnabled(true);
     ui->bQuit->setEnabled(true);
     ui->bBrowse->setEnabled(true);
+    ui->bBrowseFile->setEnabled(true);
     ui->bReset->setEnabled(true);
     ui->sBYear->setEnabled(true);
     ui->sBDay->setEnabled(true);
@@ -487,10 +572,23 @@ void MainWIndow::on_rBInfo_clicked() { // About...
             +".";
     sysInfo+="</i></small></p>";
 
-    QString infoMsg;    
-    infoMsg=QString::fromStdString("<p><strong>shiftpicdate-gui</strong> "+std::string(VER)+"<br /><br />");
+    QString infoMsg;
+    infoMsg=QString::fromStdString("<p><strong>shiftpicdate-gui</strong> "+
+                                   std::to_string(VER_MAJOR)+"."+
+                                   std::to_string(VER_MINOR)+"."+
+                                   std::to_string(VER_REV)
+                                   +"<br /><br />");
+
     infoMsg+=tr("Qt5 GUI for changing picture timestamps.</p>");
+
+    if (this->hasUpdate)
+        infoMsg+="<p><i>"+tr("Update available")+": "
+                +"<a href='https://sourceforge.net/projects/shiftpicdate-gui'>"
+                +QString::fromStdString(this->lastRelease)
+                +"</a>.</p>";
+
     infoMsg+=QString::fromStdString(sysInfo);
+
     infoMsg+="<p><a href='https://github.com/a-lemonnier/shiftpicdate-gui'>github.com/a-lemonnier/shiftpicdate-gui</a><br />";
     infoMsg+="MIT - A. Lemonnier - "+QDate::currentDate().toString("yyyy")+"</p>";
 
@@ -723,6 +821,22 @@ void MainWIndow::startSlideshow() {
     else std::cerr << "- MainWIndow::startSlideshow(): empty list.";
 }
 
+void MainWIndow::checkForUpdate(){
+    this->setLogtext("- Check update.\n");
+    QNetworkRequest request;
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setProtocol(QSsl::SecureProtocols);
+    request.setSslConfiguration(config);
+
+    request.setUrl(QUrl("https://sourceforge.net/projects/shiftpicdate-gui/best_release.json"));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    manager->get(request);
+
+    connect(manager, &QNetworkAccessManager::finished, this, &MainWIndow::replyFinished);
+}
+
 void MainWIndow::changePic() {
     this->currentPic++;
     if (this->currentPic>this->picNb-1) this->currentPic=0;
@@ -748,6 +862,79 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
 
 void MainWIndow::addEpoch(long t) { this->vEpoch.push_back(t); }
 
+
+void MainWIndow::replyFinished(QNetworkReply* reply) {
+    QString data = (QString) reply->readAll();
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
+    
+    if (reply->error()==QNetworkReply::NoError) {
+        
+        QJsonObject jsonObject = jsonDoc.object();
+        
+        std::string sRelease=jsonObject.value("release").toObject().value("filename").toString().toStdString();
+        
+        sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '/'), sRelease.end());
+        sRelease.erase(0, std::string(APPNAME).size());
+        
+        if (sRelease.find(".tar.gz")!=std::string::npos)
+            sRelease.erase(sRelease.find("src.tar.gz"), std::string("src.tar.gz").size());
+        if (sRelease.find(".zip")!=std::string::npos)
+            sRelease.erase(sRelease.find("src.zip"), std::string("src.zip").size());
+        if (sRelease.find(".exe")!=std::string::npos)
+            sRelease.erase(sRelease.find(".exe"), std::string(".exe").size());
+        
+        sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '-'), sRelease.end());
+        
+        int dot1, dot2;
+        dot1=sRelease.find_first_of(".");
+        dot2=sRelease.find_last_of(".");
+        
+        sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '.'), sRelease.end());
+        
+        int major_ver=0, minor_ver=0, rev_ver=0;
+        
+        if (dot1<dot2) {
+            major_ver=std::stoi(sRelease.substr(0, dot1));
+            minor_ver=std::stoi(sRelease.substr(dot1, dot2-dot1-1));
+            rev_ver=std::stoi(sRelease.substr(dot2-1, sRelease.size()-dot2+1));
+        }
+        else {
+            major_ver=std::stoi(sRelease.substr(0, dot1));
+            minor_ver=std::stoi(sRelease.substr(dot1, sRelease.size()-dot1));
+        }
+        
+        if (major_ver>VER_MAJOR) this->hasUpdate=true;
+        else if (major_ver==VER_MAJOR) {
+             if (minor_ver>VER_MINOR) this->hasUpdate=true;
+            else if (minor_ver==VER_MINOR) {
+                 if (rev_ver>VER_REV) this->hasUpdate=true;
+                 else this->hasUpdate=false;
+            }
+            else this->hasUpdate=false;
+        }
+        else this->hasUpdate=false;
+        
+        if (this->hasUpdate) {
+            this->setLogtext(tr("- New release: ").toStdString()+
+                            "<a href='www.google.fr'>"+
+                            std::to_string(major_ver) + "." +
+                            std::to_string(minor_ver) + "." +
+                            std::to_string(rev_ver)+
+                            "</a>.\n");
+            this->lastRelease=std::to_string(major_ver) + "." +
+                              std::to_string(minor_ver) + "." +
+                              std::to_string(rev_ver);
+        }
+    }
+    else {
+        this->hasUpdate=false;
+        this->lastRelease=std::to_string(VER_MAJOR) + "." +
+        std::to_string(VER_MINOR) + "." +
+        std::to_string(VER_REV);
+    }
+}
+
+
 void MainWIndow::run_shift() {
   runShift *rs=new runShift();
   QThread *th=new QThread();
@@ -768,16 +955,18 @@ void MainWIndow::run_shift() {
         this->timer->stop();
         this->update_Log();
 
-        this->lHistCurYear=0;
-        ui->cbYear->clear();
-        ui->cbYear->clearFocus();
-        ui->cbYear->addItem(" ");
-        ui->cbYear->setCurrentIndex(0);
+        if (this->vsList.size()>1) {
+            this->lHistCurYear=0;
+            ui->cbYear->clear();
+            ui->cbYear->clearFocus();
+            ui->cbYear->addItem(" ");
+            ui->cbYear->setCurrentIndex(0);
 
-        this->getfileList();
+            this->getfileList();
 
-        this->Chart->removeAllSeries();
-        this->plotHist();
+            this->Chart->removeAllSeries();
+            this->plotHist();
+      }
   });
 
   connect(th, &QThread::finished, th, &QThread::deleteLater);
@@ -936,11 +1125,14 @@ void MainWIndow::plotHist() {
 
                 this->axisX = new QBarCategoryAxis();
                 this->axisX->append(categories);
-                this->axisX->setLabelsFont(QFont(HFontfamily, 7));
+                this->axisX->setLabelsFont(QFont(HFontfamily, 8));
+                this->axisX->setLabelsColor(Qt::darkCyan);
 
                 this->Chart->axes(Qt::Vertical)[0]->setTitleText(tr("pics/day"));
-                this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(VFontfamily, 6));
-                this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(VFontfamily, 6));
+                this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(VFontfamily, 8));
+                this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(VFontfamily, 8));
+                this->Chart->axes(Qt::Vertical)[0]->setLabelsColor(Qt::blue);
+                this->Chart->axes(Qt::Vertical)[0]->setTitleBrush(QBrush(Qt::darkCyan));
                 this->Chart->axes(Qt::Vertical)[0]->setRange(0, MaxPic);
 
                 this->Chart->addAxis(this->axisX, Qt::AlignBottom);
@@ -953,11 +1145,7 @@ void MainWIndow::plotHist() {
     else this->setLogtext(tr("- Empty epoch vector.\n").toStdString());
 }
 
-void MainWIndow::plotHistY(const QString &year) {
-    if (!year.isEmpty())
-        this->lHistCurYear=std::stol(year.toStdString());
-    this->plotHist();
-}
+
 
 void MainWIndow::changeEvent(QEvent *event) {
     if (event->type() == QEvent::LanguageChange)
@@ -992,9 +1180,9 @@ void MainWIndow::mousePressEvent(QMouseEvent *event) {
             this->curHistTheme=Theme::DARK;
             this->Chart->setTheme(QtCharts::QChart::ChartThemeDark);
         }
-        this->Chart->axes(Qt::Horizontal)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Horizontal)[0]->titleFont().family(), 7));
-        this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Vertical)[0]->labelsFont().family(), 6));
-        this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(this->Chart->axes(Qt::Vertical)[0]->titleFont().family(), 6));
+        this->Chart->axes(Qt::Horizontal)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Horizontal)[0]->titleFont().family(), 8));
+        this->Chart->axes(Qt::Vertical)[0]->setLabelsFont(QFont(this->Chart->axes(Qt::Vertical)[0]->labelsFont().family(), 8));
+        this->Chart->axes(Qt::Vertical)[0]->setTitleFont(QFont(this->Chart->axes(Qt::Vertical)[0]->titleFont().family(), 8));
     }
 }
 
@@ -1059,3 +1247,5 @@ void runShift::shift() {
 
 void runShift::setDiff(long t) { this->Diff=t; }
 void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
+
+
