@@ -46,6 +46,17 @@ MainWIndow::MainWIndow(QWidget *parent)
     else ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
     // ------------------
 
+    // Icon --
+    setWindowIcon(QIcon(":/ico/ico1.png"));
+    // -------
+
+    // Version --
+    qApp->setApplicationName(APPNAME);
+    qApp->setApplicationVersion(QString::fromStdString(std::to_string(VER_MAJOR) + "." +
+                                                       std::to_string(VER_MINOR) + "." +
+                                                       std::to_string(VER_REV)));
+    // ----------
+
     ui->tBLog->setAcceptRichText(true);
     this->setLogtext("\n");
     

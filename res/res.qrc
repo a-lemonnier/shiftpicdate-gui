@@ -6,5 +6,6 @@
         <file>ts/french.ts</file>
         <file>flag/eng.svg</file>
         <file>flag/fr.svg</file>
+        <file>ico/ico1.png</file>
     </qresource>
 </RCC>

@@ -35,7 +35,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res/res.qrc">
-    <normaloff>:/ico/ico1.svg</normaloff>:/ico/ico1.svg</iconset>
+    <normaloff>:/ico/ico1.png</normaloff>:/ico/ico1.png</iconset>
   </property>
   <property name="iconSize">
    <size>

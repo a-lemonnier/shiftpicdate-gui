@@ -41,6 +41,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include <QFont>
+#include <QSystemTrayIcon>
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -51,6 +52,9 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+#if defined(_WIN32) || defined(WIN32)
+#include <QWinTaskbarButton>
+#endif
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>

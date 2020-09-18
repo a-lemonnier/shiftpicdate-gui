@@ -19,7 +19,12 @@ if(NOT DEFINED QT_VERSION_MAJOR)
     set(QT_VERSION_MAJOR 5)
 endif()
 
-find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts Network REQUIRED)
+if(WIN32)
+    find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts Network Winextras REQUIRED)
+endif(WIN32)
+if(UNIX)
+    find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools Charts Network REQUIRED)
+endif(UNIX)
 
 file(GLOB TS_FILES "res/ts/*.ts")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
