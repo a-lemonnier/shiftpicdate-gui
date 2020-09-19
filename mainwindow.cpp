@@ -22,7 +22,10 @@ MainWIndow::MainWIndow(QWidget *parent)
 , lHistCurYear(0)
 , curHistTheme(Theme::DARK)
 , selectedLang(Lang::EN)
-, hasUpdate(false) {
+, hasUpdate(false)
+, autoWrap (true)
+, isPicHidden(false)
+{
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString("shiftpicdate-gui "+
                                                 std::to_string(VER_MAJOR)+"."+
@@ -31,11 +34,12 @@ MainWIndow::MainWIndow(QWidget *parent)
 
     // Set translation --
     QString defaultLocale = QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
-    if (defaultLocale.toStdString().find("fr") ||
-        defaultLocale.toStdString().find("FR") ||
-        defaultLocale.toStdString().find("Fr")) {
+    ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+
+    if (defaultLocale.toStdString().find("fr")!=std::string::npos ||
+        defaultLocale.toStdString().find("FR")!=std::string::npos ||
+        defaultLocale.toStdString().find("Fr")!=std::string::npos) {
         this->selectedLang=Lang::FR;
         if (qTranslator.load("french.qm"))
           qApp->installTranslator(&qTranslator);
@@ -43,12 +47,57 @@ MainWIndow::MainWIndow(QWidget *parent)
         ui->bFlag->setIcon(QIcon(":/flag/fr.svg"));
         ui->retranslateUi(this);
     }
-    else ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
+
     // ------------------
 
     // Icon --
     this->setWindowIcon(QIcon(":/ico/shiftpicdate-gui.ico"));
+
+    // - + ▢ ↻ ◁ ▷
+    QSize iconSizeR(16,16);
+    QSize iconSize(32,32);
+
+    ui->bScroll->text().clear();
+    ui->bScroll->setIconSize(iconSize);
+    ui->bScroll->setIcon(QIcon(":/ico/auto_scroll_on.svg"));
+
+    ui->bWrap->text().clear();
+    ui->bWrap->setIconSize(iconSize);
+    ui->bWrap->setIcon(QIcon(":/ico/wrap_lines_on.svg"));
+
+    ui->bQuiet->text().clear();
+    ui->bQuiet->setIconSize(iconSize);
+    ui->bQuiet->setIcon(QIcon(":/ico/verbose.svg"));
+
+    ui->bZoomOut->text().clear();
+    ui->bZoomOut->setIconSize(iconSizeR);
+    ui->bZoomOut->setIcon(QIcon(":/ico/minus.svg"));
+
+    ui->bZoomIn->text().clear();
+    ui->bZoomIn->setIconSize(iconSizeR);
+    ui->bZoomIn->setIcon(QIcon(":/ico/plus.svg"));
+
+    ui->bHidepic->text().clear();
+    ui->bHidepic->setIconSize(iconSize);
+    ui->bHidepic->setIcon(QIcon(":/ico/eye_on.svg"));
+
+    ui->bRot->text().clear();
+    ui->bRot->setIconSize(iconSize);
+    ui->bRot->setIcon(QIcon(":/ico/rot_bw.svg"));
+
+    ui->bStop->text().clear();
+    ui->bStop->setIconSize(iconSize);
+    ui->bStop->setIcon(QIcon(":/ico/stop_bw.svg"));
+
+    ui->bNext->text().clear();
+    ui->bNext->setIconSize(iconSize);
+    ui->bNext->setIcon(QIcon(":/ico/next_bw.svg"));
+
+    ui->bPrev->text().clear();
+    ui->bPrev->setIconSize(iconSize);
+    ui->bPrev->setIcon(QIcon(":/ico/prev_bw.svg"));
     // -------
+
 
     // Version --
     qApp->setApplicationName(APPNAME);
@@ -84,14 +133,13 @@ MainWIndow::MainWIndow(QWidget *parent)
     // Set values --
     ui->bDST->setChecked(this->isDST);
     
-    ui->cBScroll->setChecked(true);
-    ui->cBWrap->setChecked(true);
-    
     ui->sBYear->setValue(this->DeltaY);
     ui->sBDay->setValue(this->DeltaD);
     ui->sBHour->setValue(this->DeltaH);
     ui->sBMin->setValue(this->DeltaM);
     ui->sBSec->setValue(this->DeltaS);
+
+    ui->rBInfo->setFocus();
     // -------------
 
     // Set Styles --
@@ -219,6 +267,7 @@ void MainWIndow::on_bBrowse_clicked() {
                     delete imgr;
                 }
                 else {
+                    this->changeTaskbarOverlay(":/ico/play.svg");
                     this->setEnabled(false);
                     this->getfileList();
                     this->setEnabled(true);
@@ -326,6 +375,7 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBMin->setEnabled(false);
     ui->sBSec->setEnabled(false);
 
+    this->changeTaskbarOverlay(":/ico/play.svg");
 
     if (this->vsList.size()>1) this->chartView->setHidden(true);
 
@@ -362,8 +412,20 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 void MainWIndow::on_bZoomIn_clicked()  { ui->tBLog->zoomIn(1);  }
 void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
 void MainWIndow::on_bTest_clicked() { ui->bReset->setEnabled(true); }
-void MainWIndow::on_cBHidepic_clicked(bool checked) { ui->picLabel->setHidden(checked); }
 void MainWIndow::on_bStop_clicked() { if (this->timer_ss->isActive()) timer_ss->stop(); }
+
+void MainWIndow::on_bHidepic_clicked() {
+    this->isPicHidden=!this->isPicHidden;
+    if (this->isPicHidden) ui->bHidepic->setIcon(QIcon(":/ico/eye_off.svg"));
+    else ui->bHidepic->setIcon(QIcon(":/ico/eye_on.svg"));
+
+    ui->bStop->setHidden(this->isPicHidden);
+    ui->bRot->setHidden(this->isPicHidden);
+    ui->bPrev->setHidden(this->isPicHidden);
+    ui->bNext->setHidden(this->isPicHidden);
+    ui->picLabel->setHidden(this->isPicHidden);
+
+}
 
 void MainWIndow::on_bRot_clicked() {
     if (!this->timer_ss->isActive()) {
@@ -385,28 +447,37 @@ void MainWIndow::on_bRot_clicked() {
 }
 
 
-void MainWIndow::on_cBWrap_clicked(bool checked) {
-    if (!checked) {
+void MainWIndow::on_bWrap_clicked() {
+    this->autoWrap=!this->autoWrap;
+    if (!this->autoWrap) {
+        ui->bWrap->setIcon(QIcon(":/ico/wrap_lines_off.svg"));
         ui->tBLog->setLineWrapMode(QTextEdit::NoWrap);
         this->setLogtext(tr("- Auto wrap off.\n").toStdString());
     }
     else {
+        ui->bWrap->setIcon(QIcon(":/ico/wrap_lines_on.svg"));
         ui->tBLog->setLineWrapMode(QTextEdit::WidgetWidth);
         this->setLogtext(tr("- Auto wrap on.\n").toStdString());
     }
 }
 
-void MainWIndow::on_cBQuiet_clicked(bool checked) {
-    this->isQuiet=checked;
-    if (!checked) this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
+void MainWIndow::on_bQuiet_clicked() {
+    this->isQuiet=!this->isQuiet;
+    if (this->isQuiet) ui->bQuiet->setIcon(QIcon(":/ico/quiet.svg"));
+    else ui->bQuiet->setIcon(QIcon(":/ico/verbose.svg"));
+
+    if (!this->isQuiet) this->setLogtext(tr("- Toggle verbosity on.\n").toStdString());
 }
 
-void MainWIndow::on_cBScroll_clicked(bool checked) {
-    this->isAutoScroll=checked;
-    if (!this->isQuiet) {
-        if (checked) this->setLogtext(tr("- Toggle auto scroll on.\n").toStdString());
+void MainWIndow::on_bScroll_clicked() {
+    this->isAutoScroll=!this->isAutoScroll;
+
+    if (this->isAutoScroll) ui->bScroll->setIcon(QIcon(":/ico/auto_scroll_on.svg"));
+    else ui->bScroll->setIcon(QIcon(":/ico/auto_scroll_off.svg"));
+
+    if (!this->isQuiet)
+        if (this->isAutoScroll) this->setLogtext(tr("- Toggle auto scroll on.\n").toStdString());
         else         this->setLogtext(tr("- Toggle auto scroll off.\n").toStdString());
-    }
 }
 
 void MainWIndow::on_bReset_clicked() {
@@ -417,8 +488,7 @@ void MainWIndow::on_bReset_clicked() {
     ui->lEPath->setEnabled(true);
     
     ui->bDST->setChecked(this->isDST);
-    ui->cBHidepic->setChecked(false);
-    
+
     QString savedStrp="<p><span style=\" font-weight:600; color:#aa0000;\">";
     QString savedStr=tr("No picture selected.");
     QString savedStrs="</span></p>";
@@ -625,6 +695,8 @@ void MainWIndow::on_bNext_clicked() {
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
 
+    this->changeTaskbarPic(pmap);
+
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
     ui->picLabel->setToolTipDuration(1000);
@@ -640,6 +712,8 @@ void MainWIndow::on_bPrev_clicked() {
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
 
+    this->changeTaskbarPic(pmap);
+
     ui->picLabel->setPixmap(pmap.scaled(ui->picLabel->size().height(),ui->picLabel->size().width(),Qt::KeepAspectRatio));
 
     ui->picLabel->setToolTipDuration(1000);
@@ -649,6 +723,8 @@ void MainWIndow::on_bPrev_clicked() {
 
 void MainWIndow::on_bSelectfile_clicked() {
     qeBlur.setEnabled(true);
+
+    this->changeTaskbarOverlay(":/ico/gears_1.svg");
 
     this->timer_ss->stop();
 
@@ -663,6 +739,8 @@ void MainWIndow::on_bSelectfile_clicked() {
 
     connect(secWindow, &fsDialog::finished, this,
             [this]() {
+                this->changeTaskbarOverlay(":/ico/pause.svg");
+
                 this->lHistCurYear=0;
                 this->vEpoch.clear();
                 for(const auto &file: this->vsList)
@@ -718,7 +796,7 @@ void MainWIndow::setvsList(std::vector<std::string> &vsList) { this->vsList=vsLi
 
 std::vector<std::string> MainWIndow::getvsList() { return this->vsList; }
 
-int  MainWIndow::computeDeltaT() { // compute total secs.
+int MainWIndow::computeDeltaT() { // compute total secs.
     constexpr int cM=60;
     constexpr int cH=cM*60;
     constexpr int cD=cH*24;
@@ -733,12 +811,30 @@ int  MainWIndow::computeDeltaT() { // compute total secs.
     return this->DeltaT;
 }
 
+void MainWIndow::changeTaskbarOverlay(const QString &str) {
+#if defined(_WIN32) || defined(WIN32)
+    this->tbarButton->clearOverlayIcon();
+    this->tbarButton->setOverlayIcon(QIcon(str));
+#endif
+}
+
+void MainWIndow::changeTaskbarPic(const QPixmap &pm) {
+#if defined(_WIN32) || defined(WIN32)
+    //this->tbarThumb->setIconicLivePreviewPixmap(pmap);
+    this->tbarThumb->setIconicThumbnailPixmap(pmap);
+#endif
+}
+
 void MainWIndow::update_progressBar_value(int v) {
     int r=255-static_cast<float>(v)/100*255;
     int g=static_cast<float>(v)/100*255;
     // Color as function of v
     ui->progressBar->setStyleSheet(QString::fromStdString("color: rgb("+std::to_string(r)+", "+std::to_string(g)+", 0);"));
     ui->progressBar->setValue(v);
+
+#if defined(_WIN32) || defined(WIN32)
+    this->tbarProgress->setValue(v);
+#endif
 }
 
 void MainWIndow::update_Log_value(QString str) { this->setLogtextTh(str.toUtf8().constData()); }
@@ -794,6 +890,8 @@ void MainWIndow::getfileList() {
 
                 ui->bRun->setStyleSheet(spdStyle::bRunGreen);
                 ui->tBLog->setStyleSheet(spdStyle::tbLogGreen);
+
+                this->changeTaskbarOverlay(":/ico/pause.svg");
         }
     }, Qt::BlockingQueuedConnection);
 
@@ -832,6 +930,23 @@ void MainWIndow::startSlideshow() {
     else std::cerr << "- MainWIndow::startSlideshow(): empty list.";
 }
 
+
+void MainWIndow::initTaskBar() {
+#if defined(_WIN32) || defined(WIN32)
+      this->tbarButton = new QWinTaskbarButton();
+      this->tbarButton->setWindow(this->windowHandle());
+      this->tbarButton->setOverlayIcon(QIcon(":/ico/pause.svg"));
+
+      this->tbarProgress = this->tbarButton->progress();
+      this->tbarProgress->setVisible(true);
+
+      this->tbarProgress->setRange(0,100);
+
+      tbarThumb = new QWinThumbnailToolBar();
+      this->tbarThumb->setWindow(this->windowHandle());
+#endif
+}
+
 void MainWIndow::checkForUpdate(){
     this->setLogtext(tr("- Check update").toStdString()+".\n");
     QNetworkRequest request;
@@ -854,6 +969,8 @@ void MainWIndow::changePic() {
 
     QPixmap pmap(QString::fromStdString(this->vsList[this->currentPic]));
     
+    this->changeTaskbarPic(pmap);
+
     QTransform transform(QTransform().rotate(this->iPicRot));
     pmap = pmap.transformed(transform);
 
@@ -965,8 +1082,11 @@ void MainWIndow::run_shift() {
   connect(rs, &runShift::finished, th, &QThread::quit);
 
   connect(rs, &runShift::finished,  this, [this]() {
+
         this->timer->stop();
         this->update_Log();
+
+        this->changeTaskbarOverlay(":/ico/pause.svg");
 
         if (this->vsList.size()>1) {
             this->lHistCurYear=0;

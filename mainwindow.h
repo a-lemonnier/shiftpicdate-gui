@@ -52,6 +52,13 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+#if defined(_WIN32) || defined(WIN32)
+#include <QWinThumbnailToolBar>
+#include <QWinThumbnailToolButton>
+#include <QWinTaskbarButton>
+#include <QWinTaskbarProgress>
+#endif
+
 #include <QtCharts/QChartView>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
@@ -117,9 +124,13 @@ public:
     void setLogtextErr(const std::string &msg);
 
     void getfileList();
+
     void setvsList(std::vector<std::string> &);
     std::vector<std::string> getvsList();
     void startSlideshow();
+
+    void initTaskBar();
+
     void checkForUpdate();
 
     enum Lang { FR, EN };
@@ -141,8 +152,8 @@ private slots:
     void on_bRun_clicked();
     void on_bDST_clicked(bool checked);
     void on_bTest_clicked();
-    void on_cBWrap_clicked(bool checked);
-    void on_cBQuiet_clicked(bool checked);
+    void on_bWrap_clicked();
+    void on_bQuiet_clicked();
     void on_bReset_clicked();
     void on_rBInfo_clicked();
 
@@ -155,8 +166,8 @@ private slots:
     void on_sBMin_valueChanged(int val);
     void on_sBHour_valueChanged(int val);
 
-    void on_cBScroll_clicked(bool checked);
-    void on_cBHidepic_clicked(bool checked);
+    void on_bScroll_clicked();
+    void on_bHidepic_clicked();
     void on_bRot_clicked();
     void on_bNext_clicked();
     void on_bPrev_clicked();
@@ -182,6 +193,12 @@ private:
     QTimer *timer, *timer_ss;
 
     QGraphicsBlurEffect qeBlur;
+
+#if defined(_WIN32) || defined(WIN32)
+    QWinTaskbarButton *tbarButton;
+    QWinTaskbarProgress *tbarProgress;
+    QWinThumbnailToolBar *tbarThumb;
+#endif
 
     QString SLog;
     std::vector<QString> QSLog;
@@ -222,7 +239,12 @@ private:
     bool hasUpdate;
     std::string lastRelease;
 
+    bool autoWrap;
+    bool isPicHidden;
+
     int computeDeltaT();
+    void changeTaskbarOverlay(const QString &);
+    void changeTaskbarPic(const QPixmap&);
 
 signals:
     void LogTimout();

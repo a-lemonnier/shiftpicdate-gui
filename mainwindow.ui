@@ -68,70 +68,40 @@
       <item row="3" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QCheckBox" name="cBWrap">
-          <property name="text">
-           <string>Auto wrap lines</string>
+         <spacer name="horizontalSpacer_29">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="cBScroll">
-          <property name="text">
-           <string>Auto scroll</string>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="cBQuiet">
-          <property name="text">
-           <string>Quiet</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bZoomIn">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
+          <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
             <height>20</height>
            </size>
           </property>
-          <property name="statusTip">
-           <string>Zoom in</string>
-          </property>
-          <property name="whatsThis">
-           <string/>
-          </property>
-          <property name="text">
-           <string>+</string>
-          </property>
-         </widget>
+         </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="bZoomOut">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
+         <widget class="QPushButton" name="bScroll">
           <property name="maximumSize">
            <size>
-            <width>20</width>
-            <height>20</height>
+            <width>32</width>
+            <height>32</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Auto scroll.</string>
+          </property>
           <property name="statusTip">
-           <string>Zoom out</string>
+           <string>Auto scroll.</string>
           </property>
           <property name="text">
-           <string>-</string>
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -149,58 +119,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QCheckBox" name="cBHidepic">
-          <property name="statusTip">
-           <string>Hide picture.</string>
-          </property>
-          <property name="text">
-           <string>Hide picture</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bRot">
-          <property name="maximumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="statusTip">
-           <string>Rotate picture.</string>
-          </property>
-          <property name="text">
-           <string>↻</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bStop">
-          <property name="maximumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
-          </property>
-          <property name="statusTip">
-           <string>Stop slideshow.</string>
-          </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>▢</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bPrev">
+         <widget class="QPushButton" name="bZoomOut">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -209,48 +128,401 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>20</width>
-            <height>20</height>
+            <width>32</width>
+            <height>32</height>
            </size>
           </property>
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-            <stylestrategy>PreferAntialias</stylestrategy>
-           </font>
+          <property name="toolTip">
+           <string>Zoom out.</string>
           </property>
           <property name="statusTip">
-           <string>Previous picture.</string>
+           <string>Zoom out.</string>
           </property>
           <property name="text">
-           <string>◁</string>
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="bNext">
+         <spacer name="horizontalSpacer_25">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>15</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bZoomIn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Zoom in.</string>
+          </property>
+          <property name="statusTip">
+           <string>Zoom in.</string>
+          </property>
+          <property name="whatsThis">
+           <string/>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_26">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
             <height>20</height>
            </size>
           </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bQuiet">
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Toggle verbosity.</string>
+          </property>
+          <property name="statusTip">
+           <string>Toggle verbosity.</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_27">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bWrap">
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Auto wrap lines.</string>
+          </property>
+          <property name="statusTip">
+           <string>Auto wrap lines.</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_28">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_23">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bHidepic">
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Hide pictures.</string>
+          </property>
+          <property name="statusTip">
+           <string notr="true">Hide pictures.</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_21">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bRot">
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Rotate picture.</string>
+          </property>
+          <property name="statusTip">
+           <string>Rotate picture.</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_19">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bStop">
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>10</pointsize>
             <stylestrategy>PreferAntialias</stylestrategy>
            </font>
           </property>
+          <property name="toolTip">
+           <string>Stop slideshow.</string>
+          </property>
+          <property name="statusTip">
+           <string>Stop slideshow.</string>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_20">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bPrev">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <stylestrategy>PreferAntialias</stylestrategy>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Previous picture.</string>
+          </property>
+          <property name="statusTip">
+           <string>Previous picture.</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_22">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="bNext">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <stylestrategy>PreferAntialias</stylestrategy>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Next picture.</string>
+          </property>
           <property name="statusTip">
            <string>Next picture.</string>
           </property>
           <property name="text">
-           <string>▷</string>
+           <string notr="true"/>
           </property>
           <property name="flat">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_24">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -473,6 +745,12 @@
           </item>
           <item>
            <widget class="QComboBox" name="cbYear">
+            <property name="toolTip">
+             <string>Select the year to plot.</string>
+            </property>
+            <property name="statusTip">
+             <string>Select the year to plot.</string>
+            </property>
             <item>
              <property name="text">
               <string>Years</string>
@@ -508,7 +786,7 @@
             <property name="minimumSize">
              <size>
               <width>300</width>
-              <height>100</height>
+              <height>200</height>
              </size>
             </property>
             <property name="mouseTracking">

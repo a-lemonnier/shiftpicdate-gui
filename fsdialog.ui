@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="res/res.qrc">
-    <normaloff>:/ico/ico.svg</normaloff>:/ico/ico.svg</iconset>
+    <normaloff>:/ico/gears.svg</normaloff>:/ico/gears.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

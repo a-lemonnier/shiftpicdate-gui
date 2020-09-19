@@ -9,5 +9,7 @@ int main(int argc, char *argv[]) {
     MainWIndow w;
     w.show();
 
+    w.initTaskBar();
+
     return a.exec();
 }

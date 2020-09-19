@@ -1,12 +1,29 @@
 <RCC>
     <qresource prefix="/">
-        <file>ico/ico.svg</file>
-        <file>ico/ico0.svg</file>
         <file>ico/ico1.svg</file>
         <file>ts/french.ts</file>
         <file>flag/eng.svg</file>
         <file>flag/fr.svg</file>
         <file>ico/ico1.png</file>
         <file>ico/shiftpicdate-gui.ico</file>
+        <file>ico/clock_earth.svg</file>
+        <file>ico/pause.svg</file>
+        <file>ico/play.svg</file>
+        <file>ico/gears_1.svg</file>
+        <file>ico/gears.svg</file>
+        <file>ico/next_bw.svg</file>
+        <file>ico/prev_bw.svg</file>
+        <file>ico/stop_bw.svg</file>
+        <file>ico/rot_bw.svg</file>
+        <file>ico/eye_off.svg</file>
+        <file>ico/eye_on.svg</file>
+        <file>ico/plus.svg</file>
+        <file>ico/minus.svg</file>
+        <file>ico/quiet.svg</file>
+        <file>ico/verbose.svg</file>
+        <file>ico/wrap_lines_on.svg</file>
+        <file>ico/wrap_lines_off.svg</file>
+        <file>ico/auto_scroll_on.svg</file>
+        <file>ico/auto_scroll_off.svg</file>
     </qresource>
 </RCC>
