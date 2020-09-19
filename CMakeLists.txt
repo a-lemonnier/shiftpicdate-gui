@@ -75,7 +75,8 @@ if(WIN32)
 endif(WIN32)
 
 if(UNIX)
-    set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
+#    set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
     find_package(Boost 1.40 OPTIONAL_COMPONENTS filesystem)

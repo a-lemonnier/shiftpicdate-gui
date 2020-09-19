@@ -620,84 +620,84 @@
         <translation type="unfinished">- Nouvelle version: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1192"/>
+        <location filename="../../mainwindow.cpp" line="1199"/>
         <source>- Select year: </source>
         <translation type="unfinished">- Selection de l&apos;année: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1234"/>
+        <location filename="../../mainwindow.cpp" line="1241"/>
         <source>Janvier</source>
         <translation type="unfinished">Janvier</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1235"/>
+        <location filename="../../mainwindow.cpp" line="1242"/>
         <source>February</source>
         <translation type="unfinished">Février</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1236"/>
+        <location filename="../../mainwindow.cpp" line="1243"/>
         <source>March</source>
         <translation type="unfinished">Mars</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1237"/>
+        <location filename="../../mainwindow.cpp" line="1244"/>
         <source>April</source>
         <translation type="unfinished">Avril</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1239"/>
+        <location filename="../../mainwindow.cpp" line="1246"/>
         <source>June</source>
         <translation type="unfinished">Juin</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1240"/>
+        <location filename="../../mainwindow.cpp" line="1247"/>
         <source>July</source>
         <translation type="unfinished">Juillet</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1241"/>
+        <location filename="../../mainwindow.cpp" line="1248"/>
         <source>August</source>
         <translation type="unfinished">Août</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1242"/>
+        <location filename="../../mainwindow.cpp" line="1249"/>
         <source>September</source>
         <translation type="unfinished">Septembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1243"/>
+        <location filename="../../mainwindow.cpp" line="1250"/>
         <source>October</source>
         <translation type="unfinished">Octobre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1244"/>
+        <location filename="../../mainwindow.cpp" line="1251"/>
         <source>November</source>
         <translation type="unfinished">Novembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1245"/>
+        <location filename="../../mainwindow.cpp" line="1252"/>
         <source>December</source>
         <translation type="unfinished">Décembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1264"/>
+        <location filename="../../mainwindow.cpp" line="1271"/>
         <source>pics/day</source>
         <translation type="unfinished">photos/j</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1278"/>
+        <location filename="../../mainwindow.cpp" line="1285"/>
         <source>- Empty epoch vector.
 </source>
         <translation type="unfinished">- Vecteur d&apos;Epoques vide.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1297"/>
+        <location filename="../../mainwindow.cpp" line="1304"/>
         <source>- Chose BlueCerulean theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème BlueCerulean</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1292"/>
+        <location filename="../../mainwindow.cpp" line="1299"/>
         <source>- Chose Qt theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Qt</translation>
     </message>
@@ -712,18 +712,18 @@
         <translation type="unfinished">Mise-à-jour disponible</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1302"/>
+        <location filename="../../mainwindow.cpp" line="1309"/>
         <source>- Chose Light theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Light</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1307"/>
-        <location filename="../../mainwindow.cpp" line="1312"/>
+        <location filename="../../mainwindow.cpp" line="1314"/>
+        <location filename="../../mainwindow.cpp" line="1319"/>
         <source>- Chose Dark theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Dark</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1238"/>
+        <location filename="../../mainwindow.cpp" line="1245"/>
         <source>May</source>
         <translation type="unfinished">Mai</translation>
     </message>
@@ -829,7 +829,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1330"/>
+        <location filename="../../mainwindow.cpp" line="1337"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
@@ -972,14 +972,14 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="1365"/>
+        <location filename="../../mainwindow.cpp" line="1372"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1377"/>
+        <location filename="../../mainwindow.cpp" line="1384"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.
