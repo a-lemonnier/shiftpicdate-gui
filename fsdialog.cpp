@@ -6,6 +6,12 @@ fsDialog::fsDialog(QWidget *parent) :
     ui(new Ui::fsDialog) {
 
     ui->setupUi(this);
+
+    ui->bOK->setToolTip(tr("Confirm selection"));
+    ui->bCancel->setToolTip(tr("Cancel selection"));
+    ui->bSelectAll->setToolTip(tr("Select all pictures"));
+    ui->bDeselectAll->setToolTip(tr("Deselect all pictures"));
+
     this->vsList.clear();
     for(const auto str: static_cast<MainWIndow*>(parent)->getvsList())
         this->vsList.emplace_back(str);

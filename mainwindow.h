@@ -5,7 +5,7 @@
 
 #define VER_MAJOR 0
 #define VER_MINOR 3
-#define VER_REV 1
+#define VER_REV 2
 
 #include <Qt>
 #include <QMainWindow>
@@ -69,6 +69,8 @@
 #include <tuple>
 #include <set>
 #include <map>
+#include <regex>
+#include <exception>
 
 #if __has_include (<filesystem>)
 #include <filesystem>

@@ -867,7 +867,7 @@ void MainWIndow::changePic() {
 }
 
 void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
-    this->setLogtext("- "+std::to_string(abs(static_cast<long>(vs.size()-this->vsList.size())))+tr(" files removed.").toStdString());
+    this->setLogtext("- "+std::to_string(abs(static_cast<long>(vs.size()-this->vsList.size())))+tr(" files removed.").toStdString()+"\n");
     this->vsList=vs;
 }
 
@@ -877,24 +877,22 @@ void MainWIndow::addEpoch(long t) { this->vEpoch.push_back(t); }
 void MainWIndow::replyFinished(QNetworkReply* reply) {
     QString data = (QString) reply->readAll();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
-    
+
     if (reply->error()==QNetworkReply::NoError) {
         
         QJsonObject jsonObject = jsonDoc.object();
         
         std::string sRelease=jsonObject.value("release").toObject().value("filename").toString().toStdString();
-        
-        sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '/'), sRelease.end());
-        sRelease.erase(0, std::string(APPNAME).size());
-        
+
         if (sRelease.find(".tar.gz")!=std::string::npos)
-            sRelease.erase(sRelease.find("src.tar.gz"), std::string("src.tar.gz").size());
+            sRelease.erase(sRelease.find(".tar.gz"), std::string(".tar.gz").size());
         if (sRelease.find(".zip")!=std::string::npos)
-            sRelease.erase(sRelease.find("src.zip"), std::string("src.zip").size());
+            sRelease.erase(sRelease.find(".zip"), std::string(".zip").size());
         if (sRelease.find(".exe")!=std::string::npos)
             sRelease.erase(sRelease.find(".exe"), std::string(".exe").size());
-        
-        sRelease.erase(std::remove(sRelease.begin(), sRelease.end(), '-'), sRelease.end());
+
+        sRelease=std::regex_replace(sRelease, std::regex(R"([^\d.])"), "");
+        sRelease.erase(sRelease.size(),1);
 
         int dot1, dot2;
         dot1=sRelease.find_first_of(".");
@@ -904,14 +902,19 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
         
         int major_ver=0, minor_ver=0, rev_ver=0;
         
-        if (dot1<dot2) {
-            major_ver=std::stoi(sRelease.substr(0, dot1));
-            minor_ver=std::stoi(sRelease.substr(dot1, dot2-dot1-1));
-            rev_ver=std::stoi(sRelease.substr(dot2-1, sRelease.size()-dot2+1));
+        try {
+            if (dot1<dot2) {
+                major_ver=std::stoi(sRelease.substr(0, dot1));
+                minor_ver=std::stoi(sRelease.substr(dot1, dot2-dot1-1));
+                rev_ver=std::stoi(sRelease.substr(dot2-1, sRelease.size()-dot2+1));
+            }
+            else {
+                major_ver=std::stoi(sRelease.substr(0, dot1));
+                minor_ver=std::stoi(sRelease.substr(dot1, sRelease.size()-dot1));
+            }
         }
-        else {
-            major_ver=std::stoi(sRelease.substr(0, dot1));
-            minor_ver=std::stoi(sRelease.substr(dot1, sRelease.size()-dot1));
+        catch (const std::exception& e) {
+                std::cerr << "- Error while parsing version string: " << e.what() << ".\n";
         }
         
         if (major_ver>VER_MAJOR) this->hasUpdate=true;
@@ -944,7 +947,6 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
     }
 }
 
-
 void MainWIndow::run_shift() {
   runShift *rs=new runShift();
   QThread *th=new QThread();
@@ -954,6 +956,7 @@ void MainWIndow::run_shift() {
   rs->moveToThread(th);
   rs->setvsList(this->vsList);
   rs->setDiff(this->DeltaT);
+  rs->setDST(this->isDST);
   
   connect(timer, &QTimer::timeout, this, &MainWIndow::update_Log);
 
@@ -1256,6 +1259,6 @@ void runShift::shift() {
 }
 
 void runShift::setDiff(long t) { this->Diff=t; }
-void runShift::setDST(bool bIsDST) { this->bIsDST=bIsDST; }
+void runShift::setDST(bool isDST) { this->bIsDST=isDST; }
 
 

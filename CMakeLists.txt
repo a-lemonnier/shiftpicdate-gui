@@ -79,6 +79,6 @@ endif (WIN32)
 
 if (UNIX)
     target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network)
-    target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lstdc++fs -lexiv2)
+    target_link_libraries(shiftpicdate-gui LINK_PUBLIC -lexiv2)
 endif (UNIX)
 
