@@ -12,6 +12,26 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(COMPILER gcc)
+
+if (COMPILER STREQUAL "gcc")
+  set(CMAKE_CC_COMPILER "gcc")
+  set(CMAKE_CXX_COMPILER "g++")
+  message("CC: gcc")
+  message("CXX: g++")
+elseif (COMPILER STREQUAL "clang")
+  set(CMAKE_CC_COMPILER "clang")
+  set(CMAKE_CXX_COMPILER "clang++")
+  message("CC: clang")
+  message("CXX: clang++")
+elseif (COMPILER STREQUAL "intel") #does not work as usual
+  set(INTEL_DIR  /opt/intel/sw_dev_tools/bin)
+  set(CMAKE_CC_COMPILER ${INTEL_DIR}/icc)
+  set(CMAKE_CXX_COMPILER ${INTEL_DIR}/icpc)
+  message("CC: icc")
+  message("CXX: icpc")
+endif()
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -56,6 +76,8 @@ if(UNIX)
     set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+    find_package(Boost 1.40 OPTIONAL_COMPONENTS filesystem)
+
     add_executable(shiftpicdate-gui
         main.cpp
         mainwindow.cpp
@@ -79,6 +101,6 @@ endif (WIN32)
 
 if (UNIX)
     target_link_libraries(shiftpicdate-gui PRIVATE Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Charts Qt${QT_VERSION_MAJOR}::Network)
-    target_link_libraries(shiftpicdate-gui LINK_PUBLIC -lexiv2)
+    target_link_libraries(shiftpicdate-gui LINK_PUBLIC ${Boost_LIBRARIES} -lpthread -lstdc++fs -lstdc++fs -lexiv2)
 endif (UNIX)
 
