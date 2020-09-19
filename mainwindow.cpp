@@ -820,8 +820,8 @@ void MainWIndow::changeTaskbarOverlay(const QString &str) {
 
 void MainWIndow::changeTaskbarPic(const QPixmap &pm) {
 #if defined(_WIN32) || defined(WIN32)
-    //this->tbarThumb->setIconicLivePreviewPixmap(pmap);
-    this->tbarThumb->setIconicThumbnailPixmap(pmap);
+    //this->tbarThumb->setIconicLivePreviewPixmap(pm);
+    this->tbarThumb->setIconicThumbnailPixmap(pm);
 #endif
 }
 
@@ -1054,20 +1054,13 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
             this->lastRelease=std::to_string(major_ver) + "." +
                               std::to_string(minor_ver) + "." +
                               std::to_string(rev_ver);
-
         }
-        std::cout << "Distant version: " << std::to_string(major_ver) + "." +
-                                            std::to_string(minor_ver) + "." +
-                                            std::to_string(rev_ver); "\n";
-        std::cout << "Local version: " << std::to_string(VER_MAJOR) + "." +
-                                          std::to_string(VER_MINOR) + "." +
-                                          std::to_string(VER_REV) << "\n";
     }
     else {
         this->hasUpdate=false;
         this->lastRelease=std::to_string(VER_MAJOR) + "." +
-                          std::to_string(VER_MINOR) + "." +
-                          std::to_string(VER_REV);
+        std::to_string(VER_MINOR) + "." +
+        std::to_string(VER_REV);
     }
 }
 
