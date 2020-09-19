@@ -5,7 +5,7 @@
 
 #define VER_MAJOR 0
 #define VER_MINOR 3
-#define VER_REV 2
+#define VER_REV 3
 
 #include <Qt>
 #include <QMainWindow>
