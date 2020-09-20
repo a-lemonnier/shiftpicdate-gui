@@ -210,14 +210,15 @@ void MainWIndow::on_bBrowse_clicked() {
     dialog.setFileMode(QFileDialog::DirectoryOnly);
 #endif
 
-    dialog.setViewMode(QFileDialog::List);
-    
-    // See on QT forum ***
-    QListView *list = dialog.findChild<QListView*>("listView");
-    if (list)  list->setSelectionMode(QAbstractItemView::MultiSelection);
-    QTreeView *tree = dialog.findChild<QTreeView*>();
-    if (tree)  tree->setSelectionMode(QAbstractItemView::MultiSelection);
-    // ***
+    dialog.setViewMode(QFileDialog::Detail);
+
+//    Gnome issue..
+//    // See on QT forum ***
+//    QListView *list = dialog.findChild<QListView*>("listView");
+//    if (list)  list->setSelectionMode(QAbstractItemView::MultiSelection);
+//    QTreeView *tree = dialog.findChild<QTreeView*>();
+//    if (tree)  tree->setSelectionMode(QAbstractItemView::MultiSelection);
+//    // ***
     
     QStringList fileNames;
     QStringList fileNames_tmp;
