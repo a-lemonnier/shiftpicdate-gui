@@ -205,12 +205,14 @@ void MainWIndow::on_bBrowse_clicked() {
     QFileDialog dialog(this);
 
 #if defined(__linux__)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     dialog.setOption(QFileDialog::ShowDirsOnly, true);
+#else
+   dialog.setFileMode(QFileDialog::DirectoryOnly);
+#endif
 #else
     dialog.setFileMode(QFileDialog::DirectoryOnly);
 #endif
-
-    dialog.setViewMode(QFileDialog::Detail);
 
 //    Gnome issue..
 //    // See on QT forum ***

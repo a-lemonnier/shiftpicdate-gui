@@ -42,6 +42,7 @@
 #include <QEvent>
 #include <QFont>
 #include <QSystemTrayIcon>
+#include <QtGlobal>
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
