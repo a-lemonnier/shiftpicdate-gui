@@ -990,7 +990,6 @@ void MainWIndow::get_fsDialog_vector(std::vector<std::string> &vs) {
 
 void MainWIndow::addEpoch(long t) { this->vEpoch.push_back(t); }
 
-
 void MainWIndow::replyFinished(QNetworkReply* reply) {
     QString data = (QString) reply->readAll();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
@@ -998,8 +997,12 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
     if (reply->error()==QNetworkReply::NoError) {
         
         QJsonObject jsonObject = jsonDoc.object();
-        
-        std::string sRelease=jsonObject.value("release").toObject().value("filename").toString().toStdString();
+
+#if defined(_WIN32) || defined(WIN32)
+        std::string sRelease=jsonObject.value("platform_releases").toObject().value("windows").toObject().value("filename").toString().toStdString();
+#else
+        std::string sRelease=jsonObject.value("platform_releases").toObject().value("linux").toObject().value("filename").toString().toStdString();
+#endif
 
         if (sRelease.find(".tar.gz")!=std::string::npos)
             sRelease.erase(sRelease.find(".tar.gz"), std::string(".tar.gz").size());
