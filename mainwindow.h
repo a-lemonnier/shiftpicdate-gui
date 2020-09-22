@@ -17,6 +17,7 @@ constexpr int BLINK_NB=5; // blink button 5 times
 #include <QThread>
 #include <QtGlobal>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QDir>
 #include <QFileDialog>
 #include <QTreeView>
