@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
 
     QCommandLineOption Year(QStringList() << "Y" << "year",
-                           QCoreApplication::translate("main", "Years."),  "items", "0);
+                           QCoreApplication::translate("main", "Years."),  "items", "0");
     QCommandLineOption Day(QStringList() << "D" << "day",
                            QCoreApplication::translate("main", "Days."), 0);
     QCommandLineOption Hour(QStringList() << "H" << "hour",
