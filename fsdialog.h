@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <QObject>
-#include <QDir>
 #include <QThread>
 #include <QTranslator>
 #include <QMessageBox>
@@ -14,14 +13,10 @@
 #include <QGraphicsView>
 #include <QPixmap>
 #include <QMatrix>
-#include <QTreeView>
-#include <QListView>
-#include <QMimeData>
 #include <QListWidgetItem>
 
 #include <string>
 #include <vector>
-#include <memory>
 
 #include "mainwindow.h"
 
@@ -29,8 +24,7 @@ namespace Ui {
 class fsDialog;
 }
 
-class fsDialog : public QDialog
-{
+class fsDialog : public QDialog {
     Q_OBJECT
 
 public:

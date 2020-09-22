@@ -74,20 +74,4 @@ namespace spdFunc {
 // ----------------------------------------------------
 
 
-
-std::string spdFunc::getExifDate(const std::string &sFilename);
-long spdFunc::getExifEpoch(const std::string &sFilename);
-std::pair<std::string, long> spdFunc::getExifDateEpoch(const std::string &sFilename);
-bool spdFunc::setExifDate(const std::string &sFilename, long Diff, bool bIsDST=false);
-
-std::string spdFunc::shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST=false);
-
-long spdFunc::fileNb(const fs::path &path);
-
-std::tuple<long, long, long, long, long, long> spdFunc::decompEpoch(long t);
-std::string spdFunc::stoyear(long t);
-void spdFunc::test();
-bool spdFunc::test_ext(const std::string &sS);
-
-
 #endif // shiftpicdate_win32.h

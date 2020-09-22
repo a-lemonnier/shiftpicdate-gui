@@ -3,46 +3,52 @@
 
 #define APPNAME "shiftpicdate-gui"
 
-#define VER_MAJOR 0
-#define VER_MINOR 3
-#define VER_REV 3
+constexpr int VER_MAJOR=0;
+constexpr int VER_MINOR=3;
+constexpr int VER_REV=4;
+
+constexpr int IOSLEEP=75; // wait 75ms between each RW
+constexpr int BLINK_NB=5; // blink button 5 times
 
 #include <Qt>
 #include <QMainWindow>
 #include <QObject>
+#include <QWidget>
+#include <QThread>
+#include <QtGlobal>
+#include <QTimer>
 #include <QDir>
 #include <QFileDialog>
-#include <QThread>
+#include <QTreeView>
+#include <QListView>
 #include <QTranslator>
 #include <QMessageBox>
 #include <QMetaType>
-#include <QScrollBar>
-#include <QTimer>
+#include <QGraphicsEffect>
 #include <QImageReader>
 #include <QGraphicsView>
 #include <QPixmap>
+#include <QTransform>
 #include <QMatrix>
-#include <QTreeView>
-#include <QListView>
 #include <QTextStream>
 #include <QPainter>
-#include <QList>
 #include <QPainterPath>
 #include <QRect>
-#include <QWidget>
-#include <QTransform>
-#include <QLabel>
 #include <QDateTime>
-#include <QGraphicsEffect>
 #include <QSysInfo>
+#include <QProcess>
+#include <QRadioButton>
 #include <QLayout>
+#include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QScrollBar>
+#include <QList>
+
 #include <QMouseEvent>
 #include <QEvent>
 #include <QFont>
 #include <QSystemTrayIcon>
-#include <QtGlobal>
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -71,7 +77,6 @@
 
 #include <ctime>
 #include <algorithm>
-#include <memory>
 #include <cassert>
 #include <random>
 #include <tuple>
@@ -79,6 +84,12 @@
 #include <map>
 #include <regex>
 #include <exception>
+#include <string>
+
+#define VER_STR std::to_string(VER_MAJOR)+"." + \
+                std::to_string(VER_MINOR)+"." + \
+                std::to_string(VER_REV)
+#define VER_QSTR QString::fromStdString(VER_STR)
 
 #if __has_include (<filesystem>)
 #include <filesystem>
@@ -137,17 +148,6 @@ public:
     enum Lang { FR, EN };
     enum Theme {DARK, LIGHT, QT, BLUE};
 
-public slots:
-    void update_progressBar_value(int);
-    void update_Log_value(QString);
-    void update_Log();
-    void changePic();
-    void get_fsDialog_vector(std::vector<std::string> &);
-    void run_shift();
-    void plotHist();
-    void addEpoch(long);
-    void replyFinished(QNetworkReply*);
-
 private slots:
     void on_bBrowse_clicked();
     void on_bRun_clicked();
@@ -156,17 +156,8 @@ private slots:
     void on_bWrap_clicked();
     void on_bQuiet_clicked();
     void on_bReset_clicked();
-    void on_rBInfo_clicked();
-
     void on_bZoomIn_clicked();
     void on_bZoomOut_clicked();
-
-    void on_sBDay_valueChanged(int val);
-    void on_sBYear_valueChanged(int val);
-    void on_sBSec_valueChanged(int val);
-    void on_sBMin_valueChanged(int val);
-    void on_sBHour_valueChanged(int val);
-
     void on_bScroll_clicked();
     void on_bHidepic_clicked();
     void on_bRot_clicked();
@@ -174,12 +165,31 @@ private slots:
     void on_bPrev_clicked();
     void on_bStop_clicked();
     void on_bSelectfile_clicked();
-
     void on_bFlag_released();
+    void on_bBrowseFile_clicked();
+
+    void on_sBDay_valueChanged(int val);
+    void on_sBYear_valueChanged(int val);
+    void on_sBSec_valueChanged(int val);
+    void on_sBMin_valueChanged(int val);
+    void on_sBHour_valueChanged(int val);
 
     void on_cbYear_activated(const QString &);
 
-    void on_bBrowseFile_clicked();
+    void on_rBInfo_clicked();
+
+    void update_progressBar_value(int);
+    void update_SSprogressBar_value(int);
+    void update_Log_value(QString);
+    void update_Log();
+    void changePic();
+    void get_fsDialog_vector(std::vector<std::string> &);
+    void run_shift();
+    void plotHist();
+    void addEpoch(long);
+    void replyFinished(QNetworkReply*);
+    void getButtontoBlink();
+    void getRButtontoBlink();
 
 private:
     Ui::MainWIndow *ui;
@@ -202,21 +212,12 @@ private:
 #endif
 
     QString SLog;
-    std::vector<QString> QSLog;
 
     std::string sFilename;
     std::vector<std::string> vsList;
     std::vector<long> vEpoch;
 
-    std::vector<std::pair<std::string, std::time_t> > vBins;
-
-
-    long DeltaY;
-    long DeltaD;
-    long DeltaH;
-    long DeltaM;
-    long DeltaS;
-
+    long DeltaY, DeltaD, DeltaH, DeltaM, DeltaS;
     long DeltaT;
 
     bool isDST;
@@ -246,6 +247,9 @@ private:
     int computeDeltaT();
     void changeTaskbarOverlay(const QString &);
     void changeTaskbarPic(const QPixmap&);
+
+    void blinkButton(QPushButton *button);
+    void blinkRButton(QRadioButton *rbutton);
 
 signals:
     void LogTimout();

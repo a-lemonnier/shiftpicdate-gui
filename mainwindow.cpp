@@ -128,6 +128,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->lEPath->setEnabled(false);
 
     ui->cbYear->setHidden(true);
+    ui->SSprogressBar->setHidden(true);
     // -----------------
 
     // Set values --
@@ -196,6 +197,15 @@ MainWIndow::MainWIndow(QWidget *parent)
     // Define some connections
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
     connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
+
+    // Blink
+    connect(ui->bReset, &QPushButton::clicked, this, &MainWIndow::getButtontoBlink);
+    connect(ui->bRun, &QPushButton::clicked, this, &MainWIndow::getButtontoBlink);
+    connect(ui->bFlag, &QPushButton::clicked, this, &MainWIndow::getButtontoBlink);
+    connect(ui->bTest, &QPushButton::clicked, this, &MainWIndow::getButtontoBlink);
+
+    QTimer::singleShot(1500, this, [this]() {this->blinkButton(ui->bFlag);});
+    // -----------------------
 }
 
 MainWIndow::~MainWIndow() { delete ui; }
@@ -204,17 +214,21 @@ void MainWIndow::on_bBrowse_clicked() {
     qeBlur.setEnabled(true);
     QFileDialog dialog(this);
 
+// Gnome issue
 #if defined(__linux__)
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-    dialog.setOption(QFileDialog::ShowDirsOnly, true);
-#else
-   dialog.setFileMode(QFileDialog::DirectoryOnly);
-#endif
+    QProcess process;
+    QStringList processList;
+    processList << "test";
+    process.start("pidof", QStringList("gnome-session"));
+    process.waitForReadyRead();
+    if(!process.readAllStandardOutput().isEmpty())
+        dialog.setFileMode(QFileDialog::DirectoryOnly);
+    else
+        dialog.setOption(QFileDialog::ShowDirsOnly, true);
 #else
     dialog.setFileMode(QFileDialog::DirectoryOnly);
 #endif
 
-//    Gnome issue..
 //    // See on QT forum ***
 //    QListView *list = dialog.findChild<QListView*>("listView");
 //    if (list)  list->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -361,6 +375,8 @@ void MainWIndow::on_bBrowseFile_clicked() {
 }
 
 void MainWIndow::on_bRun_clicked() {
+    if (this->timer_ss->isActive()) this->timer_ss->stop();
+
     ui->sBYear->setStyleSheet(spdStyle::TimeField);
     ui->sBDay->setStyleSheet(spdStyle::TimeField);
     ui->sBHour->setStyleSheet(spdStyle::TimeField);
@@ -414,7 +430,7 @@ void MainWIndow::on_bDST_clicked(bool checked) {
 
 void MainWIndow::on_bZoomIn_clicked()  { ui->tBLog->zoomIn(1);  }
 void MainWIndow::on_bZoomOut_clicked() { ui->tBLog->zoomOut(1); }
-void MainWIndow::on_bTest_clicked() { ui->bReset->setEnabled(true); }
+void MainWIndow::on_bTest_clicked() { ; }
 void MainWIndow::on_bStop_clicked() { if (this->timer_ss->isActive()) timer_ss->stop(); }
 
 void MainWIndow::on_bHidepic_clicked() {
@@ -427,7 +443,7 @@ void MainWIndow::on_bHidepic_clicked() {
     ui->bPrev->setHidden(this->isPicHidden);
     ui->bNext->setHidden(this->isPicHidden);
     ui->picLabel->setHidden(this->isPicHidden);
-
+    ui->SSprogressBar->setHidden(this->isPicHidden);
 }
 
 void MainWIndow::on_bRot_clicked() {
@@ -484,6 +500,8 @@ void MainWIndow::on_bScroll_clicked() {
 }
 
 void MainWIndow::on_bReset_clicked() {
+    if (this->timer_ss->isActive()) this->timer_ss->stop();
+
     ui->bRun->setEnabled(true);
     ui->sBYear->setEnabled(true);
     ui->sBDay->setEnabled(true);
@@ -638,6 +656,8 @@ void MainWIndow::on_sBHour_valueChanged(int val) {
 void MainWIndow::on_rBInfo_clicked() { // About...
     this->qeBlur.setEnabled(true);
 
+    this->blinkRButton(ui->rBInfo);
+
     int currentProgress=ui->progressBar->value();
     ui->progressBar->setValue(100);
 
@@ -705,6 +725,9 @@ void MainWIndow::on_bNext_clicked() {
     ui->picLabel->setToolTipDuration(1000);
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+
+    ui->SSprogressBar->setRange(1, this->picNb+1);
+    ui->SSprogressBar->setValue(this->currentPic+1);
 }
 
 void MainWIndow::on_bPrev_clicked() {
@@ -722,6 +745,9 @@ void MainWIndow::on_bPrev_clicked() {
     ui->picLabel->setToolTipDuration(1000);
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+
+    ui->SSprogressBar->setRange(1, this->picNb+1);
+    ui->SSprogressBar->setValue(this->currentPic+1);
 }
 
 void MainWIndow::on_bSelectfile_clicked() {
@@ -828,6 +854,54 @@ void MainWIndow::changeTaskbarPic(const QPixmap &pm) {
 #endif
 }
 
+void MainWIndow::blinkButton(QPushButton *button) {
+    button->setFocus();
+
+    int Blink_nb=BLINK_NB;
+    int Blink_freq=40;
+    int Blink_dur=Blink_freq*Blink_nb;
+
+    QTimer *timer_blink=new QTimer();
+
+    QElapsedTimer elapsedT;
+    elapsedT.start();
+
+    connect(timer_blink, &QTimer::timeout, this, [this, elapsedT, Blink_freq, Blink_dur, button,timer_blink](){
+            if (elapsedT.elapsed()+Blink_freq>=Blink_dur) {
+                button->setFlat(false);
+                button->clearFocus();
+                timer_blink->stop();
+            }
+            else
+                button->setFlat(!button->isFlat());
+    });
+    connect(timer_blink, &QTimer::destroyed, timer_blink, &QTimer::deleteLater);
+    timer_blink->start(Blink_freq);
+}
+
+void MainWIndow::blinkRButton(QRadioButton *rbutton) {
+    int Blink_nb=BLINK_NB;
+    int Blink_freq=100;
+    int Blink_dur=Blink_freq*Blink_nb;
+
+    QTimer *timer_blink=new QTimer();
+
+    QElapsedTimer elapsedT;
+    elapsedT.start();
+
+    connect(timer_blink, &QTimer::timeout, this, [this, elapsedT, Blink_freq, Blink_dur, rbutton, timer_blink](){
+            if (elapsedT.elapsed()+Blink_freq>=Blink_dur) {
+                rbutton->setChecked(false);
+                rbutton->clearFocus();
+                timer_blink->stop();
+            }
+            else
+                rbutton->setChecked(!rbutton->isChecked());
+    });
+    connect(timer_blink, &QTimer::destroyed, timer_blink, &QTimer::deleteLater);
+    timer_blink->start(Blink_freq);
+}
+
 void MainWIndow::update_progressBar_value(int v) {
     int r=255-static_cast<float>(v)/100*255;
     int g=static_cast<float>(v)/100*255;
@@ -839,6 +913,8 @@ void MainWIndow::update_progressBar_value(int v) {
     this->tbarProgress->setValue(v);
 #endif
 }
+
+void MainWIndow::update_SSprogressBar_value(int v) { ui->SSprogressBar->setValue(v); }
 
 void MainWIndow::update_Log_value(QString str) { this->setLogtextTh(str.toUtf8().constData()); }
 
@@ -910,13 +986,19 @@ void MainWIndow::getfileList() {
 
 void MainWIndow::startSlideshow() {
     if (!this->vsList.empty()) {
+
         ui->bRot->setEnabled(true);
         ui->bNext->setEnabled(true);
         ui->bPrev->setEnabled(true);
         ui->bStop->setEnabled(true);
 
+        ui->SSprogressBar->setHidden(false);
+
         this->picNb=static_cast<long>(vsList.size());
         this->currentPic=0;
+
+        ui->SSprogressBar->setValue(1);
+        ui->SSprogressBar->setRange(1, this->picNb+1);
 
         // Show the first img
         QPixmap pmap(QString::fromStdString(this->vsList[0]));
@@ -982,6 +1064,8 @@ void MainWIndow::changePic() {
     ui->picLabel->setToolTipDuration(1000);
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
+
+    this->update_SSprogressBar_value(this->currentPic+1);
 
     this->iPicRot=0;
 }
@@ -1074,6 +1158,14 @@ void MainWIndow::replyFinished(QNetworkReply* reply) {
                           std::to_string(VER_MINOR) + "." +
                           std::to_string(VER_REV);
     }
+}
+
+void MainWIndow::getButtontoBlink() {
+    this->blinkButton(dynamic_cast<QPushButton*>(sender()));
+}
+
+void MainWIndow::getRButtontoBlink() {
+    this->blinkRButton(dynamic_cast<QRadioButton*>(sender()));
 }
 
 void MainWIndow::run_shift() {
@@ -1382,6 +1474,9 @@ void runShift::shift() {
         if (!sTmp.empty()) {
             spdFunc::setExifDate(file, this->Diff, this->bIsDST);
             emit(sendstdStr(QString::fromStdString("\t"+file+"\t"+sTmp+".\n")));
+#ifdef IOSLEEP
+            QThread::msleep(IOSLEEP);
+#endif
         }
         emit(sendProgress(static_cast<float>((iCount++)*100/iFileNb)));
     }
