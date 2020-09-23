@@ -7,7 +7,7 @@ platform:
 
 steps:
 - name: Build and Test
-  image: ubuntu:20.10
+  image: ubuntu:20.04
   commands:
     - apt-get update -y
     - DEBIAN_FRONTEND=noninteractive apt-get install -y make gcc g++ cmake exiv2 libexiv2-dev  qt5-default qtbase5-dev qttools5-dev qtbase5-dev-tools libqt5charts5-dev qtcreator
