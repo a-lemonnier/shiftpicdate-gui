@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
     QApplication::setApplicationName(APPNAME);
     QApplication::setApplicationVersion(VER_QSTR);
 
+    // Parser --
     QCommandLineParser parser;
     parser.setApplicationDescription(APPNAME);
     parser.addHelpOption();
@@ -69,34 +70,37 @@ int main(int argc, char *argv[]) {
     parser.addOption(DST);
 
     parser.process(app);
-
-    //const QStringList args = parser.positionalArguments();
+    // ---------
 
     std::string sFilename=parser.value(File).toStdString();
     std::string sDirectory=parser.value(Directory).toStdString();
 
-    long long Diff;
-    Diff+=parser.value(Year).toLongLong()*3600*24*365;
-    Diff+=parser.value(Day).toLongLong()*3600*24;
-    Diff+=parser.value(Hour).toLongLong()*3600;
-    Diff+=parser.value(Minute).toLongLong()*60;
-    Diff+=parser.value(Second).toLongLong();
+    long Diff=0;
+    Diff+=parser.value(Year).toLong()*3600*24*365;
+    Diff+=parser.value(Day).toLong()*3600*24;
+    Diff+=parser.value(Hour).toLong()*3600;
+    Diff+=parser.value(Minute).toLong()*60;
+    Diff+=parser.value(Second).toLong();
 
     bool bDST=!parser.isSet(DST);
 
+    // Start GUI --
     if (parser.optionNames().empty()) {
         MainWIndow w;
         w.show();
         w.initTaskBar();
         return app.exec();
     }
+    // ------------
 
-
+    // Help --
     if (!(parser.isSet(File) ^ parser.isSet(Directory))) {
         parser.showHelp();
         return EXIT_SUCCESS;
     }
+    // -------
 
+    // Shift directory --
     if (parser.isSet(Directory))   {
         if (fs::is_directory(sDirectory)) {
             std::vector<std::string> vList;
@@ -130,6 +134,9 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
     }
+    // ------------------
+
+    // Shift file --
     else {
         if (fs::exists(sFilename) && spdFunc::test_ext(sFilename)) {
             std::cout << "- Shift date by: " << Diff << "s -> "
@@ -147,6 +154,7 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
     }
+    // -------------
 
     return EXIT_SUCCESS;
 }

@@ -158,6 +158,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     ui->sBHour->setStyleSheet(spdStyle::TimeField);
     ui->sBMin->setStyleSheet(spdStyle::TimeField);
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
+
     // -------------
 
     // Blur --
@@ -178,7 +179,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     this->Chart->setToolTip(tr("Time line."));
 
     this->chartView->setRenderHint(QPainter::Antialiasing);
-//    this->chartView->setMaximumHeight(125);
+    this->chartView->setMaximumHeight(200);
 
     ui->hlBarChart->setSizeConstraint(QLayout::SetFixedSize);
     ui->hlBarChart->addWidget(this->chartView);
@@ -849,7 +850,7 @@ void MainWIndow::changeTaskbarOverlay(const QString &str) {
 
 void MainWIndow::changeTaskbarPic(const QPixmap &pm) {
 #if defined(_WIN32) || defined(WIN32)
-    //this->tbarThumb->setIconicLivePreviewPixmap(pm);
+    this->tbarThumb->setIconicLivePreviewPixmap(pm);
     this->tbarThumb->setIconicThumbnailPixmap(pm);
 #endif
 }
@@ -858,7 +859,11 @@ void MainWIndow::blinkButton(QPushButton *button) {
     button->setFocus();
 
     int Blink_nb=BLINK_NB;
+#if defined(_WIN32) || defined(WIN32)
+    int Blink_freq=75;
+#else
     int Blink_freq=40;
+#endif
     int Blink_dur=Blink_freq*Blink_nb;
 
     QTimer *timer_blink=new QTimer();
@@ -866,14 +871,26 @@ void MainWIndow::blinkButton(QPushButton *button) {
     QElapsedTimer elapsedT;
     elapsedT.start();
 
-    connect(timer_blink, &QTimer::timeout, this, [this, elapsedT, Blink_freq, Blink_dur, button,timer_blink](){
+    connect(timer_blink, &QTimer::timeout, this, [elapsedT, Blink_freq, Blink_dur, button,timer_blink](){
             if (elapsedT.elapsed()+Blink_freq>=Blink_dur) {
+#if defined(_WIN32) || defined(WIN32)
+                button->setStyleSheet("");
+#else
                 button->setFlat(false);
+#endif
                 button->clearFocus();
                 timer_blink->stop();
             }
-            else
-                button->setFlat(!button->isFlat());
+            else {
+#if defined(_WIN32) || defined(WIN32)
+                if (button->styleSheet().isEmpty())
+                  button->setStyleSheet(spdStyle::Blink);
+                else
+                  button->setStyleSheet("");
+#else
+                  button->setFlat(!button->isFlat());
+#endif
+            }
     });
     connect(timer_blink, &QTimer::destroyed, timer_blink, &QTimer::deleteLater);
     timer_blink->start(Blink_freq);

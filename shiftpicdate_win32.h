@@ -57,8 +57,8 @@ namespace fs = boost::filesystem;
 
 namespace spdFunc {
     std::string getExifDate(const std::string &sFilename);
-     long getExifEpoch(const std::string &sFilename);
-     std::pair<std::string, long> getExifDateEpoch(const std::string &sFilename);
+    long getExifEpoch(const std::string &sFilename);
+    std::pair<std::string, long> getExifDateEpoch(const std::string &sFilename);
     bool setExifDate(const std::string &sFilename, long Diff, bool bIsDST);
 
     std::string shiftTimestamp(const std::string &sTimestamp, long t, bool bIsDST);

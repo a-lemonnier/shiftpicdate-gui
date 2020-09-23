@@ -84,8 +84,7 @@ namespace spdStyle {
             "    height: 0 px;"
             "    subcontrol-position: top;"
             "    subcontrol-origin: margin;"
-            "}"
-;
+            "}";
 
     const QString ScrollBar=
             "QScrollBar:vertical {"
@@ -117,9 +116,15 @@ namespace spdStyle {
             "    subcontrol-origin: margin;"
             "}";
 
+    const QString BlinkRadial=
+            "background: qradialgradient("
+              "spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, "
+              "stop:0 rgba(50, 0, 150, 100), stop:1 rgba(255, 255, 255, 200));";
 
-
-
+     const QString Blink=
+             "background-color: qlineargradient("
+               "spread:pad, x1:0, y1:0, x2:1, y2:1, "
+               "stop:0 rgba(0, 0, 100, 100), stop:1 rgba(255, 255, 255, 175));";
 }
 
 
