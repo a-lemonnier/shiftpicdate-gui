@@ -940,6 +940,9 @@
                 <height>10</height>
                </size>
               </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
               <property name="value">
                <number>24</number>
               </property>
@@ -950,7 +953,7 @@
                <bool>false</bool>
               </property>
               <property name="format">
-               <string>%v/%m</string>
+               <string>%v</string>
               </property>
              </widget>
             </item>

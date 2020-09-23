@@ -725,7 +725,7 @@ void MainWIndow::on_bNext_clicked() {
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 
-    ui->SSprogressBar->setRange(1, this->picNb+1);
+    ui->SSprogressBar->setRange(1, this->picNb);
     ui->SSprogressBar->setValue(this->currentPic+1);
 }
 
@@ -745,7 +745,7 @@ void MainWIndow::on_bPrev_clicked() {
     ui->picLabel->setToolTip(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
     ui->statusbar->showMessage(QString::fromStdString(std::to_string(this->currentPic+1)+"/"+std::to_string(this->picNb)+"\t-\t"+this->vsList[this->currentPic]));
 
-    ui->SSprogressBar->setRange(1, this->picNb+1);
+    ui->SSprogressBar->setRange(1, this->picNb);
     ui->SSprogressBar->setValue(this->currentPic+1);
 }
 
@@ -1013,7 +1013,7 @@ void MainWIndow::startSlideshow() {
         this->currentPic=0;
 
         ui->SSprogressBar->setValue(1);
-        ui->SSprogressBar->setRange(1, this->picNb+1);
+        ui->SSprogressBar->setRange(1, this->picNb);
 
         // Show the first img
         QPixmap pmap(QString::fromStdString(this->vsList[0]));
