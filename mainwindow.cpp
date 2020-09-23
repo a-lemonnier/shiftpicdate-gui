@@ -218,9 +218,7 @@ void MainWIndow::on_bBrowse_clicked() {
 // Gnome issue
 #if defined(__linux__)
     QProcess process;
-    QStringList processList;
-    processList << "test";
-    process.start("pidof", QStringList("gnome-session"));
+    process.start("pgrep", QStringList("gnome-session"));
     process.waitForReadyRead();
     if(!process.readAllStandardOutput().isEmpty())
         dialog.setFileMode(QFileDialog::DirectoryOnly);
