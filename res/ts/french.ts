@@ -923,29 +923,49 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../../main.cpp" line="21"/>
+        <location filename="../../main.cpp" line="42"/>
+        <source>Shift the EXIF date and time of a picture, or pictures of a given directory.</source>
+        <translation type="unfinished">Décale la date et l&apos;heure (EXIF) d&apos;une image ou des images d&apos;un répertoire donné.</translation>
+    </message>
+    <message>
+        <location filename="../../main.cpp" line="46"/>
+        <source>Specify to directory where find the pictures to shift.</source>
+        <translation type="unfinished">Indique le répertoire où sont les images à traiter.</translation>
+    </message>
+    <message>
+        <location filename="../../main.cpp" line="49"/>
+        <source>Specify the file to shift (do not use -d option).</source>
+        <translation type="unfinished">Indique l&apos;image à décaler (incompatible avec -d).</translation>
+    </message>
+    <message>
+        <location filename="../../main.cpp" line="52"/>
         <source>Years.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Années.</translation>
     </message>
     <message>
-        <location filename="../../main.cpp" line="23"/>
+        <location filename="../../main.cpp" line="54"/>
         <source>Days.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jours.</translation>
     </message>
     <message>
-        <location filename="../../main.cpp" line="25"/>
+        <location filename="../../main.cpp" line="56"/>
         <source>Hours.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Heures.</translation>
     </message>
     <message>
-        <location filename="../../main.cpp" line="27"/>
+        <location filename="../../main.cpp" line="58"/>
         <source>Minutes.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minutes.</translation>
     </message>
     <message>
-        <location filename="../../main.cpp" line="29"/>
+        <location filename="../../main.cpp" line="60"/>
         <source>Seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seconds.</translation>
+    </message>
+    <message>
+        <location filename="../../main.cpp" line="63"/>
+        <source>Enable the DST.</source>
+        <translation type="unfinished">Active l&apos;heure d&apos;été.</translation>
     </message>
 </context>
 <context>

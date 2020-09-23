@@ -194,7 +194,7 @@ MainWIndow::MainWIndow(QWidget *parent)
     this->checkForUpdate();
     // ---------------
 
-    // Define some connections
+    // Define some connections --
     connect(ui->tBLog->horizontalScrollBar(), &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
     connect(ui->tBLog->verticalScrollBar(),   &QScrollBar::sliderMoved, [this]() {ui->tBLog->setStyleSheet("");});
 
