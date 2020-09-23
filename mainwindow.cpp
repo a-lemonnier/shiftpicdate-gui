@@ -1,7 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-MainWIndow::MainWIndow(QWidget *parent)
+MainWIndow::MainWIndow(QTranslator *translator, QWidget *parent)
 : QMainWindow(parent)
 , ui(new Ui::MainWIndow)
 , qTranslator(QTranslator())
@@ -37,6 +37,7 @@ MainWIndow::MainWIndow(QWidget *parent)
 
     ui->bFlag->setIcon(QIcon(":/flag/eng.svg"));
 
+    qApp->removeTranslator(translator);
     if (defaultLocale.toStdString().find("fr")!=std::string::npos ||
         defaultLocale.toStdString().find("FR")!=std::string::npos ||
         defaultLocale.toStdString().find("Fr")!=std::string::npos) {

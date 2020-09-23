@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
     // Start GUI --
     if (parser.optionNames().empty()) {
-        MainWIndow w;
+        MainWIndow w(&translator);
         w.show();
         w.initTaskBar();
         return app.exec();

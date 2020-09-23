@@ -129,7 +129,7 @@ class MainWIndow : public QMainWindow {
     QThread lFThread;
 
 public:
-    MainWIndow(QWidget *parent = nullptr);
+    MainWIndow(QTranslator* Translator, QWidget *parent = nullptr);
     ~MainWIndow();
 
     void setLogtextTh(const std::string &msg);
