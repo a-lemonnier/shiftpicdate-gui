@@ -1,9 +1,10 @@
 ### Version 0.3.4 ###
     
-    + Fix file dialog for Gnome
-    + Add blinking buttons
-    + Add slideshow for progressbar
-    + Add command line support
+    + Fix file dialog for Gnome.
+    + Add blinking buttons.
+    + Add slideshow for progressbar.
+    + Add command line support.
+    + Disable Run button and histogram when Run pressed.
     
 ### Version 0.3.3 ###
 

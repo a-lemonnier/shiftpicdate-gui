@@ -386,7 +386,7 @@
         <location filename="../../mainwindow.ui" line="905"/>
         <location filename="../../build/debug/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="774"/>
         <location filename="../../build/Release/shiftpicdate-gui_autogen/include/ui_mainwindow.h" line="775"/>
-        <location filename="../../mainwindow.cpp" line="514"/>
+        <location filename="../../mainwindow.cpp" line="500"/>
         <source>No picture selected.</source>
         <translation type="unfinished">Aucune image sélectionnée.</translation>
     </message>
@@ -498,163 +498,163 @@
         <translation type="unfinished">- Erreur: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="423"/>
+        <location filename="../../mainwindow.cpp" line="409"/>
         <source>- DST is disable.
 </source>
         <translation type="unfinished">- DST est désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="427"/>
+        <location filename="../../mainwindow.cpp" line="413"/>
         <source>- DST is enable: +1h.
 </source>
         <translation type="unfinished">- DST est activé: +1h.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="474"/>
+        <location filename="../../mainwindow.cpp" line="460"/>
         <source>- Auto wrap off.
 </source>
         <translation type="unfinished">- Saut de ligne désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="479"/>
+        <location filename="../../mainwindow.cpp" line="465"/>
         <source>- Auto wrap on.
 </source>
         <translation type="unfinished">- Saut de ligne automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="488"/>
+        <location filename="../../mainwindow.cpp" line="474"/>
         <source>- Toggle verbosity on.
 </source>
         <translation type="unfinished">- Mode verbeux activé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="498"/>
+        <location filename="../../mainwindow.cpp" line="484"/>
         <source>- Toggle auto scroll on.
 </source>
         <translation type="unfinished">- Défilement automatique.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="499"/>
+        <location filename="../../mainwindow.cpp" line="485"/>
         <source>- Toggle auto scroll off.
 </source>
         <translation type="unfinished">- Défilement automatique désactivé.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="571"/>
-        <location filename="../../mainwindow.cpp" line="590"/>
-        <location filename="../../mainwindow.cpp" line="609"/>
-        <location filename="../../mainwindow.cpp" line="628"/>
-        <location filename="../../mainwindow.cpp" line="647"/>
+        <location filename="../../mainwindow.cpp" line="557"/>
+        <location filename="../../mainwindow.cpp" line="576"/>
+        <location filename="../../mainwindow.cpp" line="595"/>
+        <location filename="../../mainwindow.cpp" line="614"/>
+        <location filename="../../mainwindow.cpp" line="633"/>
         <source>-&gt; Shift by </source>
         <translation type="unfinished">-&gt; Décalage de </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="573"/>
-        <location filename="../../mainwindow.cpp" line="592"/>
+        <location filename="../../mainwindow.cpp" line="559"/>
+        <location filename="../../mainwindow.cpp" line="578"/>
         <source> or </source>
         <translation type="unfinished"> ou </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="686"/>
+        <location filename="../../mainwindow.cpp" line="672"/>
         <source>Qt5 GUI for changing picture timestamps.&lt;/p&gt;</source>
         <translation type="unfinished">Qt5 GUI pour le décalage de la date des images.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1052"/>
+        <location filename="../../mainwindow.cpp" line="1038"/>
         <source>- Check update</source>
         <translation type="unfinished">- Vérification d&apos;une nouvelle version</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1155"/>
+        <location filename="../../mainwindow.cpp" line="1141"/>
         <source>- New release: </source>
         <translation type="unfinished">- Nouvelle version: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1312"/>
+        <location filename="../../mainwindow.cpp" line="1314"/>
         <source>- Select year: </source>
         <translation type="unfinished">- Selection de l&apos;année: </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1354"/>
+        <location filename="../../mainwindow.cpp" line="1356"/>
         <source>Janvier</source>
         <translation type="unfinished">Janvier</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1355"/>
+        <location filename="../../mainwindow.cpp" line="1357"/>
         <source>February</source>
         <translation type="unfinished">Février</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1356"/>
+        <location filename="../../mainwindow.cpp" line="1358"/>
         <source>March</source>
         <translation type="unfinished">Mars</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1357"/>
+        <location filename="../../mainwindow.cpp" line="1359"/>
         <source>April</source>
         <translation type="unfinished">Avril</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1359"/>
+        <location filename="../../mainwindow.cpp" line="1361"/>
         <source>June</source>
         <translation type="unfinished">Juin</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1360"/>
+        <location filename="../../mainwindow.cpp" line="1362"/>
         <source>July</source>
         <translation type="unfinished">Juillet</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1361"/>
+        <location filename="../../mainwindow.cpp" line="1363"/>
         <source>August</source>
         <translation type="unfinished">Août</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1362"/>
+        <location filename="../../mainwindow.cpp" line="1364"/>
         <source>September</source>
         <translation type="unfinished">Septembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1363"/>
+        <location filename="../../mainwindow.cpp" line="1365"/>
         <source>October</source>
         <translation type="unfinished">Octobre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1364"/>
+        <location filename="../../mainwindow.cpp" line="1366"/>
         <source>November</source>
         <translation type="unfinished">Novembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1365"/>
+        <location filename="../../mainwindow.cpp" line="1367"/>
         <source>December</source>
         <translation type="unfinished">Décembre</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1384"/>
+        <location filename="../../mainwindow.cpp" line="1386"/>
         <source>pics/day</source>
         <translation type="unfinished">photos/j</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1398"/>
+        <location filename="../../mainwindow.cpp" line="1400"/>
         <source>- Empty epoch vector.
 </source>
         <translation type="unfinished">- Vecteur d&apos;Epoques vide.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1417"/>
+        <location filename="../../mainwindow.cpp" line="1419"/>
         <source>- Chose BlueCerulean theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème BlueCerulean</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1412"/>
+        <location filename="../../mainwindow.cpp" line="1414"/>
         <source>- Chose Qt theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Qt</translation>
     </message>
@@ -664,23 +664,23 @@
         <translation type="unfinished">- Continue avec un seul fichier</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="689"/>
+        <location filename="../../mainwindow.cpp" line="675"/>
         <source>Update available</source>
         <translation type="unfinished">Mise-à-jour disponible</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1422"/>
+        <location filename="../../mainwindow.cpp" line="1424"/>
         <source>- Chose Light theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Light</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1427"/>
-        <location filename="../../mainwindow.cpp" line="1432"/>
+        <location filename="../../mainwindow.cpp" line="1429"/>
+        <location filename="../../mainwindow.cpp" line="1434"/>
         <source>- Chose Dark theme for the histogram</source>
         <translation type="unfinished">- Change le thème vers le thème Dark</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1358"/>
+        <location filename="../../mainwindow.cpp" line="1360"/>
         <source>May</source>
         <translation type="unfinished">Mai</translation>
     </message>
@@ -701,14 +701,14 @@
         <translation type="obsolete">Interface Qt5 pour le décalage des dates des images.&lt;br /&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="792"/>
+        <location filename="../../mainwindow.cpp" line="778"/>
         <source>- Switch language to French.
 </source>
         <translation type="unfinished">- Bascule l&apos;interface en Français.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="797"/>
+        <location filename="../../mainwindow.cpp" line="783"/>
         <source>- Switch language to English.
 </source>
         <translation type="unfinished">- Bascule l&apos;interface en Anglais.
@@ -731,14 +731,14 @@
         <translation type="obsolete">- MainWIndow::update_Log(): Défilement jusqu&apos;à la fin.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="997"/>
+        <location filename="../../mainwindow.cpp" line="983"/>
         <source>- List of files...
 </source>
         <translation type="unfinished">- Liste des fichiers...
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1090"/>
+        <location filename="../../mainwindow.cpp" line="1076"/>
         <source> files removed.</source>
         <translation type="unfinished"> fichiers enlevés.</translation>
     </message>
@@ -786,7 +786,7 @@
         <translation type="obsolete"> fichiers.</translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1450"/>
+        <location filename="../../mainwindow.cpp" line="1452"/>
         <source>	 - Number of files: </source>
         <translation type="unfinished">	 - Nombre de fichiers: </translation>
     </message>
@@ -971,14 +971,14 @@
 <context>
     <name>runShift</name>
     <message>
-        <location filename="../../mainwindow.cpp" line="1485"/>
+        <location filename="../../mainwindow.cpp" line="1487"/>
         <source>- Start shifting pictures.
 </source>
         <translation type="unfinished">- Application du décalage.
 </translation>
     </message>
     <message>
-        <location filename="../../mainwindow.cpp" line="1500"/>
+        <location filename="../../mainwindow.cpp" line="1502"/>
         <source>- Shifting completed.
 </source>
         <translation type="unfinished">- Décalage terminé.

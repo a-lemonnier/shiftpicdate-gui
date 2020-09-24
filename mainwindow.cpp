@@ -383,6 +383,8 @@ void MainWIndow::on_bRun_clicked() {
     ui->sBMin->setStyleSheet(spdStyle::TimeField);
     ui->sBSec->setStyleSheet(spdStyle::TimeField);
 
+    ui->bRun->setStyleSheet("");
+
     ui->bRun->setEnabled(false);
     ui->bQuit->setEnabled(true);
     ui->bBrowse->setEnabled(false);
@@ -399,22 +401,6 @@ void MainWIndow::on_bRun_clicked() {
     if (this->vsList.size()>1) this->chartView->setHidden(true);
 
     this->run_shift();
-
-    if (this->vsList.size()>1) this->chartView->setHidden(false);
-
-    ui->bRun->setEnabled(true);
-    ui->bQuit->setEnabled(true);
-    ui->bBrowse->setEnabled(true);
-    ui->bBrowseFile->setEnabled(true);
-    ui->bReset->setEnabled(true);
-    ui->sBYear->setEnabled(true);
-    ui->sBDay->setEnabled(true);
-    ui->sBHour->setEnabled(true);
-    ui->sBMin->setEnabled(true);
-    ui->sBSec->setEnabled(true);
-
-    ui->tBLog->setStyleSheet("");
-    ui->bRun->setStyleSheet("");
 }
 
 void MainWIndow::on_bDST_clicked(bool checked) {
@@ -1205,6 +1191,22 @@ void MainWIndow::run_shift() {
 
         this->timer->stop();
         this->update_Log();
+
+        if (this->vsList.size()>1) this->chartView->setHidden(false);
+
+        ui->bRun->setEnabled(true);
+        ui->bQuit->setEnabled(true);
+        ui->bBrowse->setEnabled(true);
+        ui->bBrowseFile->setEnabled(true);
+        ui->bReset->setEnabled(true);
+        ui->sBYear->setEnabled(true);
+        ui->sBDay->setEnabled(true);
+        ui->sBHour->setEnabled(true);
+        ui->sBMin->setEnabled(true);
+        ui->sBSec->setEnabled(true);
+
+        ui->tBLog->setStyleSheet("");
+        ui->bRun->setStyleSheet("");
 
         this->changeTaskbarOverlay(":/ico/pause.svg");
 
