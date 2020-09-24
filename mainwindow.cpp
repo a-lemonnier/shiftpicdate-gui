@@ -180,7 +180,8 @@ MainWIndow::MainWIndow(QTranslator *translator, QWidget *parent)
     this->Chart->setToolTip(tr("Time line."));
 
     this->chartView->setRenderHint(QPainter::Antialiasing);
-    this->chartView->setMaximumHeight(200);
+    this->chartView->setMinimumHeight(150);
+    this->chartView->setMaximumHeight(250);
 
     ui->hlBarChart->setSizeConstraint(QLayout::SetFixedSize);
     ui->hlBarChart->addWidget(this->chartView);
@@ -1334,7 +1335,7 @@ void MainWIndow::plotHist() {
 
                         if (it!=vStat.end()) {
                             int N=vStat[std::distance(vStat.begin(), it)].n;
-                            if (N>MaxPic) MaxPic=N;
+                            if (N>=MaxPic) MaxPic=N;
                             *set << N ;
                         }
                         else *set << 0;

@@ -5,6 +5,7 @@
     + Add slideshow for progressbar.
     + Add command line support.
     + Disable Run button and histogram when Run pressed.
+    + Fix translations.s
     
 ### Version 0.3.3 ###
 
