@@ -180,8 +180,8 @@ MainWIndow::MainWIndow(QTranslator *translator, QWidget *parent)
     this->Chart->setToolTip(tr("Time line."));
 
     this->chartView->setRenderHint(QPainter::Antialiasing);
-    this->chartView->setMinimumHeight(125);
-    this->chartView->setMaximumHeight(250);
+    this->chartView->setMinimumHeight(150);
+    this->chartView->setMaximumHeight(150);
 
     ui->hlBarChart->setSizeConstraint(QLayout::SetFixedSize);
     ui->hlBarChart->addWidget(this->chartView);

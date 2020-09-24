@@ -785,7 +785,7 @@
            <widget class="QTextBrowser" name="tBLog">
             <property name="minimumSize">
              <size>
-              <width>300</width>
+              <width>400</width>
               <height>200</height>
              </size>
             </property>
@@ -843,10 +843,13 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <property name="sizeConstraint">
-             <enum>QLayout::SetMaximumSize</enum>
+             <enum>QLayout::SetMinimumSize</enum>
             </property>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
               <item>
                <spacer name="horizontalSpacer_16">
                 <property name="orientation">
@@ -866,7 +869,7 @@
               <item>
                <widget class="QLabel" name="picLabel">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
